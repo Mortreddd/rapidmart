@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +14,9 @@ use App\Http\Controllers\HomeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::middleware('guest')->group( function() {
 
-Route::get('/', HomeController::class); 
+    Route::get('/login', [LoginController::class, 'index'])->name('login'); 
+    Route::post('/login', [LoginController::class, 'login'])->name('login.verify');
+
+});

@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .text-input {
+        @apply block w-full px-3 py-2 mt-1 transition-colors duration-300 ease-in-out bg-transparent border shadow-sm;
+    }
+    .normal-input {
+        @apply border-primary placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500;
+    }
+    .error-input {
+        @apply border-red-600 ring-red-600;
+    }
+}
+
+@layer utilities {
+    #form {
+        animation: fadeInAnimation ease 1s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeInAnimation {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
