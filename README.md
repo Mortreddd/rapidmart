@@ -1,9 +1,5 @@
 <p align="center"><a><img src="./public/images/logo.png" width="400" alt="Rapidmart Logo"></a></p>
 
-<p align="center">
-    <h1>RapidMart</h1>
-</p>
-
 ## About RapidMart
 
 A Web-Based Platform of a Convenience Store for Efficiency and Enchanced Management Experience
@@ -19,7 +15,7 @@ A Web-Based Platform of a Convenience Store for Efficiency and Enchanced Managem
 -   To collaborate with other teams and integrate a well built convenience store system.
 -   To Develop a web system for a convenience store for efficiend and enchanced management experience.
 
-### Programming Language and Framework
+## Programming Language and Framework
 
 -   **[Laravel 10](https://laravel.com/)**
 -   **[Tailwindcss 3.4.1](https://tailwindcss.com/)**
