@@ -15,15 +15,17 @@ class LoginController extends Controller
     
     public function index()
     {
-        return view('login');
+        return view('layouts.login');
     }
     
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
-        if(Auth::attempt($credentials, $request->remember)){
-            return RouteServiceProvider::HOME;
-        }   
-        return Redirect::back()->withErrors($request->messages());
+        return RouteServiceProvider::HOME;
+        // $credentials = $request->only(['email', 'password']);
+        // if(Auth::attempt($credentials, $request->remember)){
+        //     return RouteServiceProvider::HOME;
+        // }   
+
+        // return Redirect::back()->withErrors($request->messages());
     }
 }

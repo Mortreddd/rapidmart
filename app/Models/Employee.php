@@ -12,8 +12,17 @@ class Employee extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillabe = [
-        'name',
-        'salary_per_hour',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'gender',
+        'age',
+        'phone',
+        'position_id',
+        'department_id',
+        'email',
+        'password',
+        'employment_status',
         'created_at',
         'updated_at'
     ];

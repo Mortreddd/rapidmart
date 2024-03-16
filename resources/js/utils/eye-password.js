@@ -4,14 +4,16 @@ let openEye = document.querySelector(".open-eye");
 let closeEye = document.querySelector(".close-eye");
 
 const checkPasswordVisibility = () => {
-    if (passwordField.type === "password") {
+    if (passwordField.type !== "password") {
+        passwordField.type = "password";
+
+        closeEye.classList.add("hidden");
+        openEye.classList.remove("hidden");
+    } else {
         passwordField.type = "text";
+
         openEye.classList.add("hidden");
         closeEye.classList.remove("hidden");
-    } else {
-        passwordField.type = "password";
-        openEye.classList.remove("hidden");
-        closeEye.classList.add("hidden");
     }
 };
 

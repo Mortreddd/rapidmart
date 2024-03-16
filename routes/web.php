@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -14,9 +14,14 @@ use App\Http\Controllers\Auth\LoginController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::middleware('guest')->group( function() {
 
-    Route::get('/login', [LoginController::class, 'index'])->name('login'); 
-    Route::post('/login', [LoginController::class, 'login'])->name('login.verify');
+// * COMMENTED FOR TESTING
+// Route::middleware('guest')->group( function() {
 
-});
+
+// });
+
+Route::get('/', DashboardController::class)->name('home');
+
+Route::get('/login', [LoginController::class, 'index'])->name('login'); 
+Route::post('/login', [LoginController::class, 'login'])->name('login.verify');

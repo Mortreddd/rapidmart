@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\HumanResource\Department;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('positions', function (Blueprint $table) {
+        Schema::create('benefits', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Department::class)->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->int('salary_per_hour');
-            $table->timestamps();
+            $table->string('benefit_description');
+            $table->float('amount');
+            $table->datetime('benefit_date');
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('benefits');
     }
 };
