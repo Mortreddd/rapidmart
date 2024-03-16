@@ -1,4 +1,4 @@
-<p align="center"><a><img src="./public/images/logo.png" width="400" height="400" alt="Laravel Logo"></a></p>
+<p align="center"><a><img src="./public/images/logo.png" width="400" alt="Rapidmart Logo"></a></p>
 
 <p align="center">
     <h1>RapidMart</h1>
