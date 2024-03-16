@@ -13,7 +13,7 @@
             {{--  SIDE BAR --}}
                 <aside id="sidebar" class="h-full width-transition grid-template-col-0">
                     <div class="flex flex-col items-start w-full h-full overflow-x-hidden">
-                        <div class="flex flex-col flex-wrap items-center h-full px-5 space-y-8 bg-white w-72">
+                        <div class="flex flex-col flex-wrap items-center h-full px-5 space-y-4 bg-white w-60">
                             <div class="flex items-center justify-center w-full h-20 py-3">
                                 <img src="{{ asset('images/rapidmart-text.png') }}" alt="rapidmart" class="w-full h-fit mix-blend-multiply">
                             </div>
@@ -21,24 +21,19 @@
                                 <img src="{{ asset('images/sample-image.jpg') }}" alt="" class="object-cover w-32 h-32 border-2 rounded-full border-secondary">
                             <h3 class="text-lg text-gray-700">Emmanuel Male</h3>
                         </div>
-                        <ul class="flex flex-col w-full h-fit">
-                            <li class="justify-between w-full">
-                                <a href="" class="text-lg text-black">
+                        <ul class="flex flex-col w-full space-y-2 h-fit">
+                            <li class="">
+                                <a href="" class="active-link">
                                     Dashboard
                                 </a>
                             </li>
-                            <li class="justify-between w-full">
-                                <a href="" class="text-lg text-black">
+                            <li class="">
+                                <a href="" class="inactive-link">
                                     Dashboard
                                 </a>
                             </li>
-                            <li class="justify-between w-full">
-                                <a href="" class="text-lg text-black">
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="justify-between w-full">
-                                <a href="" class="text-lg text-black">
+                            <li class="">
+                                <a href="" class="inactive-link">
                                     Dashboard
                                 </a>
                             </li>

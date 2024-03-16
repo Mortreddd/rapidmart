@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('gender', ['M', 'F']);
             $table->int('age');
             $table->string('phone');
+            $table->string('image')->nullable();
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Department::class)->constrained()->cascadeOnDelete();
             $table->string('email');

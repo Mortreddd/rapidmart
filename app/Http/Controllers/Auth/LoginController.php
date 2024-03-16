@@ -18,9 +18,9 @@ class LoginController extends Controller
         return view('layouts.login');
     }
     
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
-        return RouteServiceProvider::HOME;
+        return Redirect::intended(RouteServiceProvider::HOME);
         // $credentials = $request->only(['email', 'password']);
         // if(Auth::attempt($credentials, $request->remember)){
         //     return RouteServiceProvider::HOME;
