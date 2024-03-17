@@ -1,9 +1,10 @@
-let loading = document.querySelector("#loading");
+let loading = document.getElementById("loading");
 let content = document.getElementById("content");
 
-document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(() => {
+document.onreadystatechange = () => {
+    if (document.readyState === "complete") {
+        clearInterval(stateCheck);
         loading.classList.replace("flex", "hidden");
-        content.classList.remove("hidden");
-    }, 2000);
-});
+        content.classList.replace("hidden", "flex");
+    }
+};
