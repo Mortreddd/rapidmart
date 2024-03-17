@@ -9,40 +9,21 @@
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/utils/sidebar.js'])
     </head>
     <body class="font-sans antialiased transition-all duration-300 ease-out">
-        <main id="content" class="relative flex w-full h-[100vh]">
-            {{--  SIDE BAR --}}
-                <aside id="sidebar" class="h-full width-transition grid-template-col-0">
-                    <div class="flex flex-col items-start w-full h-full overflow-x-hidden">
-                        <div class="flex flex-col flex-wrap items-center h-full px-5 space-y-4 bg-white w-60">
-                            <div class="flex items-center justify-center w-full h-20 py-3">
-                                <img src="{{ asset('images/rapidmart-text.png') }}" alt="rapidmart" class="w-full h-fit mix-blend-multiply">
-                            </div>
-                            <div class="flex flex-col items-center w-full">
-                                <img src="{{ asset('images/sample-image.jpg') }}" alt="" class="object-cover w-32 h-32 border-2 rounded-full border-secondary">
-                            <h3 class="text-lg text-gray-700">Emmanuel Male</h3>
-                        </div>
-                        <ul class="flex flex-col w-full space-y-2 h-fit">
-                            <li class="">
-                                <a href="" class="active-link">
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="" class="inactive-link">
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="" class="inactive-link">
-                                    Dashboard
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
-            {{-- SIDE BAR --}}
+        <div id="loading" class="fixed top-0 left-0 items-center justify-center hidden w-full h-full">
+            <div class='flex items-center justify-center w-full h-full space-x-2 bg-black dark:invert'>
+                <span class='sr-only'>Loading...</span>
+                <div class='h-8 w-8 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+                <div class='h-8 w-8 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+                <div class='w-8 h-8 rounded-full bg-primary animate-bounce'></div>
             </div>
-            <div class="w-full">
+        </div>
+        <main id="content" class="flex w-full h-[100vh]">
+            {{--  SIDE BAR --}}
+            <aside id="sidebar" class="h-full width-transition grid-template-col-0">
+                @include('includes.sidebar')
+            </aside>
+            {{-- SIDE BAR --}}
+            <div class="w-full h-full">
                 <nav class="flex items-center justify-between w-full px-3 py-5 bg-secondary h-fit">
                     <button id="burger-button" class="inline-block cursor-pointer">
                         <div class='bar1'></div>
@@ -50,11 +31,6 @@
                         <div class='bar3'></div>
                     </button>
                     <ul class="flex items-center justify-end h-auto gap-5 w-fit">
-                        <li>
-                            <a href="">Hello</a>
-                            <a href="">Hello</a>
-                            <a href="">Hello</a>
-                        </li>
                     </ul>
                 </nav>
             </div>
