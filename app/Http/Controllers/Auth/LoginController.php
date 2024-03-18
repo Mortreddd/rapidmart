@@ -23,7 +23,7 @@ class LoginController extends Controller
         return Redirect::intended(RouteServiceProvider::HOME);
         // $credentials = $request->only(['email', 'password']);
         // if(Auth::attempt($credentials, $request->remember)){
-        //     return RouteServiceProvider::HOME;
+        //     return Redirect::intended(RouteServiceProvider::HOME);
         // }   
 
         // return Redirect::back()->withErrors($request->messages());

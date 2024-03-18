@@ -9,9 +9,9 @@ class Position extends Model
 {
     use HasFactory;
 
-    protected $fillabe = [
-        'department_id',
+    protected $fillable = [
         'name',
+        'department_id',
         'salary_per_hour',
         'created_at',
         'updated_at'
