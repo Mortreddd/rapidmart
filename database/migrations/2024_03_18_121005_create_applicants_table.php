@@ -12,21 +12,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->id()->from(1000);
-            $table->string('first_name')->index();
+        Schema::create('applicants', function (Blueprint $table) {
+            $table->id();
+            $table->string('first_name');
             $table->string('middle_name');
-            $table->string('last_name')->index();
+            $table->string('last_name');
             $table->enum('gender', ['M', 'F']);
             $table->integer('age');
+            $table->string('address');
             $table->string('phone');
-            $table->string('image')->nullable();
-            $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->string('email');
-            $table->string('password');
+            $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->enum('employment_status', ['Full Time', 'Part Time', 'Contractual', 'Probationary', 'Resigned', 'Terminated', 'Training']);
-            $table->float('salary');
-            $table->rememberToken();
+            $table->enum('status', ['Accepted', 'Pending', 'Rejected'])->default('Pending');
             $table->timestamps();
         });
     }
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('applicants');
     }
 };

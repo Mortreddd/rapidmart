@@ -4,7 +4,7 @@
             <img src="{{ asset('images/rapidmart-text.png') }}" alt="rapidmart" class="w-96 h-fit mix-blend-multiply">
         </div>
         <div class="flex flex-col items-center w-full">
-            <img src="{{ asset('images/sample-image.jpg') }}" alt="" class="object-cover w-32 h-32 border-2 rounded-full border-secondary">
+            <img src="{{ asset('images/avatars/sample-image.jpg') }}" alt="" class="object-cover w-32 h-32 border-2 rounded-full border-secondary">
         <h3 class="text-lg text-gray-700">Emmanuel Male</h3>
     </div>
     <ul class="flex flex-col flex-wrap w-full h-fit">

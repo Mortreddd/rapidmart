@@ -11,7 +11,7 @@ class Employee extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillabe = [
+    protected $fillable = [
         'first_name',
         'middle_name',
         'last_name',
@@ -19,7 +19,6 @@ class Employee extends Authenticatable
         'age',
         'phone',
         'position_id',
-        'department_id',
         'email',
         'password',
         'employment_status',
