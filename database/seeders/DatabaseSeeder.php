@@ -284,7 +284,7 @@ class DatabaseSeeder extends Seeder
             'salary' => 25000,
 
         ]);
-        Employee::factory()->create();
+        Employee::factory(50)->create();
 
     }
 }
