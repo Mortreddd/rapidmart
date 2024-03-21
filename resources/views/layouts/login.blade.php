@@ -6,18 +6,10 @@
 
         <title>Rapid Mart</title>
 
-        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/utils/eye-password.js', 'resources/js/utils/loading.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/utils/eye-password.js'])
     </head>
     <body class="font-sans antialiased transition-all duration-300 ease-out">
-        <div id="loading" class="fixed top-0 left-0 flex items-center justify-center w-full h-full">
-            <div class='flex items-center justify-center w-full h-full space-x-2 bg-black dark:invert'>
-                <span class='sr-only'>Loading...</span>
-                <div class='h-8 w-8 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]'></div>
-                <div class='h-8 w-8 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]'></div>
-                <div class='w-8 h-8 rounded-full bg-primary animate-bounce'></div>
-            </div>
-        </div>
-        <main id="content" class="w-full h-[100vh] hidden">
+        <main id="content" class="w-full h-[100vh] flex">
             <div class="flex w-full h-full">
                 <section class="md:flex h-full hidden md:w-[50%] md:flex-col md:justify-center md:items-center">
                     {{-- Logo image here if big size screen else hide on mobile--}}
@@ -28,13 +20,13 @@
                     </div>
                 </section>
                 <section class="mx-auto h-full flex justify-center flex-col w-full md:px-0 px-10 md:w-[50%] bg-contain bg-right bg-no-repeat" style="background-image: url('{{ asset('images/bg-wave-login.png') }}')">
-                    <form id="form" action="{{ route('login.verify') }}" method="post" class="w-full backdrop-blur-sm mx-auto space-y-6 rounded-lg md:p-10 md:w-96 xl:w-[26rem]">
+                    <form action="{{ route('login.verify') }}" method="post" class="w-full fade-in backdrop-blur-sm mx-auto space-y-6 rounded-lg md:p-10 md:w-96 xl:w-[26rem]">
                         @csrf
                         <img src="{{ asset('images/logo.png') }}" alt="logo" srcset="" class="object-cover mx-auto transition-all duration-300 ease-in-out bg-transparent min-h-36 max-h-44 lg:min-h-60 lg:max-h-72 xl:h-80 mix-blend-multiply aspect-square">
                         <div class="w-full space-y-3 h-fit">
-                            <input type="email" value="" placeholder="Email" @class(['text-input']) />
+                            <input type="email" name="email" placeholder="Email" @class(['text-input']) />
                             <div class="flex items-center w-full h-fit">
-                                <input type="text" value="" id="password" placeholder="Password" @class(['text-input']) />
+                                <input type="text" id="password" name="password" placeholder="Password" @class(['text-input']) />
                                 <button id="eye-password" type="button" class="absolute text-sm translate-y-1 md:pr-3 right-5 md:right-10 text-secondary">
                                     {{-- open eye --}}
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4 mx-auto md:w-6 md:h-6 open-eye" viewBox="0 0 16 16">

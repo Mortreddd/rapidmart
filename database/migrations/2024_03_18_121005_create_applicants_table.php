@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
-            $table->enum('employment_status', ['Full Time', 'Part Time', 'Contractual', 'Probationary', 'Resigned', 'Terminated', 'Training']);
+            $table->enum('employment_status', ['Full Time', 'Part Time', 'Contractual', 'Probationary', 'Resigned', 'Terminated', 'Training'])->default('Full Time');
             $table->enum('status', ['Accepted', 'Pending', 'Rejected'])->default('Pending');
             $table->timestamps();
         });

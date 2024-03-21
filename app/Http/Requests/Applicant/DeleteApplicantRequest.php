@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Applicant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class DeleteApplicantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,14 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|string',
-            'password' => 'required|string',
+            'applicant_id' => 'required|integer|exists:applicants,id'
         ];
     }
 
-    public function messages(): array
+    public function messages()
     {
         return [
-            'email' => 'Credentials do not match our records',
-            'password' => 'Credentials do not match our records'
+            'applicant_id' => 'Something went wrong'
         ];
     }
 }

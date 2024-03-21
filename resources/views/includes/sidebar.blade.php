@@ -1,14 +1,17 @@
-<div class="flex flex-col items-start w-full h-full overflow-y-hidden flex-nowrap">
+
+
+
+<div class="top-0 sticky left-0 flex flex-col items-start w-full h-full overflow-y-hidden flex-nowrap">
     <div class="flex flex-col items-center h-full px-5 space-y-4 bg-white w-fit">
         <div class="flex items-center justify-center w-full h-20 py-3">
             <img src="{{ asset('images/rapidmart-text.png') }}" alt="rapidmart" class="w-96 h-fit mix-blend-multiply">
         </div>
         <div class="flex flex-col items-center w-full">
-            <img src="{{ asset('images/avatars/sample-image.jpg') }}" alt="" class="object-cover w-32 h-32 border-2 rounded-full border-secondary">
-        <h3 class="text-lg text-gray-700">Emmanuel Male</h3>
+            <img src="{{ asset(Auth::user()->image) }}" alt="" class="object-cover w-32 h-32 border-2 rounded-full border-secondary">
+        <h3 class="text-lg text-gray-700">{{ Auth::user()->first_name }}</h3>
     </div>
     <ul class="flex flex-col flex-wrap w-full h-fit">
-        <li id="dashboard" class="flex items-center justify-between w-full link active-link current h-fit">
+        <li id="dashboard" class="flex items-center justify-between w-full link inactive-link h-fit ">
             <div class="flex gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
@@ -154,12 +157,12 @@
         <li class="w-full overflow-y-hidden bg-gray-100 rounded human-resource grid-template-row-0 height-transition">
             <ul class="flex flex-col w-full space-y-2 rounded h-fit">
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                    <a href="{{ route('applicant.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Hiring Management
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                    <a href="{{ route('employee.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Employee Management
                     </a>
                 </li>

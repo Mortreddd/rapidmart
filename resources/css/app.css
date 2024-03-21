@@ -36,6 +36,24 @@
     .arrow {
         @apply w-6 h-6 transition-transform duration-200 ease-in-out rotate-0;
     }
+
+    /* MODAL SECTION */
+    .modal-active {
+        @apply visible duration-75 ease-out;
+    }
+    .modal-inactive {
+        @apply transition-colors invisible;
+    }
+    .modal-content {
+        @apply rounded-xl bg-white duration-200 shadow p-6 transition-all;
+    }
+    .fade-in-modal {
+        @apply translate-y-0 opacity-100 ease-in;
+    }
+    .fade-out-modal {
+        @apply translate-y-4 opacity-0 ease-out;
+    }
+    /* MODAL SECTION */
 }
 
 @layer utilities {
@@ -45,8 +63,20 @@
         animation-fill-mode: forwards;
     }
 
-    #form {
-        animation: fadeInAnimation ease 1.3s;
+    .fade-in {
+        animation: fadeInAnimation ease-in 1.2s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    .fade-in-early {
+        animation: fadeInAnimation ease-out 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    .fade-in-delay {
+        animation: fadeInAnimation ease-in 2s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
     }
