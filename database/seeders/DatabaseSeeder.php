@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Employee;
+use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Position;
 use Illuminate\Database\Seeder;
@@ -276,7 +277,7 @@ class DatabaseSeeder extends Seeder
             'gender' => 'M',
             'age' => 20,
             'phone' => '09123456789',
-            'image' => 'avatars/sample-image.jpg',
+            'image' => 'images/avatars/sample-image.jpg',
             'position_id' => 1,
             'email' => 'emmanmale@gmail.com',
             'password' => Hash::make('emmanuelmale25'),
@@ -285,6 +286,6 @@ class DatabaseSeeder extends Seeder
 
         ]);
         Employee::factory(50)->create();
-
+        Applicant::factory(210)->create();
     }
 }
