@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('applicants', function (Blueprint $table) {
-            $table->id();
+            $table->id()->from(1000);
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
@@ -22,9 +22,12 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('email');
+            $table->string('image')->nullable(); // directory of an image file
+            $table->string('resume')->nullable(); // directory of a resume file
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->enum('employment_status', ['Full Time', 'Part Time', 'Contractual', 'Probationary', 'Resigned', 'Terminated', 'Training'])->default('Full Time');
             $table->enum('status', ['Accepted', 'Pending', 'Rejected'])->default('Pending');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

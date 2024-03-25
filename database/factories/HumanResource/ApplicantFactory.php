@@ -26,7 +26,7 @@ class ApplicantFactory extends Factory
             'address' => fake()->address(),
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
-            'position_id' => fake()->numberBetween(1, Position::all()->count()),
+            'position_id' => fake()->numberBetween(1, Position::count()),
             'employment_status' => fake()->randomElement(['Full Time', 'Part Time']),
             'status' => fake()->randomElement(['Accepted', 'Pending', 'Rejected']),
             'created_at' => fake()->dateTimeBetween('-1 years', 'now')

@@ -26,17 +26,17 @@ class DatabaseSeeder extends Seeder
         // ]);
         Department::factory()->count(6)->sequence(
             [
-                'name' => 'HR',
+                'name' => 'Human Resource Department',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Marketing',
+                'name' => 'Sales Department',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Accounting',
+                'name' => 'Accounting Department',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -46,18 +46,19 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'name' => 'Information Technology',
+                'name' => 'Purchasing Department',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+
             [
-                'name' => 'Logistics',
+                'name' => 'Inventory Department',
                 'created_at' => now(),
                 'updated_at' => now()
             ]
         )
         ->create();
-        Position::factory()->count(30)->sequence(
+        Position::factory()->count(19)->sequence(
             [
                 'name' => 'HR Manager',
                 'department_id' => 1,
@@ -87,28 +88,14 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'name' => 'Marketing Manager',
+                'name' => 'Sales Manager',
                 'department_id' => 2,
                 'salary_per_hour' => 38,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Digital Manager',
-                'department_id' => 2,
-                'salary_per_hour' => 32,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Advertising Coordinator',
-                'department_id' => 2,
-                'salary_per_hour' => 30,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Market Research Analyst',
+                'name' => 'Sales Analyst',
                 'department_id' => 2,
                 'salary_per_hour' => 33,
                 'created_at' => now(),
@@ -157,13 +144,6 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'name' => 'Customer Service Representative',
-                'department_id' => 4,
-                'salary_per_hour' => 14,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
                 'name' => 'Cashier',
                 'department_id' => 4,
                 'salary_per_hour' => 14,
@@ -192,99 +172,49 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'name' => 'Loss Prevention Associate',
-                'department_id' => 4,
-                'salary_per_hour' => 14,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'IT Support Specialist',
+                'name' => 'Purchasing Manager',
                 'department_id' => 5,
-                'salary_per_hour' => 25,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Systems Administrator',
-                'department_id' => 5,
-                'salary_per_hour' => 35,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'IT Security Specialist',
-                'department_id' => 5,
-                'salary_per_hour' => 37,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Database Administrator',
-                'department_id' => 5,
-                'salary_per_hour' => 35,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Web Developer',
-                'department_id' => 5,
-                'salary_per_hour' => 31,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Supply Chain Analyst',
-                'department_id' => 6,
-                'salary_per_hour' => 20,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Logistic Manager',
-                'department_id' => 6,
                 'salary_per_hour' => 30,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Supply Chain Analyst',
+                'name' => 'Inventory Manager',
+                'department_id' => 6,
+                'salary_per_hour' => 24,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Inventory Clerk',
                 'department_id' => 6,
                 'salary_per_hour' => 20,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Logistic Manager',
-                'department_id' => 6,
-                'salary_per_hour' => 30,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Warehouse Manager',
-                'department_id' => 6,
-                'salary_per_hour' => 25,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
         )
         ->create();
+
+        // ? ADD YOUR MANAGER ACCOUNT HERE
         Employee::factory()->create([
             'first_name' => 'Emmanuel',
             'middle_name' => 'Meneses',
             'last_name' => 'Male',
             'gender' => 'M',
             'age' => 20,
+            'birthday' => '2002-03-15', // '2002-03-15
             'phone' => '09123456789',
             'image' => 'images/avatars/sample-image.jpg',
             'position_id' => 1,
             'email' => 'emmanmale@gmail.com',
-            'password' => Hash::make('emmanuelmale25'),
+            'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
             'salary' => 25000,
-
+            'created_at' => now()->subYear(),
+            'updated_at' => null,
+            'notes' => 'This is super ugly client'
         ]);
+        
         Employee::factory(50)->create();
         Applicant::factory(210)->create();
     }

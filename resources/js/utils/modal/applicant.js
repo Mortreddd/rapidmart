@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     "fade-out-modal"
                 );
             }
-            currentModalIndex = buttonIndex;
         });
     });
 });

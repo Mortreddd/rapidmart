@@ -15,13 +15,6 @@ class Attendance extends Model
         'time_in',
         'time_out',
         'total_hours',
-        'created_at',
-        'updated_at'
-    ];
-
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
 
     

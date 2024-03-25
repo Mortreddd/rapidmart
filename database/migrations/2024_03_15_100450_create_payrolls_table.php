@@ -1,6 +1,5 @@
 <?php
-
-use App\Models\Employee;
+use App\Models\HumanResource\Attendance;
 use App\Models\HumanResource\Benefit;
 use App\Models\HumanResource\Deduction;
 use Illuminate\Database\Migrations\Migration;
@@ -16,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Attendance::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Deduction::class)->nullable();
             $table->foreignIdFor(Benefit::class)->nullable();
             $table->float('total_salary');

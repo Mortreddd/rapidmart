@@ -15,10 +15,11 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->string('start_date');
-            $table->time('time_in');
-            $table->time('time_out');
+            $table->datetime('start_date')->default(now()->toDateString());
+            $table->timestamp('time_in')->default(now());
+            $table->timestamp('time_out');
             $table->float('total_hours')->nullable();
+
         });
     }
 

@@ -19,15 +19,18 @@ return new class extends Migration
             $table->string('last_name')->index();
             $table->enum('gender', ['M', 'F']);
             $table->integer('age');
+            $table->date('birthday');
             $table->string('phone');
             $table->string('image')->nullable();
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->string('email');
+            $table->timestamp('email_verified_at')->nullable(); // Added field for email verification
             $table->string('password');
-            $table->enum('employment_status', ['Full Time', 'Part Time', 'Contractual', 'Probationary', 'Resigned', 'Terminated', 'Training']);
+            $table->enum('employment_status', ['Full Time', 'Part Time', 'Resigned', 'Training']);
             $table->float('salary');
             $table->rememberToken();
             $table->timestamps();
+            $table->text('notes')->nullable();
         });
     }
 

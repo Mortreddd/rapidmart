@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('benefit_description');
             $table->float('amount');
-            $table->datetime('benefit_date');
+            $table->datetime('benefit_date')->nullable()->default(now()->toDateString());
         });
     }
 

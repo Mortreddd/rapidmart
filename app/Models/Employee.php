@@ -17,13 +17,15 @@ class Employee extends Authenticatable
         'last_name',
         'gender',
         'age',
+        'birthday',
         'phone',
         'position_id',
         'email',
         'password',
         'employment_status',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'notes'
     ];
 
     protected $casts = [
