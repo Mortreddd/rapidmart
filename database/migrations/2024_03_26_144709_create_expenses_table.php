@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreign('order_receipt_id')->references('id')->on('order_receipts');
-            $table->foreign('payroll_receipt_id')->references('id')->on('payroll_receipts');
+            $table->foreignId('order_receipt_id')->constrained('order_receipts')->cascadeOnDelete();
+            $table->foreignId('payroll_receipt_id')->constrained('payroll_receipts')->cascadeOnDelete();
             $table->float('total_amount');
             $table->timestamps();
         });

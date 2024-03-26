@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('revenues', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Expense::class)->constrained()->cascadeOnDelete();
-            $table->foreign('sale_receipt_id')->references('id')->on('sale_receipts');
+            $table->foreignId('sale_receipt_id')->constrained('sale_receipts')->cascadeOnDelete();
             $table->float('income');
             $table->float('total_cost');
             $table->float('profit');
