@@ -10,6 +10,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+    // ? 
+    // ? ISSUE IS COMING FROM HERE??
+    // ?
     public function up(): void
     {
         Schema::create('promos', function (Blueprint $table) {

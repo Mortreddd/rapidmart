@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Shipper::class)->constrained()->cascadeOnDelete();
             $table->float('unit_price');
-            $table->int('quantity');
+            $table->integer('quantity');
             $table->float('total_amount');
             $table->dateTime('order_date');
             $table->timestamps();
