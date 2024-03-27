@@ -18,26 +18,12 @@ class ApplicantController extends Controller
             'acceptedApplicant' => Applicant::where('status', 'Accepted')->get(),
             'pendingApplicant' => Applicant::where('status', 'Pending')->get(),
             'rejectedApplicant' => Applicant::where('status', 'Rejected')->get(),
+            'allApplicants' => Applicant::all(),
             'applicantData' => Applicant::selectRaw('CONCAT(MONTHNAME(created_at), ", ", YEAR(created_at)) AS EachMonth, COUNT(*) AS TotalApplicants')
                     ->groupByRaw('YEAR(created_at), MONTH(created_at)')
                     ->orderby('created_at')
                     ->get()
         ]);
     }
-
-    public function edit(EditApplicantRequest $request, $applicant_id)
-    {
-        Applicant::findOrFail($applicant_id)->update([
-            'status' => $request->only(['status']),
-            'updated_at' => now()
-        ]);
-        
-        return Redirect::back()->with(['editted' => 'Successfully Edited Applicant']);
-    }
-
-    public function delete(DeleteApplicantRequest $request, $applicant_id)
-    {
-        Applicant::findOrFail($applicant_id)->delete();
-        return Redirect::back()->with(['deleted' => 'Successfully deleted applicant']);
-    }
+    
 }

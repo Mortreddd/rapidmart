@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('email');
-            $table->string('image')->nullable(); // directory of an image file
             $table->string('resume')->nullable(); // directory of a resume file
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->enum('employment_status', ['Full Time', 'Part Time', 'Contractual', 'Probationary', 'Resigned', 'Terminated', 'Training'])->default('Full Time');
