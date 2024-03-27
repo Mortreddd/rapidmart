@@ -87,7 +87,7 @@
             transform: translateY(20px);
         }
 
-        100% {
+        80% {
             opacity: 1;
             transform: translateY(0);
         }

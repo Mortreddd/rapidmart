@@ -19,7 +19,6 @@ class Applicant extends Model
         'address',
         'phone',
         'email',
-        'image',
         'resume',
         'position_id',
         'created_at',

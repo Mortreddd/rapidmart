@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Support\Carbon;
+use Laravel\Sanctum\HasApiTokens;
 
 class Employee extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
         'first_name',
@@ -38,4 +39,14 @@ class Employee extends Authenticatable
         'remember_token',
     ];
 
+    public function submissionDate()
+    {
+        $createdAt = Carbon::parse($this->created_at);
+        
+        $monthName = $createdAt->format('F'); 
+        $dayOfMonth = $createdAt->format('d'); 
+        $year = $createdAt->format('Y');
+        
+        return "$monthName $dayOfMonth, $year"; 
+    }
 }
