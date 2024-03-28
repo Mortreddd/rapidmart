@@ -16,7 +16,7 @@
         </li>
         <li>
             <a class="relative flex overflow-hidden hover:scale-110 justify-center items-center text-white hover:text-gray-300 transition-all cursor-pointer duration-200 ease-in-out">
-                <img src="{{ Auth::user()->image }}" alt="" class="w-10 h-10 object-cover border-white border border-solid object-center aspect-square rounded-full">
+                <img src="{{ asset(Auth::user()->image) }}" alt="" class="w-10 h-10 object-cover border-white border border-solid object-center aspect-square rounded-full">
             </a>
         </li>
         <li>

@@ -21,11 +21,10 @@ class LoginController extends Controller
     
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
-        if(Auth::attempt($credentials, $request->has('remember'))){
+        if(Auth::attempt($request->validated(), $request->has('remember'))){
             return Redirect::intended(RouteServiceProvider::HOME);
         }   
-        return Redirect::back()->withErrors($request->messages());
+        return Redirect::back()->with($request->messages());
     }
 
     public function logout()

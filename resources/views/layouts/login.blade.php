@@ -18,14 +18,18 @@
                         <img src="{{ asset('images/store-image.png') }}" alt="" class="object-contain xl:w-72 md:w-56 md:h-56 xl:h-72 bg-blend-multiply">
                     </div>
                 </section>
-                <section class="mx-auto h-full flex justify-center flex-col w-full md:px-0 px-10 md:w-[50%] bg-contain bg-right bg-no-repeat" style="background-image: url('{{ asset('images/bg-wave-login.png') }}')">
-                    <form action="{{ route('login.verify') }}" method="post" class="w-full fade-in backdrop-blur-sm mx-auto space-y-6 rounded-lg md:p-10 md:w-96 xl:w-[26rem]">
+                <section class="mx-auto h-full flex justify-center flex-col w-full md:px-0 px-10 md:w-[50%] bg-contain bg-right bg-no-repeat">
+                    <form action="{{ route('login.verify') }}" method="post" class="w-full fade-in mx-auto space-y-6 rounded-lg md:p-7 bg-gray-100 md:w-96 xl:w-[26rem]">
                         @csrf
-                        <img src="{{ asset('images/logo.png') }}" alt="logo" srcset="" class="object-cover mx-auto transition-all duration-300 ease-in-out bg-transparent min-h-36 max-h-44 lg:min-h-60 lg:max-h-72 xl:h-80 mix-blend-multiply aspect-square">
+                        @if( Session::has('email') || Session::has('password') )
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span class="font-medium">{{ Session::get('email') ?? Session::get('password') }}</span>
+                            </div>
+                        @endif
                         <div class="w-full space-y-3 h-fit">
-                            <input type="email" name="email" placeholder="Email" @class(['text-input']) />
+                            <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" @class(['text-input', 'rounded']) />
                             <div class="flex items-center w-full h-fit">
-                                <input type="text" id="password" name="password" placeholder="Password" @class(['text-input']) />
+                                <input type="text" id="password" name="password" placeholder="Password" @class(['text-input', 'rounded']) />
                                 <button id="eye-password" type="button" class="absolute text-sm translate-y-1 md:pr-3 right-5 md:right-10 text-secondary">
                                     {{-- open eye --}}
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4 mx-auto md:w-6 md:h-6 open-eye" viewBox="0 0 16 16">
@@ -42,14 +46,14 @@
                             </div>
                             <div class="flex items-center justify-between w-full py-2">
                                 <div class="flex items-center gap-2">
-                                    <input type="checkbox" id="remember" name="remember" id="" class="w-4 h-4 rounded ring-1 ring-secondary accent-secondary border-primary hover:shadow-lg border-1 hover:p-3">
+                                    <input type="checkbox" id="remember" name="remember" id="" class="w-4 h-4 rounded ring-secondary accent-secondary outline-none border-none ring-0 border-primary hover:shadow-lg border-1 hover:p-3">
                                     <label for="remember" class="text-sm font-bold text-secondary">Remember Me</label>
                                 </div>
                                 <a href="#" class="text-sm font-bold transition-colors duration-300 ease-in-out text-secondary hover:text-secondary/80">
                                     Forgot Password?
                                 </a>
                             </div>
-                            <button type="submit" class="w-full py-2 text-white duration-300 ease-in-out bg-secondary transtiion-colors hover:bg-secondary/80">
+                            <button type="submit" class="w-full py-2 rounded text-white duration-300 ease-in-out bg-secondary transtiion-colors hover:bg-secondary/80">
                                 Login
                             </button>
                         </div>

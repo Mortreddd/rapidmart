@@ -54,6 +54,13 @@
         @apply translate-y-4 opacity-0 ease-out;
     }
     /* MODAL SECTION */
+
+    input[type="file"]::file-selector-button {
+        @apply bg-secondary text-white px-3 py-2 rounded border border-gray-700 outline-none transition-colors duration-200 ease-in-out;
+    }
+    input[type="file"]::file-selector-button:hover {
+        @apply bg-secondary/80 pointer-events-auto cursor-pointer;
+    }
 }
 
 @layer utilities {
@@ -81,6 +88,25 @@
         animation-fill-mode: forwards;
     }
 
+    .fade-out-toast {
+        animation: fadeOutAnimation ease-out 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: backwards;
+    }
+
+    @keyframes fadeOutAnimation {
+        0% {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+        80% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        100% {
+            display: none;
+        }
+    }
     @keyframes fadeInAnimation {
         0% {
             opacity: 0;
@@ -122,4 +148,12 @@
     .width-transition > div {
         overflow: hidden;
     }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
 }

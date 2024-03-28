@@ -30,7 +30,7 @@ class CreateApplicantRequest extends FormRequest
             'address' => 'string|required',
             'phone' => 'string|min:11|required',
             'email' => 'string|required|email',
-            'resume' => 'file|nullable|max:5120',
+            'resume' => 'file|nullable|max:10240',
             'position_id' => 'required|integer',
             'notes' => 'nullable'
         ];

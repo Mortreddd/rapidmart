@@ -12,14 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->datetime('start_date')->default(now()->toDateString());
-            $table->timestamp('time_in')->default(now());
-            $table->timestamp('time_out');
-            $table->float('total_hours')->nullable();
-
+            $table->string('message');
+            $table->enum('status', ['read', 'unread'])->default('unread');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('notifications');
     }
 };

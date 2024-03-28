@@ -53,7 +53,7 @@
         <div class="pt-8 w-full flex justify-between items-center">
             <div class="w-fit">
                 <form action="" method="post" class="flex w-96 items-center gap-3">
-                <input type="search" name="search" id="search-applicant-input" placeholder="Search Applicant..." class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-primary block w-full p-2.5" autocomplete="off"/>
+                    <input type="search" name="search" id="search-applicant-input" placeholder="Search Applicant..." class="bg-gray-50 border border-secondary text-gray-700 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-primary block w-full p-2.5" autocomplete="off"/>
                     @csrf
                     <button id="search-applicant-button" type="button" class="rounded-lg p-2 transition-colors duration-200 ease-in-out bg-secondary hover:bg-secondary/80 text-white ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -70,24 +70,26 @@
             <caption class="text-gray-800 text-center">Applicant List</caption>
             <thead class="bg-secondary ">
                 <tr class=" rounded-lg">
-                    <th class="px-6 py-4 rounded-tl-lg">Full Name</th>
-                    <th class="px-6 py-4">Gender</th>
-                    <th class="px-6 py-4">Phone</th>
-                    <th class="px-6 py-4">Email</th>
-                    <th class="px-6 py-4">Specialization</th>
+                    <th class="px-3 py-2 rounded-tl-lg">Full Name</th>
+                    <th class="px-3 py-2">Gender</th>
+                    <th class="px-3 py-2">Phone</th>
+                    <th class="px-3 py-2">Email</th>
+                    <th class="px-3 py-2">Address</th>
+                    <th class="px-3 py-2">Specialization</th>
                     <th class="px-6 py-4">Status</th>
-                    <th class="px-6 py-4">Submitted Date</th>
+                    <th class="px-3 py-2">Submitted Date</th>
                     <th class="px-6 py-4 rounded-tr-lg">Action</th>
                 </tr>
             </thead>
             <tbody id="table-applicant-body" class="bg-white text-left rounded-b-lg">
                 @forelse($applicants as $applicant)
                     <tr class="text-black font-normal odd:bg-[#CAD9FF]">
-                        <td class="px-6 py-2">{{ $applicant->last_name }}, {{ $applicant->first_name }}</td>
-                        <td class="px-6 py-2">{{ $applicant->gender }}</td>
-                        <td class="px-6 py-2">{{ $applicant->phone }}</td>
-                        <td class="px-6 py-2">{{ $applicant->email }}</td>
-                        <td class="px-6 py-2">{{ $applicant->position->name }}</td>
+                        <td class="px-3 py-2">{{ $applicant->last_name }}, {{ $applicant->first_name }}</td>
+                        <td class="px-3 py-2">{{ $applicant->gender }}</td>
+                        <td class="px-3 py-2">{{ $applicant->phone }}</td>
+                        <td class="px-3 py-2">{{ $applicant->email }}</td>
+                        <td class="px-3 py-2">{{ $applicant->address }}</td>
+                        <td class="px-3 py-2">{{ $applicant->position->name }}</td>
                         
                         @switch($applicant->status)
                             @case('Accepted')
@@ -102,7 +104,7 @@
                             @default
                                 <td class="px-6 text-white py-2">{{ $applicant->status }}</td>
                         @endswitch
-                        <td class="px-6 py-2">{{ $applicant->submissionDate() }}</td>
+                        <td class="px-3 py-2">{{ $applicant->submissionDate() }}</td>
                         <td class="px-6 py-2 flex items-center justify-between gap-1">
                             <a href="{{ route('applicant.view.edit', ['applicant_id' => $applicant->id ]) }}" class="rounded text-white my-2 hover:text-gray-200 p-3 bg-amber-600 hover:bg-amber-700 transition-colors duration-300 ease-in-out">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -167,12 +169,22 @@
             </div>
         @endif
     </div>
-
+    @if ( Session::has('created') )
+        <div id="success-toast" class="gap-5 bg-green-500 bottom-5 right-5 sticky flex items-center w-fit border-green-600 text-md text-white rounded-lg  py-3 px-5">
+            {{ Session::get('created') }}
+            <button type="button" id="created-toast" class="bg-transparent hover:text-gray-300 rounded-lg text-white transition-colors duration-200 ease-in-out p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    @endif
 @endsection
 
 @section('scripts')
     @parent
-    @vite(['resources/js/utils/modal/applicant.js', 'resources/js/utils/search/search-applicant.js'])
+    @vite(['resources/js/utils/modal/applicant.js', 'resources/js/utils/search/search-applicant.js',
+    'resources/js/utils/toast/success.js'])
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
     <script>
         let applicantData = @json($applicantData);
