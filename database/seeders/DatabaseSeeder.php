@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Employee;
+use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Position;

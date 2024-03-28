@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\HumanResource;
 
 use App\Models\HumanResource\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;

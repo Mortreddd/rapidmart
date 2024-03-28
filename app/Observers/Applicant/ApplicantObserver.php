@@ -3,6 +3,8 @@
 namespace App\Observers\Applicant;
 
 use App\Models\HumanResource\Applicant;
+use App\Models\System\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicantObserver
 {
@@ -11,7 +13,16 @@ class ApplicantObserver
      */
     public function created(Applicant $applicant): void
     {
-        //
+        // **
+        // **   Create Notification
+        // **
+        Notification::create([
+            'employee_id' => Auth::id(),
+            'message' => 'New applicant added',
+            'status' => 'unread'
+        ]);
+
+
     }
 
     /**
@@ -19,7 +30,11 @@ class ApplicantObserver
      */
     public function updated(Applicant $applicant): void
     {
-        //
+        Notification::create([
+            'employee_id' => Auth::id(),
+            'message' => 'Applicant '.$applicant->first_name.' has been updated',
+            'status' => 'unread'
+        ]);
     }
 
     /**

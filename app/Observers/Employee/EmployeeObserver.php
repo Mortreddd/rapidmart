@@ -2,7 +2,7 @@
 
 namespace App\Observers\Employee;
 
-use App\Models\Employee;
+use App\Models\HumanResource\Employee;
 
 class EmployeeObserver
 {

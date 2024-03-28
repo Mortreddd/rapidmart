@@ -20,4 +20,5 @@ const checkPasswordVisibility = () => {
 button.addEventListener("click", () => {
     checkPasswordVisibility();
 });
-document.addEventListener("DOMContentLoaded", checkPasswordVisibility);
+
+checkPasswordVisibility();

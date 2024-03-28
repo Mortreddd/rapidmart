@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\HumanResource;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;

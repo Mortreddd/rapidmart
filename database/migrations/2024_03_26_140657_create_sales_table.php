@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Employee;
+use App\Models\HumanResource\Employee;
 use App\Models\PO\Product;
 use App\Models\Sales\Discount;
 use App\Models\Sales\Promo;
