@@ -16,11 +16,11 @@ class ApplicantObserver
         // **
         // **   Create Notification
         // **
-        Notification::create([
-            'employee_id' => Auth::id(),
-            'message' => 'New applicant added',
-            'status' => 'unread'
-        ]);
+        // Notification::create([
+        //     'employee_id' => Auth::id(),
+        //     'message' => 'New applicant added',
+        //     'status' => 'unread'
+        // ]);
 
 
     }
@@ -30,11 +30,11 @@ class ApplicantObserver
      */
     public function updated(Applicant $applicant): void
     {
-        Notification::create([
-            'employee_id' => Auth::id(),
-            'message' => 'Applicant '.$applicant->first_name.' has been updated',
-            'status' => 'unread'
-        ]);
+        // Notification::create([
+        //     'employee_id' => Auth::id(),
+        //     'message' => 'Applicant '.$applicant->first_name.' has been updated',
+        //     'status' => 'unread'
+        // ]);
     }
 
     /**
@@ -42,7 +42,11 @@ class ApplicantObserver
      */
     public function deleted(Applicant $applicant): void
     {
-        //
+        // Notification::create([
+        //     'employee_id' => Auth::id(),
+        //     'message' => 'Applicant '.$applicant->first_name.' has been deleted',
+        //     'status' => 'unread'
+        // ]);
     }
 
     /**

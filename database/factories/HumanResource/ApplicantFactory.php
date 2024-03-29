@@ -31,7 +31,8 @@ class ApplicantFactory extends Factory
             'employment_status' => fake()->randomElement(['Full Time', 'Part Time']),
             'status' => fake()->randomElement(['Accepted', 'Pending', 'Rejected']),
             'notes' => fake()->sentence(),
-            'created_at' => fake()->dateTimeBetween('-1 years', 'now')
+            'created_at' => fake()->dateTimeBetween('-1 years', 'now'),
+            'updated_at' => fake()->dateTimeBetween('-6 months', 'now')
         ];
     }
 }
