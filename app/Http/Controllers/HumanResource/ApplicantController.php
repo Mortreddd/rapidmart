@@ -6,15 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\HumanResource\Applicant;
 use App\Http\Requests\Applicant\DeleteApplicantRequest;
 use App\Http\Requests\Applicant\EditApplicantRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class ApplicantController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
+        $applicants = Applicant::with(['position'])->where('status', 'Pending')->latest()->paginate(20);
+        if($request->has('search') && $request->search != null){
+            $applicants = Applicant::where('first_name', 'like', "%{$request->search}%")
+                ->orWhere('last_name', 'like', "%{$request->search}%")
+                ->where('status', 'Pending')
+                ->orderBy('created_at')
+                ->paginate(10);
+        }
         return view('layouts.hr.applicant', [
-            'applicants' => Applicant::with(['position'])->orderBy('created_at')->paginate(10),
+            'applicants' => $applicants,
             'acceptedApplicant' => Applicant::where('status', 'Accepted')->get(),
             'pendingApplicant' => Applicant::where('status', 'Pending')->get(),
             'rejectedApplicant' => Applicant::where('status', 'Rejected')->get(),
@@ -25,5 +33,4 @@ class ApplicantController extends Controller
                     ->get()
         ]);
     }
-    
 }

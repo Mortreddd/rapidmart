@@ -33,6 +33,7 @@ git clone https://github.com/Mortreddd/rapidmart.git
 -   Second, download dependencies
 
 ```
+cd rapidmart
 composer install
 npm install
 npm install -D tailwindcss

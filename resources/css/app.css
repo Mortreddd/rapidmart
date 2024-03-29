@@ -39,13 +39,13 @@
 
     /* MODAL SECTION */
     .modal-active {
-        @apply visible duration-75 ease-out;
+        @apply visible duration-75 bg-black/20 ease-out;
     }
     .modal-inactive {
         @apply transition-colors invisible;
     }
     .modal-content {
-        @apply rounded-xl bg-white duration-200 shadow p-6 transition-all;
+        @apply rounded-xl bg-white duration-200 shadow p-6  transition-all;
     }
     .fade-in-modal {
         @apply translate-y-0 opacity-100 ease-in;
@@ -93,7 +93,6 @@
         animation-iteration-count: 1;
         animation-fill-mode: backwards;
     }
-
     @keyframes fadeOutAnimation {
         0% {
             opacity: 1;
