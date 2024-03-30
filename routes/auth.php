@@ -51,7 +51,7 @@ Route::prefix('applicants')->middleware(['auth'])->group( function () {
 Route::prefix('sales')->middleware(['auth'])->group(function (){
     Route::get('/',[SalesReportController::class,'index'])->name('sales.salesreport.index');
     Route::get('/check-inventory',[CheckInventoryController::class,'index'])->name('sales.checkinventory.index');
-    Route::get('/check-inventory/search',[CheckInventoryController::class,'search']);   
+    Route::get('/check-inventory/search',[CheckInventoryController::class,'search'])->name('sales.checkinventory.search');   
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
