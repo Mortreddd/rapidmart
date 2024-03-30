@@ -11,6 +11,8 @@ use App\Http\Controllers\HumanResource\Applicant\RejectedApplicantController;
 use App\Http\Controllers\HumanResource\ApplicantController;
 use App\Http\Controllers\HumanResource\EmployeeController;
 use App\Http\Requests\Applicant\EditApplicantRequest;
+use App\Http\Controllers\Sales\SalesReportController;
+use App\Http\Controllers\Sales\CheckInventoryController;
 
 Route::middleware(['auth'])->group( function() {
     Route::get('/', DashboardController::class)->name('home');
@@ -44,6 +46,12 @@ Route::prefix('applicants')->middleware(['auth'])->group( function () {
     // ! DELETING APPLICANT ROUTE
     Route::delete('/delete/{applicant_id}', DeleteApplicantController::class)->name('applicant.destroy');
 
+});
+
+Route::prefix('sales')->middleware(['auth'])->group(function (){
+    Route::get('/',[SalesReportController::class,'index'])->name('sales.salesreport.index');
+    Route::get('/check-inventory',[CheckInventoryController::class,'index'])->name('sales.checkinventory.index');
+    Route::get('/check-inventory/search',[CheckInventoryController::class,'search']);   
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
