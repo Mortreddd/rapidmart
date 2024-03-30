@@ -11,12 +11,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
             </button>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto p-2 rounded-full bg-red-500 text-white" >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 p-3 h-16 mx-auto rounded-full bg-red-500 text-white" >
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
             </svg>
             
             <h1 class="text-2xl block text-black font-semibold text-center">WARNING</h1>
-            <p class="text-gray-700 text-center text-md">Are you sure you want to delete all rejected applicants?</p>
+            <p class="text-gray-700 text-center text-md">Are you sure you want to delete all pending applicants?</p>
             <div class="w-full h fit justify-evenly mt-2 flex items-center">
                 <button id="cancel-modal-button" type="button" class="rounded bg-gray-200 hover:bg-gray-300 transition-colors duration-200 ease-in-out text-gray-700 px-3 py-2">Cancel</button>
                 <button type="submit" class="text-white rounded bg-red-500 hover:bg-red-600 transition-colors ease-in-out duration-200 px-3 py-2 border-600">Confirm</button>
@@ -62,7 +62,7 @@
         </nav>
         <div class="pt-8 w-full flex justify-end gap-5 items-center">
             <div class="w-fit">
-                <form action=" {{ route('applicant.rejected.index') }}" method="get" class="flex w-96 items-center gap-3">
+                <form action=" {{ route('applicant.pending.index') }}" method="get" class="flex w-96 items-center gap-3">
                     <input type="search" name="search" value="{{ Request::get('search') }}" id="search-applicant-input" placeholder="Search Applicant..." class="bg-gray-50 border border-secondary text-gray-700 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-primary block w-full p-2.5" autocomplete="off"/>
                     <button id="search-applicant-button" type="submit" class="rounded-lg p-2 transition-colors duration-200 ease-in-out bg-secondary hover:bg-secondary/80 text-white ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -79,7 +79,7 @@
             </button>
         </div>
         <table id="default-applicant-table" class="fade-in-early font-semibold text-md table-auto border text-white w-full shadow">
-            <caption class="text-gray-800 text-center">Rejected Applicant List</caption>
+            <caption class="text-gray-800 text-center">Pending Applicant List</caption>
             <thead class="bg-secondary">
                 <tr class=" rounded-lg">
                     <th class="px-3 py-2 rounded-tl-lg">Full Name</th>
