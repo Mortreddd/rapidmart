@@ -26,7 +26,7 @@ Route::prefix('employees')->middleware(['auth'])->group( function() {
 // ? APPLICANT ROUTES
 // ?
 Route::prefix('applicants')->middleware(['auth'])->group( function () {
-    Route::get('/', [ApplicantController::class, 'index'])->name('applicant.index');
+    Route::get('/', ApplicantController::class)->name('applicant.index');
 
     // * PENDING APPLICANT ROUTE
     Route::get('/pending', [PendingApplicantController::class, 'index'])->name('applicant.pending.index');
