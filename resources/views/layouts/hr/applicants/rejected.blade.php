@@ -124,7 +124,7 @@
                         </td>
                     </tr>
                 @empty
-                    <td colspan="8" class="text-center rounded-b-lg h-32 font-medium text-gray-700">
+                    <td colspan="8" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
                         No rejected applicants found
                     </td>
                     
