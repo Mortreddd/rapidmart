@@ -29,7 +29,10 @@ class ApplicantJob implements ShouldQueue
     public function handle(): void
     {
 
-        Applicant::where('status', 'Rejected')->delete();
+        Applicant::withoutEvents(fn () => 
+            Applicant::where('status', 'Rejected')->delete()
+        );
+        
         Notification::create([
             'employee_id' => Auth::id(),
             'message' => 'All rejected applicants has been deleted.',

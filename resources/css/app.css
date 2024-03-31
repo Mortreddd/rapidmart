@@ -9,6 +9,17 @@
     .error-input {
         @apply block w-full px-3 py-2 mt-1 transition-colors duration-300 ease-in-out bg-transparent border border-red-600 shadow-sm ring-red-600 ring-1 placeholder-slate-700 focus:outline-none;
     }
+    /* TOAST */
+    .tooltip {
+        @apply absolute top-0 z-10 rounded bg-white p-3 w-fit h-fit text-lg shadow duration-200 ease-in-out transition-all;
+    }
+    .tooltip-hover {
+        @apply translate-y-0 opacity-100;
+    }
+    .tooltip-not-hover {
+        @apply translate-y-4 opacity-0;
+    }
+    /* TOAST */
     /* BURGER BUTTON */
     .bar1,
     .bar2,

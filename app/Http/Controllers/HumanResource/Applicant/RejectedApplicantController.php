@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\HumanResource\Applicant;
 
-use App\Events\ClearRejectedApplicantsEvent;
+use App\Events\ProcessRejectedApplicantEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\ApplicantJob;
 use App\Models\HumanResource\Applicant;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class RejectedApplicantController extends Controller
 {
@@ -18,14 +18,14 @@ class RejectedApplicantController extends Controller
     {
         $applicants = Applicant::with(['position'])
                 ->where('status', 'Rejected')
-                ->latest('updated_at')
+                ->latest('created_at')
                 ->paginate(50);
 
         if($request->has('search') && $request->search != null){
             $applicants = Applicant::where('first_name', 'like', "%{$request->search}%")
                 ->orWhere('last_name', 'like', "%{$request->search}%")
                 ->where('status', 'Rejected')
-                ->orderBy('updated_at')
+                ->orderBy('created_at')
                 ->paginate(50);
         }
 
@@ -35,9 +35,34 @@ class RejectedApplicantController extends Controller
     }
 
 
-    // !
+    public function store($applicant_id)
+    {
+        $applicant = Applicant::findOrFail($applicant_id);
+        if(!$applicant->update([
+            'status' => 'Rejected',
+            'updated_at' => now()
+        ])){
+            return Redirect::back()->with(['error' => 'Something went wrong rejecting applicant']);
+        }
+
+        ProcessRejectedApplicantEvent::dispatch($applicant);
+        return Redirect::back()->with(['rejected' => 'Successfully rejected applicant']);
+    }
+
+    // ! DELETE AN APPLICANT
+    public function destroy($applicant_id)
+    {
+        $applicant = Applicant::findOrFail($applicant_id);
+        if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
+            Storage::delete('public/resumes/'.$applicant->resume);
+        }
+        
+        $applicant->delete();
+        return Redirect::back()->with(['deleted' => 'Successfully deleted an applicant']);
+    }
+    
     // ! CLEAR ALL METHOD
-    // !
+    // ! DANGER ZONE
     public function clear()
     {
         ApplicantJob::dispatch()

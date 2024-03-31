@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\ProcessRejectedApplicantEvent;
+use App\Listeners\RejectedApplicantListener;
 use App\Models\HumanResource\Applicant;
 use App\Observers\Applicant\ApplicantObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -16,7 +17,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        
+        ProcessRejectedApplicantEvent::class => [
+            RejectedApplicantListener::class
+        ]
     ];
 
     /**

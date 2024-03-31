@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class ApplicantController extends Controller
 {
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         $applicants = Applicant::with(['position'])->where('status', 'Pending')->latest()->paginate(20);
         if($request->has('search') && $request->search != null){

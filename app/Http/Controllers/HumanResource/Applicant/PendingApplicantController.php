@@ -19,7 +19,7 @@ class PendingApplicantController extends Controller
 
         if($request->has('search') && $request->search != null){
             $applicants = Applicant::where('first_name', 'like', "%{$request->search}%")
-                ->orWhere('last_name', 'like', "%{$request->search}%")
+                ->where('last_name', 'like', "%{$request->search}%")
                 ->where('status', 'Pending')
                 ->latest('created_at')
                 ->paginate(50);

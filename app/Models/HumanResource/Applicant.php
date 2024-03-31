@@ -5,10 +5,11 @@ namespace App\Models\HumanResource;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Applicant extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
@@ -21,19 +22,20 @@ class Applicant extends Model
         'email',
         'resume',
         'position_id',
+        'employement_status',
+        'status',
         'created_at',
         'updated_at',
         'notes'
     ];
 
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime'
+        'created_at' => 'datetime'
     ];
 
     public function position()
     {
-        return $this->belongsTo(Position::class);
+        return static::belongsTo(Position::class);
     }
 
     public function submissionDate()
@@ -45,5 +47,10 @@ class Applicant extends Model
         $year = $createdAt->format('Y');
         
         return "$monthName $dayOfMonth, $year"; 
+    }
+
+    public function updatedDate()
+    {
+        
     }
 }

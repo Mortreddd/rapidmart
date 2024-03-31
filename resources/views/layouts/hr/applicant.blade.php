@@ -127,10 +127,10 @@
                         <td class="px-3 text-black py-2 w-fit text-center">{{ $applicant->status }}</td>
                         <th class="px-3 py-2 text-center">
                             
-                            @if($applicant->resume == null)
-                                <a href="" class="text-black pointer-events-none cursor-not-allowed bg-gray-200 border-gray-300 hover:bg-gray-300 transition-colors duration-200 ease-in-out px-4 py-2 font-semibold">No Resume</a>
-                            @else 
+                            @if($applicant->resume != null)
                                 <a href="{{ asset( 'storage/resumes/'.$applicant->resume ) }}" target="_blank" class="text-black bg-gray-200 border-gray-300 hover:bg-gray-300 transition-colors duration-200 ease-in-out px-4 py-2 font-semibold">View</a>
+                            @else 
+                                <a href="" class="text-black pointer-events-none cursor-not-allowed bg-gray-200 border-gray-300 hover:bg-gray-300 transition-colors duration-200 ease-in-out px-4 py-2 font-semibold">No Resume</a>
                             @endif
                         </th>
                         <td class="px-3 py-2">{{ $applicant->submissionDate() }}</td>
@@ -152,18 +152,9 @@
                         </td>
                     </tr>
                 @empty
-                    <tr class="text-black font-normal h-32 text-center py-5 w-full bg-white">
-                        <td class="px-1 py-2 text-center"></td>
-                        <td class="px-1 py-2 text-center"></td>
-                        <td class="px-1 py-2 text-center"></td>
-                        <td class="px-1 py-2 text-center"></td>
-                        <td class="px-1 py-2 text-center">No applicants yet</td>
-                        <td class="px-1 py-2 text-center"></td>
-                        <td class="px-1 py-2 text-center"></td>
-                        <td class="px-1 py-2 text-center"></td>
-                        <td class="px-1 py-2 text-center"></td>
-                    </tr>
-                    
+                    <td colspan="9" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
+                        No rejected applicants found
+                    </td>
                 @endforelse
             </tbody>
         </table>
