@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PurchaseOrder\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +16,13 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 // * COMMENTED FOR TESTING
-Route::middleware('guest')->group( function() {
-    Route::get('/login', [LoginController::class, 'index'])->name('login'); 
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.verify');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+});
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

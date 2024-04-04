@@ -8,6 +8,8 @@ use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Position;
+use App\Models\Po\supplier;
+// use App\Models\Po\SupplierAddress;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -57,7 +59,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ]
         )
-        ->create();
+            ->create();
         Position::factory()->count(19)->sequence(
             [
                 'name' => 'HR Manager',
@@ -193,29 +195,31 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
         )
-        ->create();
+            ->create();
 
         // ? ADD YOUR MANAGER ACCOUNT HERE
         Employee::factory()->create([
-            'first_name' => 'Emmanuel',
-            'middle_name' => 'Meneses',
-            'last_name' => 'Male',
+            'first_name' => 'Mark Erol',
+            'middle_name' => 'Garcia',
+            'last_name' => 'Manansala',
             'gender' => 'M',
-            'age' => 20,
-            'birthday' => '2002-03-15', // '2002-03-15
-            'phone' => '09123456789',
-            'image' => 'images/avatars/sample-image.jpg',
+            'age' => 21,
+            'birthday' => '2003-02-24', // '2002-03-15
+            'phone' => '09053457036',
+            'image' => 'images/avatars/1337163.png',
             'position_id' => 1,
-            'email' => 'emmanmale@gmail.com',
+            'email' => 'manansalamarkerol@gmail.com',
             'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
             'salary' => 25000,
             'created_at' => now()->subYear(),
             'updated_at' => null,
-            'notes' => 'This is super ugly client'
+            'notes' => 'HATDOG'
         ]);
-        
+
         Employee::factory(50)->create();
         Applicant::factory(210)->create();
+        Supplier::factory()->count(10)->create();
+        // SupplierAddress::factory()->count(10)->create();
     }
 }

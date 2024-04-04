@@ -6,9 +6,7 @@ use App\Models\HumanResource\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
- */
+
 class EmployeeFactory extends Factory
 {
     /**
