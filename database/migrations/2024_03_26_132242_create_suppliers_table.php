@@ -12,10 +12,11 @@ return new class extends Migration {
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('s_companyname', 255);
-            $table->foreignId('s_address')->constrained('supplier_addresses');
-            $table->string('s_email', 255);
-            $table->text('s_description');
+            $table->string('company_name', 255);
+            $table->string('address');
+            $table->string('email', 255);
+            $table->text('description');
+            $table->text('picture');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

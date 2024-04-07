@@ -21,7 +21,7 @@ class SupplierFactory extends Factory
     {
         return [
             's_companyname' => fake()->name(),
-            's_address' => SupplierAddress::factory()->create()->id,
+            's_address' => fake()->realText(15),
             's_email' => fake()->unique()->safeEmail(),
             's_description' => fake()->realText(20),
 

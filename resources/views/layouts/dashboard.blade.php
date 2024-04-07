@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -14,7 +16,7 @@
         *Implemented size limitation with max-w-screen-xl.
         *Aligned content to center using m-auto. --}}
 
-        <main id="content" class="m-auto max-w-screen-xl h-full flex">
+        <main id="content" class="m-auto max-w-screen-xl h-full flex overflow-hidden">
             {{--  SIDE BAR --}}
             <aside id="sidebar" class="h-[100vh] width-transition grid-template-col-0 sticky top-0">
                 @include('includes.sidebar')

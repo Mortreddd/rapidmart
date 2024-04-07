@@ -219,7 +219,7 @@ class DatabaseSeeder extends Seeder
 
         Employee::factory(50)->create();
         Applicant::factory(210)->create();
-        Supplier::factory()->count(10)->create();
-        // SupplierAddress::factory()->count(10)->create();
+        // Supplier::factory()->count(10)->create();
+
     }
 }
