@@ -20,8 +20,8 @@ class SupplierController extends Controller
         $validated = Validator::make($request->all(), [
             'company_name' => 'required|max:255',
             'address' => 'required',
-            'email' => 'required|email|max:255',
-            'description' => 'required|min:5',
+            'email' => 'required|email|max:255|unique:supplier,email',
+            'description' => 'required|min:30',
             'picture' => 'image|mimes:jpeg,png,jpg|max:10240',
         ], [
             'company_name.required' => 'Name is required',
@@ -30,8 +30,9 @@ class SupplierController extends Controller
             'email.required' => 'Email is required',
             'email.email' => 'Email must be a valid email',
             'email.max' => 'Email is too long',
+            'email.unique' => 'Oops! Email already taken!',
             'description.required' => 'Company Description is required',
-            'description.min' => 'Company Description is to short (min:20 character)',
+            'description.min' => 'Company Description is to short (min:30 character)',
             'picture.image' => 'Must be an Image',
             'picture.mimes' => 'Must be an extension of (jpeg,png,jpg)',
             'picture.max' => 'Image is too Big (max upload size: 10 Mb)',

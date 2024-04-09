@@ -5,7 +5,7 @@
 
 
   <!-- Main modal -->
-  <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-scroll overflow-x-hidden mt-16 fixed  z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-2xl max-h-full">
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -35,6 +35,12 @@
           </div>
       </div>
   </div>
+
+{{-- Form modall --}}
+  <div id="form-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full ">
+    @include('includes.PO.AddSupplier')
+   </div>
+
 
 
 
@@ -68,15 +74,22 @@
         </li>
     </ol>
 </nav>
+{{-- Action button --}}
+<div class="flex justify-end">
 
-
+<button id="open-form" type="button" class="flex justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+    <svg class="w-6 h-6 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff" viewBox="0 0 24 24">
+    <path fill-rule="evenodd" d="M9 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H7Zm8-1a1 1 0 0 1 1-1h1v-1a1 1 0 1 1 2 0v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+  </svg>
+  Add Supplier</button>
+</div>
 
 {{-- Supplier Main Container --}}
 <div class="sm:p-4 grid place-items-center h-fit w-full sm:bg-white sm:border-4 border-solid border-gray-500">
     {{-- Suppliers Cards Container --}}
 <div class=" bg-blue-500 w-full h-fit sm:rounded-3xl p-2 sm:p-6" >
     {{-- Cards --}}
-    @include('includes.PO.AddSupplier')
+
     <div class="flex flex-wrap justify-around">
     @include('includes.PO.Suppliercards')
     </div>
@@ -89,64 +102,41 @@
 
 @section('scripts')
 @parent
-@vite(['resources/js/Pojs/supplier.js'])
+@vite(['resources/js/Pojs/MainSupplier'])
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script>
-
+<script type="module">
 $(document).ready(() => {
-    //This is for the modal since the flowbite had a bug with backdrop
-    //solution link :: https://stackoverflow.com/questions/77071906/flowbite-modal-backdrop-not-hide-when-close-with-function
-    $('#close-s-Modal').on('click',()=>{
-        new util.closeModal();
+    $('#open-form').on("click",() =>{
+
+        new ms.openModal("form-modal");
+
     })
 
-    $('#storeSupplier').on('submit', (e) => {
-        e.preventDefault();
-        let formData = new FormData($('#storeSupplier')[0]);
+    $('#close-form').on("click",() =>{
+        new ms.closeModal("form-modal");
+    })
 
-        // Setup CSRF token
-        // just making csrf is here since it not in the form
+
+
+
+
+    $("#close-s-Modal").on("click", () => {
+        new ms.closeModal();
+    });
+
+    $("#storeSupplier").on("submit", (e) => {
+        e.preventDefault();
+        let formData = new FormData($("#storeSupplier")[0]);
+
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
         });
 
-        // AJAX request
-        $.ajax({
-            url: '{{ route('supplier.store') }}',
-            data: formData,
-            type: 'POST',
-            contentType: false,
-            processData: false,
-            beforeSend:() =>{
-                $('saveSupplier').prop('disabled',true)
-
-            },
-            complete: () =>{
-                $('saveSupplier').prop('disabled',false)
-            },
-            success: (result) => {
-
-                if(result.status == 'success'){
-                    $('#storeSupplier').find('span').text('')
-
-                    $('#storeSupplier')[0].reset()
-                    new util.openSuccessModal()
-                    console.log(result)
-                }else if(result.status == 'error'){
-                    $.each(result.errors, function(key, value) {
-                    var showerror = $(document).find('#'+key+'_error')
-                    showerror.html(value)
-                });
-                }
-            },
-            error: (error) => {
-
-            }
-        });
+         new ms.hello('{{ route('supplier.store') }}')
     });
 });
 
