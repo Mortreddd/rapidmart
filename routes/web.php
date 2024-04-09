@@ -15,6 +15,7 @@ use App\Http\Controllers\PurchaseOrder\SupplierController;
 |
 */
 
+
 // * COMMENTED FOR TESTING
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
