@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Email\TransportException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Redirect;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -24,7 +26,10 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
+            
+        });
+        $this->reportable(function( TransportException $exception ) {
+            return Redirect::back()->witherrors(['error' => $exception->getMessage()]);
         });
     }
 }

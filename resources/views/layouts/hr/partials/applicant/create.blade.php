@@ -131,13 +131,13 @@
                     </div>
                 </div>
 
-                <div class="relative w-full gap-3 grid grid-cols-6">
+                <div class="relative w-full grid grid-cols-6">
                     <div class="col-span-6">
                         @if ( Session::has('resume') )
                             <p class="text-xs text-red-600 font-semibold">{{ Session::get('resume') }}</p>
                         @endif
                         <label class="block mb-2 text-sm font-medium text-gray-700" for="resume_input">Upload Resume</label>
-                        <input class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none " name="resume" type="file">
+                        <input class="block w-full text-sm text-gray border border-gray-300 rounded-lg cursor-pointer bg-gray-50 accent-primary dark:text-gray-400 focus:outline-none" id="file_input" name="resume" type="file">
                         <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Must not exceed 6MB.</p>
                     </div>
                 </div>

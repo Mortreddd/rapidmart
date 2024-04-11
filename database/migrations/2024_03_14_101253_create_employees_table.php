@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable(); // Added field for email verification
             $table->string('password');
             $table->enum('employment_status', ['Full Time', 'Part Time', 'Resigned', 'Training']);
+            $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->float('salary');
             $table->rememberToken();
             $table->timestamps();

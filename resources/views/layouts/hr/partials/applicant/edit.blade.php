@@ -4,7 +4,9 @@
 @section('title', 'Edit Applicant')
 
 @section('content')
-    section.w-full
+    <section class="w-full h-full bg-white">
+        
+    </section>
 
 
 @endsection

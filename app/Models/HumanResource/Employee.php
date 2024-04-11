@@ -24,6 +24,7 @@ class Employee extends Authenticatable
         'email',
         'password',
         'employment_status',
+        'email_verified_at',
         'created_at',
         'updated_at',
         'notes'

@@ -9,7 +9,6 @@ use App\Models\HumanResource\Applicant;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class RejectedApplicantController extends Controller
