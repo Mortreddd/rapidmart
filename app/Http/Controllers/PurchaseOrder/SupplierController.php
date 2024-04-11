@@ -4,23 +4,28 @@ namespace App\Http\Controllers\PurchaseOrder;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Http\Requests\Supplier\SupplierRequest;
-// use Pest\Arch\Objects\FunctionDescription;
-use App\Models\PO\supplier;
+use App\Models\PO\Supplier;
 use Illuminate\Support\Facades\Validator;
+
 
 class SupplierController extends Controller
 {
     public function index()
     {
-        return view('layouts.po.supplier');
+        $showSupplier = Supplier::all();
+        return view('layouts.po.supplier',compact('showSupplier'));
     }
+
+
+
+
+
     public function store(Request $request)
     {
         $validated = Validator::make($request->all(), [
             'company_name' => 'required|max:255',
             'address' => 'required',
-            'email' => 'required|email|max:255|unique:supplier,email',
+            'email' => 'required|email|max:255|unique:suppliers,email',
             'description' => 'required|min:30',
             'picture' => 'image|mimes:jpeg,png,jpg|max:10240',
         ], [
@@ -41,26 +46,34 @@ class SupplierController extends Controller
 
         if ($validated->fails()) {
             return response()->json(['status' => 'error', 'errors' => $validated->errors()]);
+        }else{
+            try{
+                if ($request->hasFile('picture')) {
+                $picture_path = $request->file('picture')->store('SupplierImg','public');
+            } else {
+                $picture_path = 'public/SupplierImg/default.png';
+            }
+
+            $supplier = Supplier::create([
+                'company_name' => $request->company_name,
+                'address' => $request->address,
+                'email' => $request->email,
+                'description' => $request->description,
+                'picture' => $picture_path,
+            ]);
+            } catch (\Exception $e) {
+                // Catch any other exceptions
+                return response()->json(['error' => 'Something went wrong.'], 500);
+            }
+
+
+
+
+
+            return response()->json(['status' => 'success', $supplier]);
         }
 
-        if ($request->hasFile('picture')) {
-            $picture = $request->file('picture')->store('SupplierImg');
-        } else {
-            $picture = 'SupplierImg/default.png';
-        }
 
-        $supplier = supplier::create([
-            'company_name' => $request->company_name,
-            'address' => $request->address,
-            'email' => $request->email,
-            'description' => $request->description,
-            'picture' => $picture,
-        ]);
-
-
-
-
-        return response()->json(['status' => 'success', $supplier]);
 
 
     }

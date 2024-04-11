@@ -1,5 +1,5 @@
 {{--
-<form id="storeSupplier" class=" w-full md:w-fit h-full  bg-blue-900 rounded-md lg:rounded-xl p-4 border-2 overflow-y-scroll overflow-x-hidden hide-scrollbar" enctype="multipart/form-data">
+<form  class=" w-full md:w-fit h-full  bg-blue-900 rounded-md lg:rounded-xl p-4 border-2 overflow-y-scroll overflow-x-hidden hide-scrollbar" enctype="multipart/form-data">
 
     <label for="email-address-icon" class="block mb-2 text-sm font-medium text-white">Your Email</label>
     <div class="relative">
@@ -11,18 +11,13 @@
       </div>
       <input type="text" id="email-address-icon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com">
     </div>
-
-
-
-
-
   </form> --}}
 
 
 
 
 
-<form  class=" w-full h-fit bg-blue-900 rounded-md lg:rounded-xl p-4 border-2   "  >
+<form id="storeSupplier" class=" w-fit h-fit bg-blue-900 rounded-md lg:rounded-xl p-4 border-2   "  >
 
     <div class="flex justify-between mb-2">
         <h3 class="text-3xl font-bold text-white">Add Supplier</h3>

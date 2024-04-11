@@ -47,7 +47,14 @@ function closeSuccessModal() {
     document.querySelector("body > div[modal-backdrop]")?.remove();
 }
 
-function hello(url) {
+
+function closeForm(){
+    const $a = document.getElementById("form-modal");
+    const m = new Modal($a);
+    m.hide()
+}
+
+function hello(url,formData) {
     // AJAX request
     $.ajax({
         url: url,
@@ -60,12 +67,14 @@ function hello(url) {
         },
         complete: () => {
             $("saveSupplier").prop("disabled", false);
+
         },
         success: (result) => {
             if (result.status == "success") {
-                // $("#storeSupplier").find("span").text("");
-                $("#storeSupplier")[0].reset();
-                openSuccessModal();
+                closeForm();
+            $("#storeSupplier").find("span").text("");
+            $("#storeSupplier")[0].reset();
+            openSuccessModal();
                 console.log(result);
             } else if (result.status == "error") {
                 $.each(result.errors, function (key, value) {
