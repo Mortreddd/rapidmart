@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title')</title>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/utils/sidebar.js'])
     </head>
     <body class=" font-sans antialiased transition-all duration-300 ease-out">
@@ -22,7 +22,9 @@
                 @include('includes.sidebar')
             </aside>
             {{-- SIDE BAR --}}
-            <div class="w-full h-full">
+            {{-- ? Added minimum height of 100% to fill all of screen Height --}}
+            <div class="w-full min-h-full">
+
                 @include('includes.header')
                 <section class="w-full h-full bg-gray-300">
                     @yield('content')

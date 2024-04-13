@@ -23,8 +23,10 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
-    Route::post('/supplier', [SupplierController::class, 'store'])->name('supplier.store');
+    Route::get('/all/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+    Route::post('/store/supplier', [SupplierController::class, 'storeSupplier'])->name('supplier.store');
+    Route::get('/delete/supplier/{id}', [SupplierController::class, 'deleteSupplier'])->name('supplier.delete');
+    Route::post('/edit/supplier', [SupplierController::class, 'editSupplier'])->name('supplier.edit');
 });
 
 require __DIR__ . '/auth.php';

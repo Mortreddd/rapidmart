@@ -1,42 +1,31 @@
 @extends('layouts.dashboard')
 @section('content')
 
-<div class="sm:p-1 relative">
 
 
-  <!-- Main modal -->
-  <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-scroll overflow-x-hidden mt-16 fixed  z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-      <div class="relative p-4 w-full max-w-2xl max-h-full">
-          <!-- Modal content -->
-          <div class="relative bg-blue-400 rounded-lg shadow dark:bg-gray-700">
-              <!-- Modal header -->
-              <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Success
-                  </h3>
-                  <button id="close-s-Modal" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
-                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                      </svg>
-                      <span class="sr-only">Close modal</span>
-                  </button>
-              </div>
-              <!-- Modal body -->
-              <div class="p-4 md:p-5 space-y-4">
-                  <p class="text-base leading-relaxed text-black dark:text-gray-400">
-                    New Supplier is Succesfully Added!
-                  </p>
-              </div>
+  <!-- toast modal -->
+@include('includes.PO.ToastModalsSupplier')
 
-          </div>
-      </div>
-  </div>
+{{-- Delete Form Modal --}}
+<div id="delete-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    @include('includes.PO.DeleteSupplier')
+</div>
 
-{{-- Form modall --}}
-  <div id="form-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-scroll overflow-x-hidden mt-16 fixed  z-50 justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full ">
-    @include('includes.PO.AddSupplier')
-   </div>
 
+{{-- Edit Form Modal --}}
+
+    @include('includes.PO.EditSupplier')
+
+
+
+
+{{--Store Form modall --}}
+<div id="form-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full">
+  @include('includes.PO.AddSupplier')
+</div>
+
+
+<div class="sm:p-2 relative">
 
 {{-- BreadCrumbs --}}
 <nav class="flex px-5 py-3 mb-4 text-gray-700 border border-gray-200 bg-gray-50 rounded-md ">
@@ -69,7 +58,6 @@
 </nav>
 {{-- Action button --}}
 <div class="flex justify-end">
-
 <button id="open-form" type="button" class="flex justify-center items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
     <svg class="w-6 h-6 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff" viewBox="0 0 24 24">
     <path fill-rule="evenodd" d="M9 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H7Zm8-1a1 1 0 0 1 1-1h1v-1a1 1 0 1 1 2 0v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
@@ -80,58 +68,133 @@
 {{-- Supplier Main Container --}}
 <div class="sm:p-4 grid place-items-center h-fit w-full sm:bg-white sm:border-4 border-solid border-gray-500">
     {{-- Suppliers Cards Container --}}
-<div class=" bg-blue-500 w-full h-fit sm:rounded-3xl p-2 sm:p-6" >
+<div id="supplierContainer" class=" bg-blue-500 w-full h-fit sm:rounded-3xl p-2 sm:p-6" >
     {{-- Cards --}}
 
     <div class="flex flex-wrap justify-around">
-    @include('includes.PO.Suppliercards')
+    @if($showSupplier->isEmpty())
+        <div class="w-full">No Data Found</div>
+    @else
+        @foreach ($showSupplier as $supplier)
+            @include('includes.PO.Suppliercards')
+        @endforeach
+    @endif
     </div>
 
+
 </div>
-</div>
+<div class=" flex flex-col mt-10">
+{{$showSupplier->onEachSide(4)->links() }}
 </div>
 
+</div>
+
+
+
+</div>
 @endsection
 
 @section('scripts')
-@parent
+{{-- @parent --}}
 @vite(['resources/js/Pojs/MainSupplier'])
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <script type="module">
-$(document).ready(() => {
-    $('#open-form').on("click",() =>{
 
-        new ms.openModal("form-modal");
-
-    })
-
-    $('#close-form').on("click",() =>{
-        new ms.closeModal("form-modal");
-    })
-
-
-
-
-
-    $("#close-s-Modal").on("click", () => {
-        new ms.closeModal("static-modal");
+$.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
     });
+//this is the start...
 
-    $("#storeSupplier").on("submit", (e) => {
-        e.preventDefault();
-        let formData = new FormData($("#storeSupplier")[0]);
+$('document').ready(()=>{
 
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
 
-         new ms.hello('{{ route('supplier.store') }}',formData)
-    });
+// store Supplier
+$("#storeSupplier").on("submit", (e) => {
+    e.preventDefault();
+    let formData = new FormData($("#storeSupplier")[0]);
+
+    //this function is in POjs
+        new ms.storeSupplier('{{ route('supplier.store') }}',formData);
 });
+
+
+// delete  Supplier
+$('.deleteSupplier').on('click',function(){
+    //supplier_id var is undefine if ()=>{arrow function is used}
+    // basically arrow function (() => { ... }),does not refer to the element that triggered the event as it would with a regular function.
+    var supplier_id = $(this).attr('data-id');
+    var supplier_name = $(this).attr('data-name');
+
+    $('#supplierName').html(supplier_name);
+    // console.log(supplier_id)
+    $('.deleteFinal').on('click',()=>{
+        var url = '{{route('supplier.delete','id')}}';
+        url = url.replace('id',supplier_id);
+
+        $.ajax({
+        url: url,
+        type: "GET",
+        contentType: false,
+        processData: false,
+        beforeSend: () => {
+            $("removeSupplier").prop("disabled", true);
+        },
+        complete: () => {
+            $("removeSupplier").prop("disabled", false);
+        },
+        success: (result) => {
+            console.log(result)
+            new ms.closedelete();
+            new ms.openDeleteModal();
+
+            setTimeout(location.reload(true), 1000);
+        },
+        error: (error) => {
+            console.log(error.responseText);
+        },
+    });
+    })
+})
+
+//edit Supplier
+
+
+$('.editSupplier').on('click',function(){
+    var id = $(this).attr('data-id')
+    var name = $(this).attr('data-name')
+    var address = $(this).attr('data-address')
+    var email = $(this).attr('data-email')
+    var description = $(this).attr('data-description')
+
+
+    $('#EditSupplier').html( name)
+    $('#edit_id').val(id)
+    $('#edit_name').val(name)
+    $('#edit_address').val(address)
+    $('#edit_email').val(email)
+    $('#edit_description').val(description)
+
+    new ms.showedit();
+
+})
+
+
+$('#editSupplier').on('submit',(e)=>{
+    e.preventDefault();
+    let editformData = new FormData($("#editSupplier")[0]);
+
+    new ms.editSupplier('{{ route('supplier.edit') }}',editformData);
+})
+
+
+
+
+
+})
+
 
 </script>
 
