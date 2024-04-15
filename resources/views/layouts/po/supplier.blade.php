@@ -7,16 +7,17 @@
 @include('includes.PO.ToastModalsSupplier')
 
 {{-- Delete Form Modal --}}
-<div id="delete-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="delete-modal" tabindex="-1"  aria-hidden="true"  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     @include('includes.PO.DeleteSupplier')
 </div>
 
 
 {{-- Edit Form Modal --}}
+<div id="edit-modal" tabindex="-1"  aria-hidden="true"  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 
     @include('includes.PO.EditSupplier')
 
-
+</div>
 
 
 {{--Store Form modall --}}
@@ -68,7 +69,7 @@
 {{-- Supplier Main Container --}}
 <div class="sm:p-4 grid place-items-center h-fit w-full sm:bg-white sm:border-4 border-solid border-gray-500">
     {{-- Suppliers Cards Container --}}
-<div id="supplierContainer" class=" bg-blue-500 w-full h-fit sm:rounded-3xl p-2 sm:p-6" >
+<div id="supplierContainer" class="supplierContainer bg-blue-500 w-full h-fit sm:rounded-3xl p-2 sm:p-6" >
     {{-- Cards --}}
 
     <div class="flex flex-wrap justify-around">
@@ -83,9 +84,9 @@
 
 
 </div>
-<div class=" flex flex-col mt-10">
+
 {{$showSupplier->onEachSide(4)->links() }}
-</div>
+
 
 </div>
 
@@ -100,6 +101,8 @@
 
 
 <script type="module">
+    // global Variables (for edit)
+    var globalName, globalAddress, globalDescription, globalPicture;
 
 $.ajaxSetup({
         headers: {
@@ -129,7 +132,6 @@ $('.deleteSupplier').on('click',function(){
     var supplier_name = $(this).attr('data-name');
 
     $('#supplierName').html(supplier_name);
-    // console.log(supplier_id)
     $('.deleteFinal').on('click',()=>{
         var url = '{{route('supplier.delete','id')}}';
         url = url.replace('id',supplier_id);
@@ -146,7 +148,6 @@ $('.deleteSupplier').on('click',function(){
             $("removeSupplier").prop("disabled", false);
         },
         success: (result) => {
-            console.log(result)
             new ms.closedelete();
             new ms.openDeleteModal();
 
@@ -163,35 +164,75 @@ $('.deleteSupplier').on('click',function(){
 
 
 $('.editSupplier').on('click',function(){
+
+
     var id = $(this).attr('data-id')
     var name = $(this).attr('data-name')
     var address = $(this).attr('data-address')
     var email = $(this).attr('data-email')
     var description = $(this).attr('data-description')
+    var picture = $(this).attr('data-picture').split('/')[1];
 
 
-    $('#EditSupplier').html( name)
+
+    $('#SupplierNameEdit').html(name)
     $('#edit_id').val(id)
     $('#edit_name').val(name)
     $('#edit_address').val(address)
     $('#edit_email').val(email)
     $('#edit_description').val(description)
+    $('#pictureFile').html("Current Picture: "+picture)
+
+
+
+    globalName = name;
+    globalAddress = address;
+    globalDescription = description;
+    globalPicture = picture;
 
     new ms.showedit();
-
 })
+
+function checkIfValueChanged(NAME, ADDRESS, DESCRIPTION, PICTURE) {
+
+
+
+    if (
+        globalName !== NAME ||
+        globalAddress !== ADDRESS ||
+        globalDescription !== DESCRIPTION ||
+        globalPicture !== PICTURE
+    ) {
+
+        return true
+    } else {
+       return false
+    }
+}
+
 
 
 $('#editSupplier').on('submit',(e)=>{
     e.preventDefault();
-    let editformData = new FormData($("#editSupplier")[0]);
+    let NAME = $('#editSupplier input[name="company_name"]').val();
+    let ADDRESS = $('#editSupplier input[name="address"]').val();
+    let DESCRIPTION = $('#editSupplier textarea[name="description"]').val();
+    let TempPIC = $('#editSupplier input[name="picture"]')[0];
+    let PICTURE;
+    if(TempPIC.files.length !== 0){
+        PICTURE = $('#editSupplier input[name="picture"]').val().split('\\')[2];
+    }else{
+        PICTURE = globalPicture;
+    }
 
-    new ms.editSupplier('{{ route('supplier.edit') }}',editformData);
+    if(checkIfValueChanged(NAME, ADDRESS, DESCRIPTION, PICTURE)){
+        let editformData = new FormData($("#editSupplier")[0]);
+        new ms.editSupplier('{{ route('supplier.edit') }}',editformData);
+    }else{
+        $('#isChanged').html("Theres Nothing to Change Please Update Something")
+    }
+
 })
-
-
-
-
 
 })
 

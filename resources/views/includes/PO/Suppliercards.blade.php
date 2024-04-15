@@ -12,10 +12,11 @@
         <div id="dropdown{{$supplier->id}}" class="z-10 border border-blue-600 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2" aria-labelledby="ddbtn_{{$supplier->id}}">
             <li>
-                <button  data-modal-target="edit-modal" data-modal-toggle="edit-modal"  class="editSupplier w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                <button class="editSupplier w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 data-id="{{$supplier->id}}"
                 data-name="{{$supplier->company_name}}"
                 data-address="{{$supplier->address}}"
+                data-picture="{{$supplier->picture}}"
                 data-email="{{$supplier->email}}"
                 data-description="{{$supplier->description}}"
                 >Edit</button>

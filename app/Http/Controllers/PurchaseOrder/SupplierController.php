@@ -87,16 +87,17 @@ class SupplierController extends Controller
     public function editSupplier(Request $request)
     {
         $validated = Validator::make($request->all(), [
-            'company_name' => 'required|max:255',
+            'company_name' => 'required|max:50',
             'address' => 'required',
-            'description' => 'required|min:10',
+            'description' => 'required|min:10|max:255',
             'picture' => 'image|mimes:jpeg,png,jpg|max:10240',
         ], [
             'company_name.required' => 'Name is required',
             'company_name.max' => 'Name is too long',
             'address.required' => 'Address is required',
             'description.required' => 'Company Description is required',
-            'description.min' => 'Company Description is to short (min:30 character)',
+            'description.min' => 'Company Description is to short (min:10 character)',
+            'description.max' => 'Description is to Long (max:255 character)',
             'picture.image' => 'Must be an Image',
             'picture.mimes' => 'Must be an extension of (jpeg,png,jpg)',
             'picture.max' => 'Image is too Big (max upload size: 10 Mb)',

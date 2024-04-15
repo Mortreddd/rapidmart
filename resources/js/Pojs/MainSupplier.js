@@ -86,10 +86,43 @@ function closeedit() {
 }
 
 function showedit() {
+    let o = {
+        placement: "bottom-right",
+        backdrop: "dynamic",
+        backdropClasses:
+            "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
+        closable: false,
+        onHide: () => {
+            console.log("Edit modal is hidden");
+        },
+        onShow: () => {
+            console.log("Edit modal is shown");
+        },
+    };
     const $ed = document.getElementById("edit-modal");
-    const med = new Modal($ed);
+    const med = new Modal($ed, o);
     med.show();
 }
+
+$("#open-form").on("click", () => {
+    openModal("form-modal");
+});
+
+$("#static-button").on("click", () => {
+    closeSuccessModal();
+});
+
+$("#close-form").on("click", () => {
+    closeModal("form-modal");
+});
+
+$("#close-s-Modal").on("click", () => {
+    closeModal("static-modal");
+});
+
+$("#edit-close-form").on("click", () => {
+    closeedit();
+});
 
 function storeSupplier(url, formData) {
     // AJAX request
@@ -111,15 +144,8 @@ function storeSupplier(url, formData) {
                 $("#storeSupplier").find("span").text("");
                 $("#storeSupplier")[0].reset();
                 openSuccessModal();
-
-                setTimeout(function () {
-                    $.get(location.href, function (data) {
-                        var supplierContent = $(data)
-                            .find("#supplierContainer")
-                            .html();
-                        $("#supplierContainer").html(supplierContent);
-                    });
-                }, 1000);
+                // .load() doesnt work it bugs the code for dropdwon btn for each user
+                setTimeout(location.reload(true), 1000);
             } else if (result.status == "error") {
                 $("#storeSupplier").find("span").text("");
                 $.each(result.errors, function (key, value) {
@@ -169,19 +195,3 @@ function editSupplier(url, formData) {
         },
     });
 }
-
-$("#open-form").on("click", () => {
-    openModal("form-modal");
-});
-
-$("#close-form").on("click", () => {
-    closeModal("form-modal");
-});
-
-$("#close-s-Modal").on("click", () => {
-    closeModal("static-modal");
-});
-
-$("#edit-close-form").on("click", () => {
-    closeedit();
-});
