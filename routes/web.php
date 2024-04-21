@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrder\SupplierController;
 
 /*
@@ -27,6 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/store/supplier', [SupplierController::class, 'storeSupplier'])->name('supplier.store');
     Route::get('/delete/supplier/{id}', [SupplierController::class, 'deleteSupplier'])->name('supplier.delete');
     Route::post('/edit/supplier', [SupplierController::class, 'editSupplier'])->name('supplier.edit');
+
+    Route::get('/create/PurchaseOrder', [PurchaseOrderController::class, 'index'])->name('po.index');
+    Route::post('/store/PurchaseOrder', [PurchaseOrderController::class, 'create'])->name('po.create');
+    Route::get('/PR/PurchaseOrder', [PurchaseOrderController::class, 'showPR'])->name('po.showpr');
+    Route::get('/download/{id}', [PurchaseOrderController::class, 'download'])->name('po.download');
+    Route::get('/delete/PurchaseOrder/{id}', [PurchaseOrderController::class, 'deletePO'])->name('po.delete');
 });
 
 require __DIR__ . '/auth.php';

@@ -7,7 +7,7 @@
 @include('includes.PO.ToastModalsSupplier')
 
 {{-- Delete Form Modal --}}
-<div id="delete-modal" tabindex="-1"  aria-hidden="true"  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="delete-modal" data-modal-target="delete-modal" tabindex="-1"  aria-hidden="true"  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     @include('includes.PO.DeleteSupplier')
 </div>
 
@@ -128,6 +128,7 @@ $("#storeSupplier").on("submit", (e) => {
 $('.deleteSupplier').on('click',function(){
     //supplier_id var is undefine if ()=>{arrow function is used}
     // basically arrow function (() => { ... }),does not refer to the element that triggered the event as it would with a regular function.
+    new ms.opendelete();
     var supplier_id = $(this).attr('data-id');
     var supplier_name = $(this).attr('data-name');
 
@@ -142,10 +143,10 @@ $('.deleteSupplier').on('click',function(){
         contentType: false,
         processData: false,
         beforeSend: () => {
-            $("removeSupplier").prop("disabled", true);
+            $("remove").prop("disabled", true);
         },
         complete: () => {
-            $("removeSupplier").prop("disabled", false);
+            $("remove").prop("disabled", false);
         },
         success: (result) => {
             new ms.closedelete();

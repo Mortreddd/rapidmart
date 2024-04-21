@@ -17,8 +17,7 @@ return new class extends Migration {
             $table->string('email', 255);
             $table->text('description');
             $table->text('picture');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+            $table->timestamps();
         });
     }
 

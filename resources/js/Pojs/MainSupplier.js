@@ -10,6 +10,7 @@ export {
     openDeleteModal,
     editSupplier,
     showedit,
+    opendelete,
 };
 
 // for <script></script>
@@ -77,6 +78,9 @@ function closedelete() {
     const $b = document.getElementById("delete-modal");
     const d = new Modal($b);
     d.hide();
+}
+function opendelete() {
+    openModal("delete-modal");
 }
 
 function closeedit() {
