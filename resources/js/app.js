@@ -6,3 +6,6 @@ window.mp = mp;
 
 import * as ms from "./Pojs/MainSupplier";
 window.ms = ms;
+
+import * as iv from "./Pojs/MainInvoice";
+window.iv = iv;

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\PurchaseOrder\InvoiceController;
 use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrder\SupplierController;
 
@@ -34,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/PR/PurchaseOrder', [PurchaseOrderController::class, 'showPR'])->name('po.showpr');
     Route::get('/download/{id}', [PurchaseOrderController::class, 'download'])->name('po.download');
     Route::get('/delete/PurchaseOrder/{id}', [PurchaseOrderController::class, 'deletePO'])->name('po.delete');
+
+    Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice.index');
+    Route::post('/invoice/{id}', [InvoiceController::class, 'sendmail'])->name('invoice.sendmail');
 });
+
 
 require __DIR__ . '/auth.php';

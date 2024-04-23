@@ -143,6 +143,8 @@ function storeSupplier(url, formData) {
             $("#saveSupplier").prop("disabled", false);
         },
         success: (result) => {
+            console.log("🚀 ~ storeSupplier ~ result:", result);
+
             if (result.status == "success") {
                 closeForm();
                 $("#storeSupplier").find("span").text("");
@@ -153,7 +155,7 @@ function storeSupplier(url, formData) {
             } else if (result.status == "error") {
                 $("#storeSupplier").find("span").text("");
                 $.each(result.errors, function (key, value) {
-                    var showerror = $(document).find("#" + key + "_error");
+                    var showerror = $(document).find("#" + key + "_erroradd");
                     showerror.html(value);
                 });
             }

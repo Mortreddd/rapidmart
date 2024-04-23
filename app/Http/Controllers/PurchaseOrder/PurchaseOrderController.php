@@ -75,9 +75,8 @@ class PurchaseOrderController extends Controller
 
     public function download($id)
     {
-        $pdf = PurchaseOrder::join('suppliers', 'purchase_orders.supplier_id', '=', 'suppliers.id')
-            ->select('purchase_orders.*', 'suppliers.company_name')
-            ->where('purchase_orders.id', '=', $id)
+        $pdf = PurchaseOrder::select('pdf_path')
+            ->where('id', '=', $id)
             ->first();
         $file = public_path('storage/' . $pdf->pdf_path);
         return response()->download($file);

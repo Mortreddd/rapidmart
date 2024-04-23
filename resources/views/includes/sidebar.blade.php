@@ -192,7 +192,7 @@
         <li class="w-full overflow-y-hidden bg-gray-100 rounded accounting grid-template-row-0 height-transition">
             <ul class="flex flex-col w-full space-y-2 rounded h-fit">
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                    <a  href="{{ route('invoice.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Invoices
                     </a>
                 </li>

@@ -126,8 +126,7 @@ $("#storeSupplier").on("submit", (e) => {
 
 // delete  Supplier
 $('.deleteSupplier').on('click',function(){
-    //supplier_id var is undefine if ()=>{arrow function is used}
-    // basically arrow function (() => { ... }),does not refer to the element that triggered the event as it would with a regular function.
+
     new ms.opendelete();
     var supplier_id = $(this).attr('data-id');
     var supplier_name = $(this).attr('data-name');

@@ -109,46 +109,47 @@
 <script type="module">
 let cancelID;
 
-    function getPR(){
-        $.ajax({
-            url: '{{route('po.showpr')}}',
-            type: 'GET',
-            contentType: false,
-            processData: false,
-            success: (result) => {
-                $('#PR').empty();
-                // console.log("🚀 ~ getPR ~ result:", result)
-                if(result.PR.length > 0){
-                    result.PR.forEach(item => {
-                        let downloadURL = '{{ route("po.download", ":id") }}';
-                        // let downloadURL = "{{ Storage::url(':path')}}";
-                        downloadURL = downloadURL.replace(':id', item.id);
-                        // console.log("🚀 ~ getPR ~ downloadURL:", downloadURL)
+function getPR(){
+    $.ajax({
+        url: '{{route('po.showpr')}}',
+        type: 'GET',
+        contentType: false,
+        processData: false,
+        success: (result) => {
+            $('#PR').empty();
+            // console.log("🚀 ~ getPR ~ result:", result)
+            if(result.PR.length > 0){
+                result.PR.forEach(item => {
+                    let downloadURL = '{{ route("po.download", ":id") }}';
+                    // let downloadURL = "{{ Storage::url(':path')}}";
+                    downloadURL = downloadURL.replace(':id', item.id);
+                    // console.log("🚀 ~ getPR ~ downloadURL:", downloadURL)
 
-                        $('#PR').append(`
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                ${item.company_name}
-                            </th>
-                            <td class="px-6 py-4">
-                                <a href='${downloadURL}' class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
-                            </td>
-                            <td class="px-6 py-4">
-                                <button data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="cancelpr focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"  data-id="${item.id}">Cancel</button>
-                            </td>
-                        </tr>
-                        `);
-                    });
-                } else {
                     $('#PR').append(`
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4 text-center" colspan="3" >Empty Data Set</td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            ${item.company_name}
+                        </th>
+                        <td class="px-6 py-4">
+                            <a href='${downloadURL}' class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <button data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="cancelpr focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"  data-id="${item.id}">Cancel</button>
+                        </td>
                     </tr>
                     `);
-                }
-            },
-    });
+                });
+            } else {
+                $('#PR').append(`
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td class="px-6 py-4 text-center" colspan="3" >Empty Data Set</td>
+                </tr>
+                `);
+            }
+        },
+});
 }
+
 $("#PR").on("click", ".cancelpr", function () {
     cancelID = $(this).attr('data-id');
     new mp.opencancelModal('delete-modal')
