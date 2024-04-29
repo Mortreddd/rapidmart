@@ -1,6 +1,4 @@
 
-
-
 <div class="top-0 sticky left-0 flex flex-col items-start w-full justify-between overflow-y-hidden">
     <div class="flex flex-col items-center h-full px-5 space-y-4 bg-white w-fit">
         <div class="flex items-center justify-center w-full h-20 py-3">
@@ -122,12 +120,12 @@
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                    <a href="{{ route('product.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Warehouse
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                    <a  class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         FIFO
                     </a>
                 </li>

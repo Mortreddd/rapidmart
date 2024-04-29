@@ -29,8 +29,9 @@ return new class extends Migration {
             $table->string('image');
             $table->integer('stocks');
             $table->float('price');
+            $table->bigInteger('barcode');
             $table->foreignIdFor(Catergory::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
+            // $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

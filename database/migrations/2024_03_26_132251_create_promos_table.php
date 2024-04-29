@@ -1,17 +1,16 @@
 <?php
 
-use App\Models\PO\Product;
+use App\Models\Inventory\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
 
-    // ? 
+    // ?
     // ? ISSUE IS COMING FROM HERE??
     // ?
     public function up(): void

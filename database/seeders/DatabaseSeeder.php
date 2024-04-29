@@ -8,8 +8,9 @@ use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Position;
+use App\Models\PO\Catergory;
 use App\Models\Po\supplier;
-// use App\Models\Po\SupplierAddress;
+use App\Models\Inventory\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -219,7 +220,9 @@ class DatabaseSeeder extends Seeder
 
         Employee::factory(50)->create();
         Applicant::factory(210)->create();
-        Supplier::factory()->count(10)->create();
+        Supplier::factory(10)->create();
+        Catergory::factory(5)->create();
+        Product::factory(10)->create();
 
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\PO;
+namespace App\Models\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,9 +15,5 @@ class Product extends Model
         'stock',
         'price',
         'category_id',
-        'supplier_id',
-        'size',
-        'created_at',
-        'updated_at'
     ];
 }

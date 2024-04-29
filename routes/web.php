@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\MailController;
 use App\Http\Controllers\PurchaseOrder\InvoiceController;
 use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrder\SupplierController;
+
+use App\Http\Controllers\Inventory\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::post('/invoice/{id}', [InvoiceController::class, 'sendmail'])->name('invoice.sendmail');
+
+    // Inventory
+
+    Route::get('/inventory', [ProductsController::class, 'index'])->name('product.index');
+
 });
 
 
