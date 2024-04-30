@@ -1,6 +1,22 @@
 @extends('layouts.dashboard')
 @section('content')
 <div class=" h-fit  p-2">
+
+    @include('includes.INV.Toast')
+
+    <div id="add-product-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full">
+        @include('includes.INV.AddModals')
+    </div>
+
+    <div id="edit-product-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full">
+        @include('includes.INV.EditModals')
+    </div>
+
+    <div id="delete-product-modal" data-modal-target="delete-product-modal" tabindex="-1"  aria-hidden="true"  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        @include('includes.INV.DeleteModals')
+    </div>
+
+
     <nav class="flex px-5 py-3 mb-4 text-gray-700 border border-gray-200 bg-gray-50 rounded-md ">
         <ol class="inline-flex items-center space-x-1 md:space-x-2">
             <li class="inline-flex items-center">
@@ -39,25 +55,6 @@
                   </svg> Add Product
                   </button>
             <form class="">
-                <div class="flex">
-                    <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-                    <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">All categories <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-            </svg></button>
-                    <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Beverages</button>
-                        </li>
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Babies Items</button>
-                        </li>
-
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Presevatives</button>
-                        </li>
-                        </ul>
-                    </div>
                     <div class="relative w-full">
                         <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search..." required />
                         <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -99,11 +96,11 @@
                 <tbody>
                     @forelse ( $products as $product)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $product->name}}
+                        <th scope="row" class="px-6 py-4">
+                            <h6 class="action font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 hover:font-bold cursor-pointer w-fit" data-id='{{$product->id}}'>{{$product->product_name}}</h6>
                         </th>
-                        <td class="px-6 py-4">
-                            <img class="w-[100px] h-[100px] border border-solid rounded-lg" src="{{ asset('storage/'.$product->image) }}" alt="">
+                        <td class="mx-6 py-4">
+                            <img class=" w-[100px] h-[100px] border border-solid rounded-lg" src="{{ asset('storage/'.$product->image) }}" alt="">
                         </td>
                         <td class="px-6 py-4">
                            {{$product->stocks}}
@@ -112,7 +109,7 @@
                             ₱{{$product->price}}
                         </td>
                         <td class="px-6 py-4">
-                           {!! DNS1D::getBarcodeHTML("$product->barcode",'PHARMA') !!}
+                           {!! DNS1D::getBarcodeHTML("$product->barcode",'C39') !!}
                         </td>
                     </tr>
                     @empty
@@ -128,17 +125,165 @@
     </div>
 
 
-
-
-
 </div>
 @endsection
 @section('scripts')
-<script>
+@vite(['resources/js/Invjs/MainProduct'])
+<script type="module">
+
+$.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+
+$(document).ready(()=>{
+
+
+
+    $('#storeProduct').on('submit',function(e){
+        e.preventDefault();
+        let formData = new FormData($("#storeProduct")[0]);
+
+        $.ajax({
+        url: '{{ route('product.store') }}',
+        data: formData,
+        type: "POST",
+        contentType: false,
+        processData: false,
+        beforeSend: () => {
+            $("#submitProduct").prop("disabled", true);
+        },
+        complete: () => {
+            $("#submitProduct").prop("disabled", false);
+        },
+        success: (result) => {
+        console.log("🚀 ~ $ ~ result:", result)
+
+            if (result.status == "success") {
+                new iv.closeModal('add-product-modal');
+                $("#storeProduct").find("span").text("");
+                $("#storeProduct")[0].reset();
+                new iv.openModal('static-modal')
+                setTimeout(location.reload(true), 1000);
+            } else if (result.status == "error") {
+                $("#storeProduct").find("span").text("");
+                $.each(result.errors, function (key, value) {
+                    var showerror = $(document).find("#" + key + "_erroradd");
+                    showerror.html(value);
+                });
+            }
+        },
+        error: (error) => {
+            console.log(error);
+        },
+    });
+    })
+
+    $(".action").on("click", function (){
+        var productId = $(this).attr('data-id')
+        var url = '{{route('product.data','id')}}';
+        url = url.replace('id',productId)
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            contentType: false,
+            processData: false,
+            success: (result) => {
+            console.log("🚀 ~ $ ~ result:", result)
+            $('#edit_product_name').val(result.data[0].product_name)
+            $('#edit_stock').val(result.data[0].stocks)
+            $('#edit_price').val(result.data[0].price)
+            $('#product_id').val(result.data[0].id)
+
+            },
+            error: (error) => {
+                console.log(error);
+            },
+        })
+
+       new iv.openModal("edit-product-modal");
+
+       $(".deleteProduct").on('click',function(){
+            new iv.closeModal('edit-product-modal');
+            new iv.openModal('delete-product-modal');
+
+            $("#remove").on("click",function(){
+                var url = '{{route('product.delete','id')}}';
+                url = url.replace('id',productId);
+
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    contentType: false,
+                    processData: false,
+                    beforeSend: () => {
+                        $("remove").prop("disabled", true);
+                    },
+                    complete: () => {
+                        $("remove").prop("disabled", false);
+                    },
+                    success: (result) => {
+                        new iv.closeModal('edit-product-modal')
+                        new iv.closeModal('delete-modal')
+                        setTimeout(location.reload(true), 1000);
+                    },
+                    error: (error) => {
+                        console.log(error.responseText);
+                    },
+
+                })
+             })
+
+
+        })
+    })
 
 
 
 
+
+    $('#editProduct').on('submit',function(e){
+        e.preventDefault();
+        let formData = new FormData($("#editProduct")[0]);
+
+        $.ajax({
+            url: '{{ route('product.edit') }}',
+            data: formData,
+            type: "POST",
+            contentType: false,
+            processData: false,
+            beforeSend: () => {
+                $("#submit_editProduct").prop("disabled", true);
+            },
+            complete: () => {
+                $("#submit_editProduct").prop("disabled", false);
+            },
+            success: (result) => {
+            console.log("🚀 ~ $ ~ result:", result)
+
+                if (result.status == "success") {
+                    new iv.closeModal('edit-product-modal');
+                    $("#editProduct").find("span").text("");
+                    $("#editProduct")[0].reset();
+                    new iv.openModal('edit-modal')
+                    setTimeout(location.reload(true), 1000);
+                } else if (result.status == "error") {
+                    $("#editProduct").find("span").text("");
+                    $.each(result.errors, function (key, value) {
+                        var showerror = $(document).find("#" + key + "_erroredit");
+                        showerror.html(value);
+                    });
+                }
+            },
+            error: (error) => {
+                console.log(error);
+            },
+        });
+
+    })
+})
 
 
 </script>

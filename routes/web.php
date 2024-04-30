@@ -44,6 +44,12 @@ Route::middleware('auth')->group(function () {
     // Inventory
 
     Route::get('/inventory', [ProductsController::class, 'index'])->name('product.index');
+    Route::post('/inventory/add-product', [ProductsController::class, 'store'])->name('product.store');
+    Route::get('/inventory/product-data/{id}', [ProductsController::class, 'getProductData'])->name('product.data');
+    Route::post('/inventory/edit-product', [ProductsController::class, 'edit'])->name('product.edit');
+    Route::get('/inventory/delete-product/{id}', [ProductsController::class, 'delete'])->name('product.delete');
+
+
 
 });
 
