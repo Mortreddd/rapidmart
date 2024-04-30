@@ -26,6 +26,7 @@ class CreateApplicantController extends Controller
             $file_name = time().$request->first_name.$request->last_name.'.'.$request->file('resume')->extension();
             $request->file('resume')->storeAs('public/resumes', $file_name);
         }
+        
         Applicant::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,

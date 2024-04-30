@@ -75,18 +75,23 @@
         <li class="w-full overflow-y-hidden bg-gray-100 rounded sales grid-template-row-0 height-transition">
             <ul class="flex flex-col w-full space-y-2 rounded h-fit">
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        Stock Control
+                    <a href="{{ route('sales.checkinventory.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                        Product Availability
+                    </a>
+                </li>
+                <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
+                    <a href="{{ route('sales.salesreport.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                        Daily Sales Report
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
                     <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        Record Sales
+                        Add Sales
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        Manage Products
+                    <a href="{{ route('sales.promoinformation.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                        Promo Information
                     </a>
                 </li>
             </ul>
