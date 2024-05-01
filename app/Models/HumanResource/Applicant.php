@@ -40,17 +40,13 @@ class Applicant extends Model
 
     public function submissionDate()
     {
-        $createdAt = Carbon::parse($this->created_at);
-        
-        $monthName = $createdAt->format('F'); 
-        $dayOfMonth = $createdAt->format('d'); 
-        $year = $createdAt->format('Y');
-        
-        return "$monthName $dayOfMonth, $year"; 
+
+        return date('F d, Y', strtotime(Carbon::parse($this->created_at)));
     }
 
-    public function updatedDate()
+    public function isAppointed()
     {
-        
+        return Interview::where('applicant_id', $this->id)->exists();
     }
+
 }

@@ -47,7 +47,7 @@
                             </div>
                             <div class="flex items-center justify-between w-full py-2">
                                 <div class="flex items-center gap-2">
-                                    <input type="checkbox" id="remember" name="remember" id="" class="w-4 h-4 rounded ring-secondary accent-secondary outline-none border-none ring-0 border-primary hover:shadow-lg border-1 hover:p-3">
+                                    <input type="checkbox" id="remember" name="remember" id="" class="w-4 h-4 rounded ring-secondary accent-secondary outline-none border-none ring-0 border-primary hover:shadow-lg border-1">
                                     <label for="remember" class="text-sm font-bold text-secondary">Remember Me</label>
                                 </div>
                                 <a href="#" class="text-sm font-bold transition-colors duration-300 ease-in-out text-secondary hover:text-secondary/80">

@@ -36,7 +36,7 @@ git clone https://github.com/Mortreddd/rapidmart.git
 cd rapidmart
 composer install
 npm install
-npm install -D tailwindcss
+npm install
 ```
 
 -   Third, copy the env.example
