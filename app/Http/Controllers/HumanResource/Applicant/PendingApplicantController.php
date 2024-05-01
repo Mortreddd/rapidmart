@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\HumanResource\Applicant;
 
+use App\Events\ProcessRejectedApplicantEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HumanResource\Applicant;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
 
 
 class PendingApplicantController extends Controller
@@ -28,5 +30,20 @@ class PendingApplicantController extends Controller
         return View::make('layouts.hr.applicants.pending', [
             'applicants' => $applicants ,
         ]);
+    }
+
+
+    public function clear()
+    {
+        Applicant::where('status', 'Pending')
+                ->get()
+                ->map(function(?Applicant $applicant){
+                    ProcessRejectedApplicantEvent::dispatch($applicant);
+                    $applicant->update(['status', 'Rejected']
+                );
+        });
+
+        return Redirect::route('applicant.index')
+            ->with(['deleted' => 'All rejected applicants are being deleted.']);
     }
 }

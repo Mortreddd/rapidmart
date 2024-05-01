@@ -9,7 +9,6 @@ use App\Models\HumanResource\Applicant;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class RejectedApplicantController extends Controller
@@ -46,6 +45,9 @@ class RejectedApplicantController extends Controller
         }
 
         ProcessRejectedApplicantEvent::dispatch($applicant);
+        if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
+            Storage::delete('public/resumes/'.$applicant->resume);
+        }
         return Redirect::back()->with(['rejected' => 'Successfully rejected applicant']);
     }
 
@@ -53,9 +55,9 @@ class RejectedApplicantController extends Controller
     public function destroy($applicant_id)
     {
         $applicant = Applicant::findOrFail($applicant_id);
-        if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
-            Storage::delete('public/resumes/'.$applicant->resume);
-        }
+        // if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
+        //     Storage::delete('public/resumes/'.$applicant->resume);
+        // }
         
         $applicant->delete();
         return Redirect::back()->with(['deleted' => 'Successfully deleted an applicant']);
@@ -65,8 +67,14 @@ class RejectedApplicantController extends Controller
     // ! DANGER ZONE
     public function clear()
     {
-        ApplicantJob::dispatch()
-            ->delay(now()->addSeconds(30));
+        Applicant::where('status', 'Rejected')
+                ->get()
+                ->map(function($applicant) {
+                    if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
+                        Storage::delete('public/resumes/'.$applicant->resume);
+                    }
+                    $applicant->delete();
+                });
         return Redirect::route('applicant.index')
             ->with('deleted', 'All rejected applicants are being deleted.');
     }
