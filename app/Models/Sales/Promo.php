@@ -17,4 +17,8 @@ class Promo extends Model
         'till_date',
         'conditions'
     ];
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

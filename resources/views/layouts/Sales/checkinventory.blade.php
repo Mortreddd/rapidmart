@@ -24,7 +24,7 @@
                 <tr class=" rounded-lg">
                     
                     @if($products->count()>1)
-                        <th class="w-full py-2 text-center">Products search does not exist</td>
+                        <th class="px-6 py-4">Products search does not exist</td>
                     @else 
                         <th class="px-6 py-4 rounded-tl-lg">Product Code</th>
                         <th class="px-6 py-4">Product Name</th>

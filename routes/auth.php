@@ -12,6 +12,11 @@ use App\Http\Controllers\HumanResource\EmployeeController;
 use App\Http\Controllers\HumanResource\Interview\InterviewController;
 use App\Http\Controllers\Sales\SalesReportController;
 use App\Http\Controllers\Sales\CheckInventoryController;
+use App\Http\Controllers\Sales\PromoInformationController;
+
+// * CREATE A MIDDLEWARE FOR YOUR OWN PART
+// * THE ROLEMIDDLEWARE IS ALREADY CONFIGURED JUST ASSIGN THE POSITIONS OR ACCESS LEVEL OF YOUR AUTHORIZED ACCOUNTS
+// * role:hr IS AN EXAMPLE FOR HUMAN RESOURCE MANAGEMENT PART WHERE THE AUTHORIZED ACCOUNT ONLY IS THE HR MANAGER AND THE RECRUITER
 
 Route::middleware(['auth', 'verified'])->group( function() {
     Route::get('/', DashboardController::class)->name('home');
@@ -47,11 +52,9 @@ Route::middleware(['auth', 'verified'])->group( function() {
             Route::get('/appoint/{applicant_id}', [AppointmentController::class, 'index'])->name('applicant.view.edit');
             Route::post('/appoint/create', [AppointmentController::class, 'store'])->name('interview.store');
         });
-
         Route::prefix('interviews')->group(function () {
             Route::get('/', [InterviewController::class, 'index'])->name('interview.index');
         });
-
     });
     
     Route::middleware(['role:sales'])->group(function (){

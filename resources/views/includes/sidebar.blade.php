@@ -92,7 +92,7 @@
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                    <a href="{{ route('sales.promoinformation.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Promo Information
                     </a>
                 </li>
