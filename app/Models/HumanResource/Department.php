@@ -20,5 +20,10 @@ class Department extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
+
+    public function positions()
+    {
+        return  static::hasMany(Position::class);
+    }
     
 }

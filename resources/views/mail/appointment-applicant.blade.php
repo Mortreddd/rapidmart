@@ -29,10 +29,23 @@
 
     <div class="message">
         <p>Dear {{ $applicantName }},</p>
-        <p>We regret to inform you that after careful consideration, we have decided not to move forward with your application for the {{ $positionName }} at Rapidmart.</p>
-        <p>We received a large number of applications, and while we appreciate the time and effort you put into your application, we have selected candidates whose qualifications more closely match the needs of the role.</p>
-        <p>We want to thank you for your interest in joining our team and wish you all the best in your job search.</p>
-        <p>Sincerely, HR Department</p>
+        <p>Thank you for applying to Rapidmart,</p>
+        <p>
+            Your application for the {{ $positionName }} position stood 
+            out to us and we would like to invite you for an interview at our 
+            office to get to know you a bit better.
+        </p>
+        <p>
+            The interview will last about 10 minutes and you'll have the chance to discuss the {{ $positionName }} position
+            and learn more about our company.
+        </p>
+        <p>
+            would you be available on {{ $appointmentDate }}?
+        </p>
+        <p>
+            Looking forward to hearing from you.
+        </p>
+        <p>All the best regards, HR Department</p>
     </div>
     <div class="footer">
         <p>This is an automated message. Please do not reply to this email.</p>

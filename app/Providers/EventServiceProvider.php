@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\AppointmentCreationEvent;
 use App\Events\ProcessRejectedApplicantEvent;
+use App\Listeners\AppointmentNoticeListener;
 use App\Listeners\RejectedApplicantListener;
 use App\Models\HumanResource\Applicant;
 use App\Observers\Applicant\ApplicantObserver;
@@ -19,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         ProcessRejectedApplicantEvent::class => [
             RejectedApplicantListener::class
+        ],
+        AppointmentCreationEvent::class => [
+            AppointmentNoticeListener::class
         ]
     ];
 

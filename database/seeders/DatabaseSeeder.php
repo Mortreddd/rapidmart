@@ -202,9 +202,11 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Male',
             'gender' => 'M',
             'age' => 20,
+            'resume' => 'dummy-resume.pdf',
             'birthday' => '2002-03-15', // '2002-03-15
             'phone' => '09123456789',
             'image' => 'images/avatars/sample-image.jpg',
+            'address' => 'San Juan San Simon Pampanga',
             'position_id' => 1,
             'email' => 'emmanmale@gmail.com',
             'password' => Hash::make('12345678'),

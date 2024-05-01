@@ -18,8 +18,11 @@ class Employee extends Authenticatable
         'last_name',
         'gender',
         'age',
+        'resume',
         'birthday',
         'phone',
+        'image',
+        'address',
         'position_id',
         'email',
         'password',
@@ -40,14 +43,15 @@ class Employee extends Authenticatable
         'remember_token',
     ];
 
-    public function submissionDate()
+    public function employedDate()
     {
-        $createdAt = Carbon::parse($this->created_at);
-        
-        $monthName = $createdAt->format('F'); 
-        $dayOfMonth = $createdAt->format('d'); 
-        $year = $createdAt->format('Y');
-        
-        return "$monthName $dayOfMonth, $year"; 
+        return date('F d, Y', strtotime(Carbon::parse($this->created_at)));
+    }
+
+    // ? FOR ROLE-BASED AUTHENTICATION
+
+    public function position()
+    {
+        return static::belongsTo(Position::class);
     }
 }
