@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\HumanResource\Employee;
-use App\Models\PO\Product;
+use App\Models\Inventory\Product;
 use App\Models\Sales\Discount;
 use App\Models\Sales\Promo;
 use App\Models\Sales\Sales;
@@ -9,8 +9,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -40,7 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        
+
         Schema::dropIfExists('sale_receipts');
         Schema::dropIfExists('sales');
     }

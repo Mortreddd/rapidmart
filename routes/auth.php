@@ -14,30 +14,27 @@ use App\Http\Controllers\Sales\SalesReportController;
 use App\Http\Controllers\Sales\CheckInventoryController;
 use App\Http\Controllers\Sales\PromoInformationController;
 
+
 // * CREATE A MIDDLEWARE FOR YOUR OWN PART
 // * THE ROLEMIDDLEWARE IS ALREADY CONFIGURED JUST ASSIGN THE POSITIONS OR ACCESS LEVEL OF YOUR AUTHORIZED ACCOUNTS
 // * role:hr IS AN EXAMPLE FOR HUMAN RESOURCE MANAGEMENT PART WHERE THE AUTHORIZED ACCOUNT ONLY IS THE HR MANAGER AND THE RECRUITER
 
 Route::middleware(['auth', 'verified'])->group( function() {
     Route::get('/', DashboardController::class)->name('home');
-    
-
+   
     Route::middleware(['role:hr'])->group(function (){
-
-        Route::prefix('employees')->group( function() {
+        Route::prefix('employees')->middleware(['auth'])->group(function () {
             Route::get('/', EmployeeController::class)->name('employee.index');
         });
-        
-        // ?
+      
         // ? APPLICANT ROUTES
         // ?
-        Route::prefix('applicants')->group( function () {
+        Route::prefix('applicants')->middleware(['auth'])->group(function () {
             Route::get('/', ApplicantController::class)->name('applicant.index');
 
             // * PENDING APPLICANT ROUTE
             Route::get('/pending', [PendingApplicantController::class, 'index'])->name('applicant.pending.index');
             Route::put('/pending/reject/{applicant_id}', [RejectedApplicantController::class, 'store'])->name('applicant.reject');
-            Route::put('/pending/clear', [PendingApplicantController::class, 'clear'])->name('applicant.pending.clear');
 
             Route::get('/rejected', [RejectedApplicantController::class, 'index'])->name('applicant.rejected.index');
             // ! DELETE APPLICANT
@@ -47,24 +44,26 @@ Route::middleware(['auth', 'verified'])->group( function() {
             // * CREATE APPLICANT ROUTE
             Route::get('/create', [CreateApplicantController::class, 'index'])->name('applicant.store');
             Route::post('/create', [CreateApplicantController::class, 'store'])->name('applicant.verify.store');
-            
+
             // ? UPDATE APPLICANT ROUTE
-            Route::get('/appoint/{applicant_id}', [AppointmentController::class, 'index'])->name('applicant.view.edit');
-            Route::post('/appoint/create', [AppointmentController::class, 'store'])->name('interview.store');
+            Route::get('/edit/{applicant_id}', [EditApplicantController::class, 'index'])->name('applicant.view.edit');
+            Route::put('/edit/{applicant_id}', [EditApplicantController::class, 'edit'])->name('applicant.edit');
+
         });
-        Route::prefix('interviews')->group(function () {
-            Route::get('/', [InterviewController::class, 'index'])->name('interview.index');
-        });
+
+
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::fallback(DashboardController::class);
+
+      Route::middleware(['role:sales'])->group(function (){
+          Route::prefix('sales')->group(function (){
+              Route::get('/',[SalesReportController::class,'index'])->name('sales.salesreport.index');
+              Route::get('/check-inventory',[CheckInventoryController::class,'index'])->name('sales.checkinventory.index');
+              Route::get('/check-inventory/search',[CheckInventoryController::class,'search'])->name('sales.checkinventory.search');   
+          });
+      });
     });
-    
-    Route::middleware(['role:sales'])->group(function (){
-        Route::prefix('sales')->group(function (){
-            Route::get('/',[SalesReportController::class,'index'])->name('sales.salesreport.index');
-            Route::get('/check-inventory',[CheckInventoryController::class,'index'])->name('sales.checkinventory.index');
-            Route::get('/check-inventory/search',[CheckInventoryController::class,'search'])->name('sales.checkinventory.search');   
-        });
-    });
-    
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     // ? TESTING EMAIL TEMPLATE

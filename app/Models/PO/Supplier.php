@@ -4,17 +4,24 @@ namespace App\Models\PO;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Supplier extends Model
+
+class supplier extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'supplier_name',
-        'contact_name',
-        'email',
+        'company_name',
         'address',
-        'postal_code',
-        'phone'
+        'email',
+        'description',
+        'picture',
     ];
+
+    // public function PurchaseOrder(): HasMany
+    // {
+    //     return $this->hasMany(PurchaseOrder::class, 'supplier_id');
+    // }
+
 }

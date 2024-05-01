@@ -65,13 +65,15 @@
         @apply translate-y-4 opacity-0 ease-out;
     }
     /* MODAL SECTION */
+    /*
 
+Problem here doesn't allow customization :)
     input[type="file"]::file-selector-button {
         @apply bg-secondary text-white px-3 py-2 rounded border border-gray-700 outline-none transition-colors duration-200 ease-in-out;
     }
     input[type="file"]::file-selector-button:hover {
         @apply bg-secondary/80 pointer-events-auto cursor-pointer;
-    }
+    } */
 }
 
 @layer utilities {
@@ -166,4 +168,20 @@ input[type="number"]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
     margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* add this to and element if want a no scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }

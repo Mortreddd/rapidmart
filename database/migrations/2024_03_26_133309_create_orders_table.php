@@ -1,20 +1,19 @@
 <?php
 
-use App\Models\PO\Product;
+use App\Models\Inventory\Product;
 use App\Models\PO\Shipper;
 use App\Models\PO\Supplier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('shippers', function(Blueprint $table) {
+        Schema::create('shippers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('phone');
@@ -33,7 +32,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        
+
     }
 
     /**

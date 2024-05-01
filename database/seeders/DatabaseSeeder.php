@@ -8,6 +8,9 @@ use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Position;
+use App\Models\PO\Catergory;
+use App\Models\Po\supplier;
+use App\Models\Inventory\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -57,7 +60,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ]
         )
-        ->create();
+            ->create();
         Position::factory()->count(19)->sequence(
             [
                 'name' => 'HR Manager',
@@ -193,10 +196,36 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
         )
-        ->create();
+            ->create();
 
         // ? ADD YOUR MANAGER ACCOUNT HERE
         Employee::factory()->create([
+            'first_name' => 'Mark Erol',
+            'middle_name' => 'Garcia',
+            'last_name' => 'Manansala',
+            'gender' => 'M',
+            'age' => 21,
+            'birthday' => '2003-02-24', // '2002-03-15
+            'phone' => '09053457036',
+            'image' => 'images/avatars/1337163.png',
+            'age' => 20,
+            'resume' => 'dummy-resume.pdf',
+            'birthday' => '2002-03-15', // '2002-03-15
+            'phone' => '09123456789',
+            'image' => 'images/avatars/sample-image.jpg',
+            'address' => 'San Juan San Simon Pampanga',
+            'position_id' => 1,
+            'email' => 'manansalamarkerol@gmail.com',
+            'password' => Hash::make('12345678'),
+            'employment_status' => 'Full Time',
+            'email_verified_at' => now(),
+            'salary' => 25000,
+            'created_at' => now()->subYear(),
+            'updated_at' => null,
+            'notes' => 'HATDOG'
+        ]);
+      
+      Employee::factory()->create([
             'first_name' => 'Emmanuel',
             'middle_name' => 'Meneses',
             'last_name' => 'Male',
@@ -217,8 +246,12 @@ class DatabaseSeeder extends Seeder
             'updated_at' => null,
             'notes' => 'This is super ugly client'
         ]);
-        
+
         Employee::factory(50)->create();
         Applicant::factory(210)->create();
+        Supplier::factory(10)->create();
+        Catergory::factory(5)->create();
+        Product::factory(10)->create();
+
     }
 }
