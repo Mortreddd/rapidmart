@@ -130,7 +130,7 @@ class SupplierController extends Controller
 
             } catch (\Exception $e) {
                 // Catch any other exceptions(need to be assisted in the future...)
-                return response()->json(['error' => 'Something went wrong.'], 500);//just for console :)
+                return response()->json(['error' => 'Something went wrong.']);//just for console :)
             }
             return response()->json(['status' => 'success', $Updatesupplier]);//just for console :)
         }
