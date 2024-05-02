@@ -28,9 +28,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/all/supplier', [SupplierController::class, 'index'])->name('supplier.index');
-    Route::post('/store/supplier', [SupplierController::class, 'storeSupplier'])->name('supplier.store');
-    Route::get('/delete/supplier/{id}', [SupplierController::class, 'deleteSupplier'])->name('supplier.delete');
-    Route::post('/edit/supplier', [SupplierController::class, 'editSupplier'])->name('supplier.edit');
+    Route::post('/store/supplier', [SupplierController::class, 'store'])->name('supplier.store');
+    Route::get('/delete/supplier/{id}', [SupplierController::class, 'destroy'])->name('supplier.delete');
+    Route::post('/edit/supplier', [SupplierController::class, 'edit'])->name('supplier.edit');
 
     Route::get('/create/PurchaseOrder', [PurchaseOrderController::class, 'index'])->name('po.index');
     Route::post('/store/PurchaseOrder', [PurchaseOrderController::class, 'create'])->name('po.create');
