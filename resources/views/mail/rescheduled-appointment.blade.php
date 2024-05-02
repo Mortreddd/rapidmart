@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Invitation</title>
+    <title>Rescheduled Interview Appointment</title>
     <style>
         body,
         h1,
@@ -70,30 +71,20 @@
         </div>
         <div class="content">
             <p class="paragraph">Dear {{ $applicantName }},</p>
-            <p class="paragraph">Thank you for applying to Rapidmart.</p>
-            <p class="paragraph">
-                Your application for the {{ $positionName }} position stood 
-                out to us and we would like to invite you for an interview at our 
-                office to get to know you a bit better.
-            </p>
-            <p class="paragraph">Your interview details are as follows:</p>
+            <p class="paragraph">We would like to inform you that your interview appointment has been rescheduled.</p>
+            <p class="paragraph">Your new interview details are as follows:</p>
             <ul class="paragraph" style="list-style-type: none;">
-                <li><strong>Date:</strong> <span style="color: #007bff;">{{ $appointmentDate }}</span></li>
-                <li><strong>Time:</strong> <span style="color: #007bff;">{{ $appointmentTime }}</span></li>
+                <li><strong>Date:</strong> <span style="color: #007bff;">{{ $interviewDate }}</span></li>
+                <li><strong>Time:</strong> <span style="color: #007bff;">{{ $interviewTime }}</span></li>
             </ul>
-            <p class="paragraph">
-                The interview will last about 10 minutes 
-                and you'll have the chance to discuss 
-                the {{ $positionName }} position
-                and learn more about our company.
-            </p>
-           
-            <p class="paragraph">Looking forward to hearing from you.</p>
+            <p class="paragraph">We apologize for any inconvenience this change may cause and appreciate your understanding.</p>
+            <p class="paragraph">If you have any questions or need further assistance, please feel free to contact us.</p>
             <p class="paragraph">Thank you for your cooperation.</p>
-            <p class="paragraph">All the best regards, HR Department</p>
+            <p class="paragraph">Sincerely,</p>
+            <p class="paragraph">Rapidmart</p>
         </div>
         <div class="footer">
-            <p>This is an automated message. Please do not reply to this email.</p>
+            <p>This email was sent by Rapidmart. Please do not reply to this email.</p>
         </div>
     </div>
 </body>

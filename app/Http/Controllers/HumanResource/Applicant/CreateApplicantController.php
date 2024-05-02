@@ -8,7 +8,7 @@ use App\Http\Requests\Applicant\CreateApplicantRequest;
 use App\Models\HumanResource\Applicant;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
-
+use Illuminate\Support\Str;
 class CreateApplicantController extends Controller
 {
     public function index()
@@ -26,12 +26,12 @@ class CreateApplicantController extends Controller
             $file_name = time().$request->first_name.$request->last_name.'.'.$request->file('resume')->extension();
             $request->file('resume')->storeAs('public/resumes', $file_name);
         }
-        
+
         Applicant::create([
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'last_name' => $request->last_name,
-            'gender' => $request->gender,
+            'first_name' => Str::title($request->first_name),
+            'middle_name' => Str::title($request->middle_name),
+            'last_name' => Str::title($request->last_name),
+            'gender' => Str::title($request->gender),
             'age' => $request->age,
             'address' => $request->address,
             'phone' => $request->phone,

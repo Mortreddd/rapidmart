@@ -18,7 +18,7 @@
         *Implemented size limitation with max-w-screen-xl.
         *Aligned content to center using m-auto. --}}
 
-        <main id="content" class="m-auto max-w-screen-xl h-full flex overflow-hidden">
+        <main id="content" class="m-auto w-full h-full flex">
             {{--  SIDE BAR --}}
             <aside id="sidebar" class="h-[100vh] width-transition grid-template-col-0 sticky top-0">
                 @include('includes.sidebar')

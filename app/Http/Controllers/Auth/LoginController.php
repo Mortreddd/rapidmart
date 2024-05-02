@@ -29,7 +29,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::logoutCurrentDevice();
+        Auth::logout();
         return Redirect::route('login');
     }
 }

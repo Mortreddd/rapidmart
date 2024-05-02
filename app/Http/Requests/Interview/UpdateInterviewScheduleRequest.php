@@ -4,7 +4,7 @@ namespace App\Http\Requests\Interview;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateInterviewRequest extends FormRequest
+class UpdateInterviewScheduleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,6 @@ class CreateInterviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'applicant_id' => 'required|exists:applicants,id',
             'interview_date' => 'required|string',
             'interview_time' => 'required',
             'interviewer_id' => 'required|exists:employees,id',
@@ -30,11 +29,9 @@ class CreateInterviewRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages() : array
     {
         return [
-            'applicant_id.required' => 'Applicant ID is required',
-            'applicant_id.exists' => 'Applicant ID does not exist',
             'interview_date.required' => 'Interview date is required',
             'interview_date.date' => 'Interview date must be a date',
             'interview_time.required' => 'Interview time is required',

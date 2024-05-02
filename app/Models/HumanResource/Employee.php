@@ -24,6 +24,7 @@ class Employee extends Authenticatable
         'image',
         'address',
         'position_id',
+        'department_id',
         'email',
         'password',
         'employment_status',

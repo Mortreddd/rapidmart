@@ -5,9 +5,9 @@
 
 @section('content')
     <div id="danger-modal" class="w-full h-full z-10 absolute top-0 inset-0 flex justify-center items-center transition-colors ease-in-out duration-200 modal-inactive">
-        <form action="{{ route('applicant.destroy.all') }}" method="post" id="danger-modal-content" class="h-fit w-80 space-y-2 modal-content fade-out-modal">
-            @csrf
+        <form action="{{ route('applicant.destroy.all') }}" method="POST" id="danger-modal-content" class="h-fit w-80 space-y-2 modal-content fade-out-modal">
             @method('DELETE')
+            @csrf
             <button type="button" id="close-modal-button" class="absolute top-3 right-3 rounded-full h-fit w-fit p-3 hover:text-gray-700 bg-white hover:bg-gray-300 transition-colors duration-200 ease-in-out">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />

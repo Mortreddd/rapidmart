@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Position;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('address');
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Department::class)->constrained()->cascadeOnDelete();
             $table->string('email');
             $table->string('password');
             $table->enum('employment_status', ['Full Time', 'Part Time', 'Resigned', 'Training']);

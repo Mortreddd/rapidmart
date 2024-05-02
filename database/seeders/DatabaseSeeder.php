@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
+use App\Models\HumanResource\Interview;
 use App\Models\HumanResource\Position;
 use App\Models\PO\Catergory;
 use App\Models\Po\supplier;
@@ -205,16 +206,13 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Manansala',
             'gender' => 'M',
             'age' => 21,
-            'birthday' => '2003-02-24', // '2002-03-15
             'phone' => '09053457036',
             'image' => 'images/avatars/1337163.png',
-            'age' => 20,
             'resume' => 'dummy-resume.pdf',
             'birthday' => '2002-03-15', // '2002-03-15
-            'phone' => '09123456789',
-            'image' => 'images/avatars/sample-image.jpg',
             'address' => 'San Juan San Simon Pampanga',
             'position_id' => 1,
+            'department_id' => 1,
             'email' => 'manansalamarkerol@gmail.com',
             'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
@@ -237,6 +235,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'images/avatars/sample-image.jpg',
             'address' => 'San Juan San Simon Pampanga',
             'position_id' => 1,
+            'department_id' => 1,
             'email' => 'emmanmale@gmail.com',
             'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
@@ -250,6 +249,7 @@ class DatabaseSeeder extends Seeder
         Employee::factory(50)->create();
         Applicant::factory(210)->create();
         Supplier::factory(10)->create();
+        Interview::factory(20)->create();
         Catergory::factory(5)->create();
         Product::factory(10)->create();
 

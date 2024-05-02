@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Invitation</title>
+    <title>Cancelled Interview Appointment</title>
     <style>
+        /* Reset CSS */
         body,
         h1,
         p {
@@ -12,6 +14,8 @@
             padding: 0;
             font-family: Arial, sans-serif;
         }
+
+        /* Container Styles */
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -19,11 +23,13 @@
             background-color: #f9f9f9;
         }
 
+        /* Header Styles */
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
 
+        /* Content Styles */
         .content {
             padding: 20px;
             background-color: #ffffff;
@@ -31,6 +37,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        /* Button Styles */
         .btn {
             display: inline-block;
             background-color: #007bff;
@@ -41,12 +48,15 @@
             margin-top: 20px;
         }
 
+        /* Footer Styles */
         .footer {
             text-align: center;
             margin-top: 20px;
             color: #666666;
             font-size: 14px;
         }
+
+        /* Title Styles */
         .title {
             color: #333333;
             font-size: 24px;
@@ -54,6 +64,7 @@
             margin-bottom: 10px;
         }
 
+        /* Paragraph Styles */
         .paragraph {
             color: #666666;
             font-size: 16px;
@@ -65,35 +76,28 @@
 
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <h1 class="title">Rescheduled Interview Appointment</h1>
+            <h1 class="title">Cancelled Interview Appointment</h1>
         </div>
+        <!-- Content -->
         <div class="content">
             <p class="paragraph">Dear {{ $applicantName }},</p>
-            <p class="paragraph">Thank you for applying to Rapidmart.</p>
             <p class="paragraph">
-                Your application for the {{ $positionName }} position stood 
-                out to us and we would like to invite you for an interview at our 
-                office to get to know you a bit better.
+                We regret to inform you that your interview appointment scheduled for 
+                <span style="color: #007bff;">{{ $interviewDate }}</span> at 
+                <span style="color: #007bff;">{{ $interviewTime }}</span> 
+                has been cancelled.
             </p>
-            <p class="paragraph">Your interview details are as follows:</p>
-            <ul class="paragraph" style="list-style-type: none;">
-                <li><strong>Date:</strong> <span style="color: #007bff;">{{ $appointmentDate }}</span></li>
-                <li><strong>Time:</strong> <span style="color: #007bff;">{{ $appointmentTime }}</span></li>
-            </ul>
-            <p class="paragraph">
-                The interview will last about 10 minutes 
-                and you'll have the chance to discuss 
-                the {{ $positionName }} position
-                and learn more about our company.
-            </p>
-           
-            <p class="paragraph">Looking forward to hearing from you.</p>
+            <p class="paragraph">Please accept our sincerest apologies for any inconvenience this may cause. We appreciate your understanding in this matter.</p>
+            <p class="paragraph">If you have any questions or need further assistance, feel free to contact us.</p>
             <p class="paragraph">Thank you for your cooperation.</p>
-            <p class="paragraph">All the best regards, HR Department</p>
+            <p class="paragraph">Sincerely,</p>
+            <p class="paragraph">HR Department</p>
         </div>
+        <!-- Footer -->
         <div class="footer">
-            <p>This is an automated message. Please do not reply to this email.</p>
+            <p>This email was sent by Rapidmart. Please do not reply to this email.</p>
         </div>
     </div>
 </body>
