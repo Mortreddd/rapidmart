@@ -18,12 +18,16 @@ class EmployeeController extends Controller
     {
         // Department::withCount(['employees'])->get()->dd();
         $employees = Employee::with(['position.department'])
+                        ->whereNotIn('employment_status', ['Resigned', 'Terminated'])
                         ->orderBy('created_at')
                         ->paginate(20);
 
         if($request->has('search') && $request->search != null){
-            $employees = Employee::where('first_name', 'like', "%{$request->search}%")
-                ->orWhere('last_name', 'like', "%{$request->search}%")
+            $employees = Employee::whereNotIn('employment_status', ['Resigned', 'Terminated'])
+                ->orWhere(function($query) use ($request) {
+                    $query->where('last_name', 'like', "%{$request->search}%")
+                        ->where('first_name', 'like', "%{$request->search}%");
+                })
                 ->orderBy('created_at')
                 ->paginate(20);
         }

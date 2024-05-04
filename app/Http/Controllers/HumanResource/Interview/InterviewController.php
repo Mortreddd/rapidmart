@@ -43,7 +43,10 @@ class InterviewController extends Controller
         $interview->update([
             'status' => 'Cancelled'
         ]);
-
+        $interview->applicant->update([
+            'status' => 'Reject'
+        ]);
+        
         return Redirect::back()->with(['cancelled' => 'Successfully cancelled appointment']);
     }
 }

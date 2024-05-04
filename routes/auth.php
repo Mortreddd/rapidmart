@@ -3,11 +3,13 @@
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HumanResource\Applicant\AcceptedApplicantController;
 use App\Http\Controllers\HumanResource\Applicant\CreateApplicantController;
 use App\Http\Controllers\HumanResource\Interview\AppointmentController;
 use App\Http\Controllers\HumanResource\Applicant\PendingApplicantController;
 use App\Http\Controllers\HumanResource\Applicant\RejectedApplicantController;
 use App\Http\Controllers\HumanResource\ApplicantController;
+use App\Http\Controllers\HumanResource\Employee\EditEmployeeController;
 use App\Http\Controllers\HumanResource\EmployeeController;
 use App\Http\Controllers\HumanResource\Interview\InterviewController;
 use App\Http\Controllers\Sales\SalesReportController;
@@ -28,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group( function() {
     Route::middleware(['role:hr'])->group(function (){
         Route::prefix('employees')->middleware(['auth'])->group(function () {
             Route::get('/', EmployeeController::class)->name('employee.index');
+            Route::get('/edit/{employee_id}', [EditEmployeeController::class, 'index'])->name('employee.show');
         });
       
         // ? APPLICANT ROUTES
@@ -35,6 +38,8 @@ Route::middleware(['auth', 'verified'])->group( function() {
         Route::prefix('applicants')->group( function () {
             Route::get('/', ApplicantController::class)->name('applicant.index');
 
+            // * ACCEPTED APPLICANT ROUTE
+            Route::get('/accepted', [AcceptedApplicantController::class, 'index'])->name('applicant.accepted.index');
             // * PENDING APPLICANT ROUTE
             Route::get('/pending', [PendingApplicantController::class, 'index'])->name('applicant.pending.index');
             Route::put('/pending/reject/{applicant_id}', [RejectedApplicantController::class, 'store'])->name('applicant.reject');

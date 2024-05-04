@@ -12,6 +12,7 @@ use App\Models\HumanResource\Position;
 use App\Models\PO\Catergory;
 use App\Models\Po\supplier;
 use App\Models\Inventory\Product;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -216,7 +217,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'manansalamarkerol@gmail.com',
             'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
-            'email_verified_at' => now(),
+            'email_verified_at' => Carbon::now(),
             'salary' => 25000,
             'created_at' => now()->subYear(),
             'updated_at' => null,
@@ -241,7 +242,7 @@ class DatabaseSeeder extends Seeder
             'employment_status' => 'Full Time',
             'email_verified_at' => now(),
             'salary' => 25000,
-            'created_at' => now()->subYear(),
+            'created_at' => Carbon::now()->subYear(),
             'updated_at' => null,
             'notes' => 'This is super ugly client'
         ]);

@@ -55,4 +55,14 @@ class Employee extends Authenticatable
     {
         return static::belongsTo(Position::class);
     }
+
+    public function department()
+    {
+        return static::belongsTo(Department::class);
+    }
+
+    public function leave()
+    {
+        return static::belongsTo(Leave::class);
+    }
 }
