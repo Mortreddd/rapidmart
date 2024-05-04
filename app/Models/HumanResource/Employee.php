@@ -24,6 +24,7 @@ class Employee extends Authenticatable
         'image',
         'address',
         'position_id',
+        'department_id',
         'email',
         'password',
         'employment_status',
@@ -53,5 +54,15 @@ class Employee extends Authenticatable
     public function position()
     {
         return static::belongsTo(Position::class);
+    }
+
+    public function department()
+    {
+        return static::belongsTo(Department::class);
+    }
+
+    public function leave()
+    {
+        return static::belongsTo(Leave::class);
     }
 }

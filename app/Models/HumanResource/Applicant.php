@@ -49,4 +49,9 @@ class Applicant extends Model
         return Interview::where('applicant_id', $this->id)->exists();
     }
 
+    public function updatedDate()
+    {
+        return date('F d, Y', strtotime(Carbon::parse($this->updated_at))); 
+    }
+
 }

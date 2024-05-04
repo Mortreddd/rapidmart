@@ -25,5 +25,10 @@ class Department extends Model
     {
         return  static::hasMany(Position::class);
     }
+
+    public function employees()
+    {
+        return static::hasMany(Employee::class);
+    }
     
 }

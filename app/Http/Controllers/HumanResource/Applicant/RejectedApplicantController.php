@@ -33,7 +33,9 @@ class RejectedApplicantController extends Controller
         ]);
     }
 
-
+    
+    // * UNCOMMENT THE STORAGE DELETE METHOD IF YOU WANT TO DELETE THE RESUME FILE AND FOR PRODUCTION
+    // * SINCE THIS IS FOR DEVELOPMENT PURPOSES ONLY, I COMMENTED THE STORAGE DELETE METHOD
     public function store($applicant_id)
     {
         $applicant = Applicant::findOrFail($applicant_id);
@@ -45,13 +47,15 @@ class RejectedApplicantController extends Controller
         }
 
         ProcessRejectedApplicantEvent::dispatch($applicant);
-        if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
-            Storage::delete('public/resumes/'.$applicant->resume);
-        }
+        // if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
+        //     Storage::delete('public/resumes/'.$applicant->resume);
+        // }
         return Redirect::back()->with(['rejected' => 'Successfully rejected applicant']);
     }
 
     // ! DELETE AN APPLICANT
+    // * UNCOMMENT THE STORAGE DELETE METHOD IF YOU WANT TO DELETE THE RESUME FILE AND FOR PRODUCTION
+    // * SINCE THIS IS FOR DEVELOPMENT PURPOSES ONLY, I COMMENTED THE STORAGE DELETE METHOD
     public function destroy($applicant_id)
     {
         $applicant = Applicant::findOrFail($applicant_id);
@@ -65,17 +69,20 @@ class RejectedApplicantController extends Controller
     
     // ! CLEAR ALL METHOD
     // ! DANGER ZONE
+    // * UNCOMMENT THE STORAGE DELETE METHOD IF YOU WANT TO DELETE THE RESUME FILE AND FOR PRODUCTION
+    // * SINCE THIS IS FOR DEVELOPMENT PURPOSES ONLY, I COMMENTED THE STORAGE DELETE METHOD
     public function clear()
     {
-        Applicant::where('status', 'Rejected')
-                ->get()
-                ->map(function($applicant) {
-                    if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
-                        Storage::delete('public/resumes/'.$applicant->resume);
-                    }
-                    $applicant->delete();
-                });
-        return Redirect::route('applicant.index')
-            ->with('deleted', 'All rejected applicants are being deleted.');
+        $applicants = Applicant::where('status', 'Rejected')->get();
+
+        $applicants->each(function( Applicant $applicant ){
+
+            // if(Storage::disk('public')->exists('resumes/'.$applicant->resume) && $applicant->resume != null){
+            //     Storage::delete('public/resumes/'.$applicant->resume);
+            // }
+            $applicant->delete();
+        });
+        
+        return Redirect::route('applicant.index')->with('deleted', 'All rejected applicants are being deleted.');
     }
 }

@@ -1,22 +1,23 @@
 <?php
 
-use App\Models\PO\Supplier;
+use App\Models\HumanResource\Employee;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
+        Schema::create('leaves', function (Blueprint $table) {
             $table->id();
-            $table->text('subject');
-            $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
-            $table->text('pdf_path');
-            $table->string('status');
+            $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->text('reason');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase_orders');
+        Schema::dropIfExists('leaves');
     }
 };

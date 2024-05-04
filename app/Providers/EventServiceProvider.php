@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 use App\Events\AppointmentCreationEvent;
+use App\Events\CancellationInterviewEvent;
 use App\Events\ProcessRejectedApplicantEvent;
+use App\Events\RescheduleAppointmentEvent;
 use App\Listeners\AppointmentNoticeListener;
+use App\Listeners\InterviewCancellationListener;
 use App\Listeners\RejectedApplicantListener;
+use App\Listeners\UpdatedAppointmentScheduleListener;
 use App\Models\HumanResource\Applicant;
 use App\Observers\Applicant\ApplicantObserver;
 use Illuminate\Auth\Events\Registered;
@@ -24,6 +28,13 @@ class EventServiceProvider extends ServiceProvider
         ],
         AppointmentCreationEvent::class => [
             AppointmentNoticeListener::class
+        ],
+
+        RescheduleAppointmentEvent::class => [
+            UpdatedAppointmentScheduleListener::class
+        ],
+        CancellationInterviewEvent::class => [
+            InterviewCancellationListener::class
         ]
     ];
 

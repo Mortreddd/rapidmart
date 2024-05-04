@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\AppointmentCreationEvent;
-use App\Mail\ApplicantAppointmentMail;
+use App\Mail\Appointments\ApplicantAppointmentMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;

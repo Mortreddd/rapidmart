@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Appointments;
 
-use App\Models\HumanResource\Applicant;
+use App\Models\HumanResource\Interview;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -11,15 +11,16 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Support\Facades\Auth;
-
-class EmailRejectedApplicant extends Mailable
+class RescheduledAppointmentNotice extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(private Applicant $applicant){}
+    public function __construct(
+        public Interview $interview,
+    ){}
 
     /**
      * Get the message envelope.
@@ -27,9 +28,9 @@ class EmailRejectedApplicant extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-                from: new Address(Auth::user()->email, 'Rapidmart'),
-                subject: 'Applicantion Update: ' . $this->applicant->position->name . ' at RapidMart',
-                to: $this->applicant->email
+            from: new Address(Auth::user()->email, 'Rapidmart'),
+            subject: 'Rescheduled Appointment Notice',
+            to: $this->interview->applicant->email
         );
     }
 
@@ -39,10 +40,11 @@ class EmailRejectedApplicant extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.rejected-applicant',
+            view: 'mail.rescheduled-appointment',
             with: [
-                'applicantName' => $this->applicant->first_name,
-                'positionName' => $this->applicant->position->name,
+                'applicantName' => $this->interview->applicant->last_name,
+                'interviewDate' => $this->interview->interviewDate(),
+                'interviewTime' => $this->interview->interviewTime()
             ]
         );
     }
