@@ -16,11 +16,11 @@ class EmployeeController extends Controller
 {
     public function __invoke(Request $request)
     {
-        // Department::withCount(['employees'])->get()->dd();
+        // Employee::groupBy('employment_status')->selectRaw('employment_status, count(*) as total')->get()->dd();
         $employees = Employee::with(['position.department'])
                         ->whereNotIn('employment_status', ['Resigned', 'Terminated'])
                         ->orderBy('created_at')
-                        ->paginate(20);
+                        ->paginate(50);
 
         if($request->has('search') && $request->search != null){
             $employees = Employee::whereNotIn('employment_status', ['Resigned', 'Terminated'])
@@ -29,13 +29,14 @@ class EmployeeController extends Controller
                         ->where('first_name', 'like', "%{$request->search}%");
                 })
                 ->orderBy('created_at')
-                ->paginate(20);
+                ->paginate(50);
         }
 
         return View::make('layouts.hr.employee', [
             'employees' => $employees,
             'overallEmployeeCount' => Employee::count(),
-            'departments' => Department::withCount(['employees'])->get()
+            'departments' => Department::withCount(['employees'])->get(),
+            'employmentStatusCounts' => Employee::groupBy('employment_status')->selectRaw('employment_status, count(*) as total')->get(),
         ]);
     }
 }

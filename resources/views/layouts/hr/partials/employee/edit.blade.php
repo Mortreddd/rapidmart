@@ -45,8 +45,9 @@
         </nav>
         
         <div class="relative w-full h-fit flex justify-center py-5">
-            <form  method="post" class="w-auto py-4 px-6 h-fit space-y-5 bg-white rounded-xl fade-in-early" enctype="multipart/form-data">
+            <form action="{{ route('employee.update', ['employee_id' => $employee->id]) }}" method="post" class="w-auto py-4 px-6 h-fit space-y-5 bg-white rounded-xl fade-in-early" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="relative w-full gap-3 grid grid-cols-6">
                     <div class="col-span-2">
                         @error('first_name')
@@ -71,36 +72,29 @@
                     </div>
                 </div>
                 <div class="relative w-full gap-3 grid grid-cols-6">
-                    <div class="col-span-2">
+                    <div class="col-span-3">
                         @error('gender')
                             <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
                         @enderror
                         <label for="gender" class="block">Gender</label>
                         <select id="gender" name="gender"  class="bg-gray-50 border focus:border-none outline-none border-gray-500 focus:ring-secondary text-gray-700 rounded-lg focus:ring-1 focus:border-secondary w-full p-2">
-                            <option selected disabled value="{{ $employee->gender }}">{{ $employee->gender === 'M' ? "Male" : "Female"}}</option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
+                            @if ($employee->gender === 'M')
+                                <option value="M" selected>Male</option>
+                                <option value="F">Female</option>
+                            @else
+                                <option value="M">Male</option>
+                                <option value="F" selected>Female</option>
+                            @endif
                         </select>
                     </div>
-                    <div class="col-span-2">
+                    <div class="col-span-3">
                         @error('age')
                             <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
                         @enderror
                         <label for="age" class="block">Age</label>
                         <input type="number" name="age" id="age" autocomplete="off" value="{{ $employee->age }}" max="200" placeholder="Age" class="w-full outline-none focus:ring-1 focus:ring-secondary focus:border-none border border-gray-500 placeholder:text-gray-700 rounded p-2">
                     </div>
-                    <div class="col-span-2">
-                        @error('position_id')
-                            <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
-                        @enderror
-                        <label for="position_id" class="block">Position</label>
-                        <select id="position_id" name="position_id" class="bg-gray-50 border focus:border-none outline-none border-gray-500 text-gray-700 rounded-lg focus:ring-1 focus:ring-secondary focus:border-secondary w-full p-2">
-                            <option selected disabled value="{{ $employee->position->id }}">{{ $employee->position->name }}</option>
-                            @foreach ($positions as $position)
-                                <option value="{{ $position->id }}">{{ $position->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    
                 </div>
 
                 <div class="col-span-6">
@@ -127,15 +121,46 @@
                     @enderror
                     <label for="employment_status" class="block">Employment Status</label>
                     <select id="employment_status" name="employment_status"  class="bg-gray-50 border focus:border-none outline-none border-gray-500 focus:ring-secondary text-gray-700 rounded-lg focus:ring-1 focus:border-secondary w-auto p-2">
-                        <option selected disabled value="{{ $employee->employment_status }}">{{ $employee->employment_status }}</option>
-                        <option value="Training">Training</option>
-                        <option value="Part Time">Part Time</option>
-                        <option value="Full Time">Full Time</option>
-                        <option value="Retired">Retired</option>
-                        <option value="Terminated">Terminated</option>
+                        @switch($employee->employment_status)
+                            @case('Training')
+                                <option value="Training" selected>Training</option>
+                                <option value="Part Time">Part Time</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Resigned">Resigned</option>
+                                <option value="Terminated">Terminated</option>
+                                @break
+                            @case('Part Time')
+                                <option value="Part Time" selected>Part Time</option>
+                                <option value="Training">Training</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Resigned">Resigned</option>
+                                <option value="Terminated">Terminated</option>
+                                @break
+                            @case('Full Time')
+                                <option value="Full Time" selected>Full Time</option>
+                                <option value="Training">Training</option>
+                                <option value="Part Time">Part Time</option>
+                                <option value="Resigned">Resigned</option>
+                                <option value="Terminated">Terminated</option>
+                                @break
+                            @case('Resigned')
+                                <option value="Resigned" selected>Resigned</option>
+                                <option value="Training">Training</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Part Time">Part Time</option>
+                                <option value="Terminated">Terminated</option>
+                                @break
+                            @case('Terminated')
+                                <option value="Terminated" selected>Terminated</option>
+                                <option value="Training">Training</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Resigned">Resigned</option>
+                                <option value="Part Time">Part Time</option>
+                                @break
+                        @endswitch
                     </select>
                 </div>
-
+                
                 <div class="relative w-full gap-3 grid grid-cols-6">
                     <div class="col-span-6">
                         @error('email')
@@ -147,6 +172,15 @@
                     </div>
                 </div>
 
+                <div class="col-span-2">
+                    @error('position_id')
+                        <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
+                    @enderror
+                    <label for="position_id" class="block">Position</label>
+                    <p>{{ $employee->position->name }}</p>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Can't be replace.</p>
+                </div>
+
                 <div class="relative w-full grid grid-cols-6">
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-700" for="resume_input">Resume</label>
@@ -155,8 +189,8 @@
                     </div>
                 </div>
                 <div class="w-full h-fit flex items-center justify-end gap-4">
-                    <a href="{{ URL::previous() }}" class="rounded text-black hover:bg-gray-300 bg-gray-200 px-4 py-2 transition-colors duration-200 ease-in-out">Cancel</a>
-                    <button type="submit" class="rounded bg-secondary px-4 py-2 text-white transition-colors duration-200 ease-in-out hover:bg-secondary/80">Save</button>
+                    <a href="{{ route('employee.index') }}" class="rounded text-black hover:bg-gray-300 bg-gray-200 px-4 py-2 transition-colors duration-200 ease-in-out">Cancel</a>
+                    <button type="submit" class="rounded bg-amber-500 px-4 py-2 text-white transition-colors duration-200 ease-in-out hover:bg-amber-600">Save</button>
                 </div>
             </form>
         </div>

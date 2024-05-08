@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HumanResource\Interview\EditApplicantStatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HumanResource\Applicant\AcceptedApplicantController;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group( function() {
         Route::prefix('employees')->middleware(['auth'])->group(function () {
             Route::get('/', EmployeeController::class)->name('employee.index');
             Route::get('/edit/{employee_id}', [EditEmployeeController::class, 'index'])->name('employee.show');
+            Route::put('/edit/{employee_id}', [EditEmployeeController::class, 'update'])->name('employee.update');
         });
       
         // ? APPLICANT ROUTES
@@ -38,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group( function() {
         Route::prefix('applicants')->group( function () {
             Route::get('/', ApplicantController::class)->name('applicant.index');
 
+            Route::put('/edit/{interview_id}/{applicant_id}', [EditApplicantStatusController::class, 'edit'])->name('applicant.status.edit');
             // * ACCEPTED APPLICANT ROUTE
             Route::get('/accepted', [AcceptedApplicantController::class, 'index'])->name('applicant.accepted.index');
             // * PENDING APPLICANT ROUTE

@@ -247,8 +247,8 @@ class DatabaseSeeder extends Seeder
             'notes' => 'This is super ugly client'
         ]);
 
-        Employee::factory(50)->create();
-        Applicant::factory(210)->create();
+        Employee::factory(200)->create();
+        Applicant::factory(302)->create();
         Supplier::factory(10)->create();
         Interview::factory(20)->create();
         Catergory::factory(5)->create();

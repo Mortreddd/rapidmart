@@ -29,9 +29,7 @@ class EditEmployeeRequest extends FormRequest
             'age' => 'integer|required|max:200',
             'address' => 'string|required',
             'phone' => 'string|min:11|required',
-            'email' => 'string|required|email',
-            'resume' => 'file|nullable|max:10240',
-            'position_id' => 'required|integer',
+            'employment_status' => 'in:Training,Part Time,Full Time,Resigned,Terminated|required',
             'notes' => 'nullable'
         ];
     }
@@ -49,10 +47,8 @@ class EditEmployeeRequest extends FormRequest
             'address.required' => 'Address is required',
             'phone.required' => 'Phone number is required',
             'phone.min' => 'Phone number must at least 11 length',
-            'email.required' => 'Email is required',
-            'email.email' => 'Email must be valid',
-            'resume.max' => 'Resume must not exceed 6MB',
-            'position_id.required' => 'Position is required'
+            'employment_status.required' => 'Employment Status is required',
+            'employment_status.in' => 'Employment Status must be in options',
         ];
     }
 }
