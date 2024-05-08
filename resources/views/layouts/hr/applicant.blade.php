@@ -243,6 +243,10 @@
         <x-toast.danger>
             {{ Session::get('error') }}
         </x-toast.danger>
+    @elseif( Session::has('success') )
+        <x-toast.success>
+            {{ Session::get('success') }}
+        </x-toast.success>
     @endif
 @endsection
 

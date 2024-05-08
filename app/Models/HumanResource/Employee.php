@@ -49,8 +49,6 @@ class Employee extends Authenticatable
         return date('F d, Y', strtotime(Carbon::parse($this->created_at)));
     }
 
-    // ? FOR ROLE-BASED AUTHENTICATION
-
     public function position()
     {
         return static::belongsTo(Position::class);

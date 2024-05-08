@@ -91,13 +91,13 @@
             <canvas id="pie-chart" style="height: 300px; width: 400px;"></canvas>
         </div>
         <div class="w-fit h-fit fade-in-early p-3 bg-white rounded-xl">
-            <canvas id="applicant-chart" style="height: 300px; width: 700px;"></canvas>
+            <canvas id="employment-chart" style="height: 300px; width: 700px;"></canvas>
         </div>
     </div>
     <div class="pt-8 w-full fade-in-early flex justify-end gap-5 items-center">
         <div class="w-fit">
             <form action=" {{ route('employee.index') }}" method="get" class="flex w-96 items-center gap-3">
-                <input type="search" name="search" value="{{ Request::get('search') }}" id="search-applicant-input" placeholder="Search Applicant..." class="bg-gray-50 border border-secondary text-gray-700 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-primary block w-full p-2.5" autocomplete="off"/>
+                <input type="search" name="search" value="{{ Request::get('search') }}" id="search-applicant-input" placeholder="Search Employee..." class="bg-gray-50 border border-secondary text-gray-700 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-primary block w-full p-2.5" autocomplete="off"/>
                 <button id="search-applicant-button" type="submit" class="rounded-lg p-2 transition-colors duration-200 ease-in-out bg-secondary hover:bg-secondary/80 text-white ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -105,12 +105,6 @@
                 </button>
             </form>
         </div>
-        <a class="rounded-lg py-2 px-3 transition-colors text-lg duration-200 ease-in-out flex gap-3 items-center bg-orange-500 text-white hover:bg-orange-600 cursor-pointer pointer-events-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-            </svg>
-            Add Employee 
-        </a>
     </div>
     <table id="default-applicant-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
         <caption class="text-gray-800 text-center">Employee List</caption>
@@ -196,8 +190,28 @@
                 @endif
             </div>
         @endif
-</div>
-
+    </div>
+    @if ( Session::has('created') )
+    <x-toast.success>
+        {{ Session::get('created') }}
+    </x-toast.success>
+    @elseif( Session::has('deleted') )
+    <x-toast.success>
+        {{ Session::get('deleted') }}
+    </x-toast.success>
+    @elseif( Session::has('rejected') )
+    <x-toast.success>
+        {{ Session::get('rejected') }}
+    </x-toast.success>
+    @elseif( Session::has('error') )
+    <x-toast.danger>
+        {{ Session::get('error') }}
+    </x-toast.danger>
+    @elseif( Session::has('success') )
+    <x-toast.success>
+        {{ Session::get('success') }}
+    </x-toast.success>
+    @endif
 @endsection
 
 @section('scripts')
@@ -223,5 +237,27 @@
             responsive: true,
          },
       });
+
+      let employmentStatusLabels = @json($employmentStatusCounts->pluck('employment_status'));
+      let employmentStatusCounts = @json($employmentStatusCounts->pluck('total'));
+      var barColors = ["blue", "green","red","orange","brown"];
+      new Chart("employment-chart", {
+        type: "bar",
+        data: {
+            labels: employmentStatusLabels,
+            datasets: [{
+            backgroundColor: barColors,
+            data: employmentStatusCounts
+            }]
+        },
+        options: {
+            legend: {
+                display: false,
+            },
+            title: {
+                display: true,
+                text : "Overall Employment Status"
+            }
+        }})
     </script>
 @endsection
