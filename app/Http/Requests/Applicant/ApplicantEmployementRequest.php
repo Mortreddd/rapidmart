@@ -2,19 +2,16 @@
 
 namespace App\Http\Requests\Applicant;
 
-use App\Models\HumanResource\Position;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
-class CreateApplicantRequest extends FormRequest
+class ApplicantEmployementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return in_array(Auth::user()->position_id, [1,2]);
+        return in_array(Auth::user()->position_id, [1, 2]);
     }
 
     /**
@@ -31,17 +28,16 @@ class CreateApplicantRequest extends FormRequest
             'gender' => 'required|in:M,F',
             'age' => 'integer|required|max:200',
             'address' => 'string|required',
+            'birthday' => 'required',
             'phone' => 'string|min:11|required',
             'email' => 'string|required|email',
-            'birthday' => 'required',
-            'resume' => 'file|nullable|max:10240',
+            'image' => 'file|nullable|max:10240',
             'position_id' => 'required|integer',
-            'notes' => 'nullable',
-            'department_id' => 'nullable'
+            'notes' => 'nullable'
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'first_name.required' => 'First Name is required',
@@ -56,9 +52,8 @@ class CreateApplicantRequest extends FormRequest
             'phone.min' => 'Phone number must at least 11 length',
             'email.required' => 'Email is required',
             'email.email' => 'Email must be valid',
-            'resume.max' => 'Resume must not exceed 6MB',
+            'image.max' => 'Image must not exceed 6MB',
             'position_id.required' => 'Position is required'
         ];
     }
-
 }

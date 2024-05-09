@@ -4,7 +4,7 @@ use App\Models\HumanResource\Employee;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Carbon\Carbon;
 return new class extends Migration
 {
     /**
@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->datetime('start_date')->default(now()->toDateString());
-            $table->timestamp('time_in')->default(now());
+            $table->datetime('date')->default(Carbon::now()->format('F d, Y'));
+            $table->timestamp('time_in');
             $table->timestamp('time_out');
             $table->float('total_hours')->nullable();
 

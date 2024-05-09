@@ -9,27 +9,23 @@ use App\Models\HumanResource\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-
+use App\Services\EmployeeService;
 
 
 class EmployeeController extends Controller
 {
-    public function __invoke(Request $request)
+
+    private EmployeeService $employeeService;
+    public function __construct()
     {
-        // Employee::groupBy('employment_status')->selectRaw('employment_status, count(*) as total')->get()->dd();
-        $employees = Employee::with(['position.department'])
-                        ->whereNotIn('employment_status', ['Resigned', 'Terminated'])
-                        ->orderBy('created_at')
-                        ->paginate(50);
+        $this->employeeService = new EmployeeService();
+    }
+    public function index(Request $request)
+    {
+        $employees = $this->employeeService->getEmployees();
 
         if($request->has('search') && $request->search != null){
-            $employees = Employee::whereNotIn('employment_status', ['Resigned', 'Terminated'])
-                ->orWhere(function($query) use ($request) {
-                    $query->where('last_name', 'like', "%{$request->search}%")
-                        ->where('first_name', 'like', "%{$request->search}%");
-                })
-                ->orderBy('created_at')
-                ->paginate(50);
+            $employees = $this->employeeService->searchEmployees($request);
         }
 
         return View::make('layouts.hr.employee', [

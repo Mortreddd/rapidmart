@@ -30,9 +30,10 @@ Route::middleware(['auth', 'verified'])->group( function() {
    
     Route::middleware(['role:hr'])->group(function (){
         Route::prefix('employees')->middleware(['auth'])->group(function () {
-            Route::get('/', EmployeeController::class)->name('employee.index');
+            Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
             Route::get('/edit/{employee_id}', [EditEmployeeController::class, 'index'])->name('employee.show');
             Route::put('/edit/{employee_id}', [EditEmployeeController::class, 'update'])->name('employee.update');
+            Route::put('/terminate/{employee_id}', [EditEmployeeController::class, 'terminate'])->name('employee.terminate');
         });
       
         // ? APPLICANT ROUTES
@@ -70,12 +71,13 @@ Route::middleware(['auth', 'verified'])->group( function() {
             Route::put('/edit/{interview_id}', [InterviewController::class, 'edit'])->name('interview.edit');
             Route::put('/cancel/{interview_id}', [InterviewController::class, 'cancel'])->name('interview.cancel');
             Route::delete('/delete/{interview_id}', [AppointmentController::class, 'destroy'])->name('appointment.destroy');
+            
         });
 
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/testing/email', fn() => view('mail.rescheduled-appointment'));
+    Route::get('/testing/email', fn() => view('mail.auth.forgot-password'));
     
     Route::fallback(DashboardController::class);
 

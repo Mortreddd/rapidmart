@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PurchaseOrder\InvoiceController;
@@ -24,6 +25,9 @@ use App\Http\Controllers\Inventory\ProductsController;
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.verify');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'verify'])->name('forgot-password.verify');
+    Route::get('/reset-password/{email}/{token}', [ForgotPasswordController::class, 'index'])->name('reset-password.index');
+    Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'])->name('reset-password.verify');
 });
 
 Route::middleware('auth')->group(function () {
