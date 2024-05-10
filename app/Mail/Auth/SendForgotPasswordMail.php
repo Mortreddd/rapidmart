@@ -40,7 +40,7 @@ class SendForgotPasswordMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.auth.forgot-password',
+            view: 'mail.auth.reset-password',
             with: [
                 'token' => $this->token,
                 'email' => $this->email,

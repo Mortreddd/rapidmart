@@ -17,7 +17,8 @@ class ForgotPasswordEvent
      * Create a new event instance.
      */
     public function __construct(
-        public $verifiedToken,
+        public string $token,
+        public string $email,
         public mixed $password
     ){}
 

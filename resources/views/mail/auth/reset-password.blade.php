@@ -1,50 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #333;
-            margin-top: 0;
-        }
-        p {
-            margin-bottom: 20px;
-            color: #666;
-        }
-        
-        .footer {
-            margin-top: 20px;
-            color: #888;
-            font-size: 12px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        
-        
-        
-        <a href="#" class="btn">Reset Password</a>
-        <p class="footer">If you didn't request a password reset, you can safely ignore this email.</p>
-    </div>
-</body>
-</html>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rescheduled Interview Appointment</title>
+    <title>Reset Password</title>
     <style>
         body,
         h1,
@@ -113,6 +67,7 @@
         }
         .btn:hover {
             background-color: #0056b3;
+            color: #fff;
         }
         .paragraph {
             color: #666666;
@@ -141,7 +96,10 @@
             </div>
         </div>
         <div class="footer">
-            <p>This email was sent by Rapidmart. Please do not reply to this email.</p>
+            <p>
+                If you didn't request a password reset, you can safely ignore this email. 
+                This email was sent by Rapidmart. Please do not reply to this email.
+            </p>
         </div>
     </div>
 </body>
