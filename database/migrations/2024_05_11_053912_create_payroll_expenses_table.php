@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HumanResource\Payroll;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('payroll_expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_receipt_id')->constrained('order_receipts')->cascadeOnDelete();
-            $table->foreignId('payroll_receipt_id')->constrained('payroll_receipts')->cascadeOnDelete();
+            $table->foreignIdFor(Payroll::class)->constrained()->cascadeOnDelete();
             $table->float('total_amount');
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('payroll_expenses');
     }
 };

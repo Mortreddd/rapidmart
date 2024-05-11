@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\HumanResource\Employee;
+use App\Models\HumanResource\Schedule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Schedule::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->datetime('date')->default(Carbon::now()->format('F d, Y'));
-            $table->timestamp('time_in');
-            $table->timestamp('time_out');
+            $table->date('date');
+            $table->timestamp('check_in');
+            $table->timestamp('check_out');
             $table->float('total_hours')->nullable();
+            
 
         });
     }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Position;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,8 +15,9 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
-            $table->
-            $table->timestamps();
+            $table->enum('shift', ['Day', 'Night'])->default('Day');
+            $table->timestamp('time_start');
+            $table->timestamp('time_end');
         });
     }
 
