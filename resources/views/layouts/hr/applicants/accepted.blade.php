@@ -105,7 +105,7 @@
             </div>
         </div>
         <table id="default-applicant-table" class="fade-in-early font-semibold text-md table-auto border text-white w-full shadow">
-            <caption class="text-gray-800 text-center">Rejected Applicant List</caption>
+            <caption class="text-gray-800 text-center">Accepted Applicant List</caption>
             <thead class="bg-secondary">
                 <tr class=" rounded-lg">
                     <th class="px-3 py-2 rounded-tl-lg">Full Name</th>
@@ -144,7 +144,7 @@
                         </td>
                     </tr>
                 @empty
-                    <td colspan="8" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
+                    <td colspan="9" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
                         No accepted applicants found
                     </td>
                     

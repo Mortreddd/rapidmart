@@ -4,7 +4,10 @@ namespace App\Exceptions;
 
 use App\Exceptions\Email\TransportException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -30,6 +33,10 @@ class Handler extends ExceptionHandler
         });
         $this->reportable(function( TransportException $exception ) {
             return Redirect::back()->witherrors(['error' => $exception->getMessage()]);
+        });
+
+        $this->renderable(function( ExpiredTokenException $exception ) {
+            return View::make('layouts.reset-password');
         });
     }
 }

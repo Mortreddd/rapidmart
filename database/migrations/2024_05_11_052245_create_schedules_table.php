@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HumanResource\Position;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_receipt_id')->constrained('order_receipts')->cascadeOnDelete();
-            $table->foreignId('payroll_receipt_id')->constrained('payroll_receipts')->cascadeOnDelete();
-            $table->float('total_amount');
-            $table->timestamps();
+            $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
+            $table->enum('shift', ['Day', 'Night'])->default('Day');
+            $table->timestamp('time_start');
+            $table->timestamp('time_end');
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('schedules');
     }
 };

@@ -17,6 +17,7 @@ class ApplicantFactory extends Factory
      */
     public function definition(): array
     {
+        $position = fake()->randomElement(Position::all());
         return [
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->lastName(),
@@ -27,7 +28,9 @@ class ApplicantFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'resume' => 'dummy-resume.pdf',
-            'position_id' => fake()->numberBetween(1, Position::count()),
+            'birthday' => fake()->date('Y-m-d', '2000-01-01'),
+            'position_id' => $position->id,
+            'department_id' => $position->department_id,
             'employment_status' => fake()->randomElement(['Full Time', 'Part Time']),
             'status' => fake()->randomElement(['Accepted', 'Pending', 'Rejected']),
             'notes' => fake()->sentence(),

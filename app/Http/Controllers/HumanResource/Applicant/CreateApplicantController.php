@@ -9,6 +9,8 @@ use App\Models\HumanResource\Applicant;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 class CreateApplicantController extends Controller
 {
     public function index()
@@ -33,11 +35,13 @@ class CreateApplicantController extends Controller
             'last_name' => Str::title($request->last_name),
             'gender' => Str::title($request->gender),
             'age' => $request->age,
+            'birthday' => Carbon::createFromFormat('m-d-Y', $request->birthday),
             'address' => $request->address,
             'phone' => $request->phone,
             'email' => $request->email,
             'resume' => $file_name,
             'position_id' => $request->position_id,
+            'department_id' => Position::find($request->position_id)->department_id,
             'notes' => $request->notes
         ]);
         return Redirect::route('applicant.index')->with(['created' => 'Successfully added applicant']);

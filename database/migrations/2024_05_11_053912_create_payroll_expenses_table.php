@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\HumanResource\Employee;
+use App\Models\HumanResource\Payroll;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('payroll_expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->string('message');
-            $table->enum('status', ['read', 'unread'])->default('unread');
+            $table->foreignIdFor(Payroll::class)->constrained()->cascadeOnDelete();
+            $table->float('total_amount');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('payroll_expenses');
     }
 };

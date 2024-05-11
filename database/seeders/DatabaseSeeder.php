@@ -79,6 +79,13 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
+                'name' => 'Attendance Manager',
+                'department_id' => 1,
+                'salary_per_hour' => 23,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
                 'name' => 'Payroll Administrator',
                 'department_id' => 1,
                 'salary_per_hour' => 25,
@@ -198,7 +205,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
         )
-            ->create();
+        ->create();
 
         // ? ADD YOUR MANAGER ACCOUNT HERE
         Employee::factory()->create([

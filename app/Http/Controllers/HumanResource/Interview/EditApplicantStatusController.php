@@ -27,12 +27,12 @@ class EditApplicantStatusController extends Controller
                 $applicant->update(['status' => 'Cancelled']);
                 RescheduleAppointmentEvent::dispatch($applicant);
                 break;
-            case 'Pending':
-                $applicant->update(['status' => 'Pending']);
-                break;
             case 'Rejected':
                 $applicant->update(['status' => 'Rejected']);
                 ProcessRejectedApplicantEvent::dispatch($applicant);
+                break;
+            default:
+                $applicant->update(['status' => 'Pending']);
                 break;
         }
 
