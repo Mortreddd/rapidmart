@@ -1,6 +1,5 @@
 import { Modal } from "flowbite";
-
-export { openModal, closeModal };
+export { openModal, closeModal, hello };
 
 function openModal(el) {
     let $myEl = document.getElementById(el);
@@ -32,6 +31,31 @@ function closeModal(el) {
     openModal.hide();
 }
 
-$("#cancelapprove").on("click", function () {
-    closeModal("approve-modal");
+function hello() {
+    alert("hello");
+}
+
+$("#openform").on("click", function () {
+    openModal("form-modal");
+});
+
+$("#close-form").on("click", function () {
+    closeModal("form-modal");
+});
+
+$("#edit-close-form").on("click", function () {
+    closeModal("edit-modal");
+    $("#editstatus").val("");
+    $("#editdescription").val("");
+    $("#qrID").val(0);
+    $("#editPOF_current").html("");
+    $("#nothing_error").html("");
+});
+
+$("#cancel-delete").on("click", function () {
+    new qr.closeModal("delete-modal");
+});
+
+$("#cancel-request").on("click", function () {
+    new qr.closeModal("request-modal");
 });

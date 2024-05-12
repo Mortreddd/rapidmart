@@ -11,6 +11,7 @@ use App\Models\HumanResource\Position;
 use App\Models\PO\Catergory;
 use App\Models\Po\supplier;
 use App\Models\Inventory\Product;
+use App\Models\PO\PurchaseOrder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -200,15 +201,15 @@ class DatabaseSeeder extends Seeder
 
         // ? ADD YOUR MANAGER ACCOUNT HERE
         Employee::factory()->create([
-            'first_name' => 'Mark Erol',
-            'middle_name' => 'Garcia',
+            'first_name' => 'Mark',
+            'middle_name' => 'G',
             'last_name' => 'Manansala',
             'gender' => 'M',
             'age' => 21,
             'birthday' => '2003-02-24', // '2002-03-15
             'phone' => '09053457036',
-            'image' => 'images/avatars/1337163.png',
-            'position_id' => 1,
+            'image' => 'images/avatars/logo.png',
+            'position_id' => 17,
             'email' => 'manansalamarkerol@gmail.com',
             'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
@@ -218,11 +219,20 @@ class DatabaseSeeder extends Seeder
             'notes' => 'HATDOG'
         ]);
 
-        Employee::factory(50)->create();
-        Applicant::factory(210)->create();
-        Supplier::factory(10)->create();
+        Employee::factory(5)->create();
+        Applicant::factory(5)->create();
+        Supplier::factory()->create([
+            'company_name' => 'HighDen ni Erol',
+            'address' => 'SkyStreet, Flowers Country, Greenny TExture',
+            'email' => 'manansalamarkerol@gmail.com',
+            'description' => 'Embracing cannabis, they find joy in its euphoric embrace, sharing laughter and creativity with friends, basking in the moments bliss.',
+            'picture' => 'SupplierImg/cana.jpeg'
+        ]);
+
         Catergory::factory(5)->create();
-        Product::factory(10)->create();
+        Product::factory(5)->create();
+        Supplier::factory(50)->create();
+        PurchaseOrder::factory(5)->create();
 
     }
 }

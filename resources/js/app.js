@@ -9,3 +9,6 @@ window.ms = ms;
 
 import * as iv from "./Pojs/MainInvoice";
 window.iv = iv;
+
+import * as qr from "./Pojs/MainQir";
+window.qr = qr;

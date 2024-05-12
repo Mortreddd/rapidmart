@@ -36,3 +36,7 @@ $("#close-edit-product-modal-form").on("click", function () {
     $("#editProduct").find("input").val("");
     closeModal("edit-product-modal");
 });
+
+$("#cancelremove").on("click", function () {
+    closeModal("delete-product-modal");
+});

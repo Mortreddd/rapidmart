@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PurchaseOrder\InvoiceController;
 use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrder\SupplierController;
+use App\Http\Controllers\PurchaseOrder\QirController;
 
 use App\Http\Controllers\Inventory\ProductsController;
 
@@ -32,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete/supplier/{id}', [SupplierController::class, 'deleteSupplier'])->name('supplier.delete');
     Route::post('/edit/supplier', [SupplierController::class, 'editSupplier'])->name('supplier.edit');
 
+
+
+
     Route::get('/create/PurchaseOrder', [PurchaseOrderController::class, 'index'])->name('po.index');
     Route::post('/store/PurchaseOrder', [PurchaseOrderController::class, 'create'])->name('po.create');
     Route::get('/PR/PurchaseOrder', [PurchaseOrderController::class, 'showPR'])->name('po.showpr');
@@ -41,16 +45,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::post('/invoice/{id}', [InvoiceController::class, 'sendmail'])->name('invoice.sendmail');
 
-    // Inventory
 
+    Route::get('/quality/report', [QirController::class, 'index'])->name('qir.index');
+    Route::post('/quality/add/report', [QirController::class, 'addQualitycheck'])->name('qir.addQualitycheck');
+    Route::get('/quality/download/{id}', [QirController::class, 'download'])->name('qir.download');
+    Route::get('/quality/get/{id}', [QirController::class, 'getItem'])->name('qir.getItem');
+    Route::post('/quality/update/report', [QirController::class, 'updateReport'])->name('qir.updateReport');
+    Route::post('/quality/delete/report', [QirController::class, 'deleteReport'])->name('qir.deleteReport');
+    Route::post('/quality/send/{id}', [QirController::class, 'requestReturn'])->name('qir.requestReturn');
+
+    // Inventory
     Route::get('/inventory', [ProductsController::class, 'index'])->name('product.index');
     Route::post('/inventory/add-product', [ProductsController::class, 'store'])->name('product.store');
     Route::get('/inventory/product-data/{id}', [ProductsController::class, 'getProductData'])->name('product.data');
     Route::post('/inventory/edit-product', [ProductsController::class, 'edit'])->name('product.edit');
     Route::get('/inventory/delete-product/{id}', [ProductsController::class, 'delete'])->name('product.delete');
-
-
-
 });
 
 

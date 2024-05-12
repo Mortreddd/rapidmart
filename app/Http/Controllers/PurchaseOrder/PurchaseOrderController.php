@@ -7,26 +7,26 @@ use App\Models\PO\PurchaseOrder;
 use App\Models\PO\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
+use Auth;
 
 
 class PurchaseOrderController extends Controller
 {
     public function index()
     {
-        $selectSupplier = Supplier::all();
+        $selectSupplier = Supplier::orderBy('company_name', 'asc')->get();
         return view('layouts.po.PurchaseOrder', compact('selectSupplier'));
     }
 
     public function create(Request $request)
     {
-        // return response()->json(['MSG' => $request->all()]);
         $validation = Validator::make(
             $request->all(),
             [
                 'subject' => 'required|string|max:1000|min:10',
                 'supplier' => 'required|integer',
-                'pdf_path' => 'required|mimes:pdf'
+                'pdf_path' => 'required|mimes:pdf',
+                'total_cost' => 'required|numeric|min:0.01',
             ],
             [
                 'subject.required' => 'Email Subject is required',
@@ -35,7 +35,10 @@ class PurchaseOrderController extends Controller
                 'subject.min' => 'Email Subject is too short (min: 10)',
                 'supplier.required' => 'Please choose a Supplier...',
                 'supplier.integer' => 'Must be an INT',
-                'pdf_path.required' => 'File is required'
+                'pdf_path.required' => 'File is required',
+                'total_cost.required' => 'Total Cost of the Order is required',
+                'total_cost.numeric' => 'Must be a numeric value..',
+                'total_cost.min' => 'Minimum Value is 1 cent..',
             ],
         );
 
@@ -53,6 +56,7 @@ class PurchaseOrderController extends Controller
                     'supplier_id' => $supplier,
                     'pdf_path' => $pdf_path,
                     'status' => $status,
+                    'total_cost' => $request->total_cost,
                 ]);
 
             } catch (\Exception $e) {
@@ -69,6 +73,7 @@ class PurchaseOrderController extends Controller
         $pr = PurchaseOrder::join('suppliers', 'purchase_orders.supplier_id', '=', 'suppliers.id')
             ->select('purchase_orders.*', 'suppliers.company_name')
             ->where('status', '=', 'onPr')
+            ->where('creator_id', '=', Auth::user()->id)
             ->get();
         return response()->json(['PR' => $pr]);
     }

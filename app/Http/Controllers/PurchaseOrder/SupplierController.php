@@ -12,11 +12,19 @@ use Illuminate\Support\Facades\Validator;
 
 class SupplierController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $showSupplier = Supplier::orderBy('id', 'desc')->paginate(9);
+        $query = Supplier::orderBy('id', 'desc');
+
+        if ($request->has('datasearch')) {
+            $query->where('company_name', 'LIKE', $request->datasearch . '%');
+        }
+
+        $showSupplier = $query->paginate(9);
+
         return view('layouts.po.supplier', compact('showSupplier'));
     }
+
 
     public function storeSupplier(Request $request)
     {
@@ -137,5 +145,6 @@ class SupplierController extends Controller
 
 
     }
+
 }
 

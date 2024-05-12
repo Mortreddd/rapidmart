@@ -143,7 +143,7 @@ function storeSupplier(url, formData) {
             $("#saveSupplier").prop("disabled", false);
         },
         success: (result) => {
-            console.log("🚀 ~ storeSupplier ~ result:", result);
+            // console.log("🚀 ~ storeSupplier ~ result:", result);
 
             if (result.status == "success") {
                 closeForm();

@@ -196,14 +196,14 @@ $(document).ready(()=>{
             $('#edit_stock').val(result.data[0].stocks)
             $('#edit_price').val(result.data[0].price)
             $('#product_id').val(result.data[0].id)
-
+            new iv.openModal("edit-product-modal");
             },
             error: (error) => {
                 console.log(error);
             },
         })
 
-       new iv.openModal("edit-product-modal");
+      
 
        $(".deleteProduct").on('click',function(){
             new iv.closeModal('edit-product-modal');
@@ -226,7 +226,7 @@ $(document).ready(()=>{
                     },
                     success: (result) => {
                         new iv.closeModal('edit-product-modal')
-                        new iv.closeModal('delete-modal')
+                        new iv.closeModal('delete-product-modal')
                         setTimeout(location.reload(true), 1000);
                     },
                     error: (error) => {
