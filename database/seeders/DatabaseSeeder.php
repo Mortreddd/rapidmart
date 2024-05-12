@@ -213,6 +213,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'manansalamarkerol@gmail.com',
             'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
+            'email_verified_at' => now(),
             'salary' => 25000,
             'created_at' => now()->subYear(),
             'updated_at' => null,

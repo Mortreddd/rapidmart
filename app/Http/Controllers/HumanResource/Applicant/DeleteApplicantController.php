@@ -15,6 +15,8 @@ class DeleteApplicantController extends Controller
     public function __invoke($applicant_id)
     {
         Applicant::findOrFail($applicant_id)->delete();
+        
+        
         return Redirect::back()->with(['deleted' => 'Successfully deleted applicant']);
     }
 }

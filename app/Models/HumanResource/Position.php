@@ -4,7 +4,7 @@ namespace App\Models\HumanResource;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\HumanResource\Department;
 class Position extends Model
 {
     use HasFactory;
@@ -21,4 +21,9 @@ class Position extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
+
+    public function department()
+    {
+        return static::belongsTo(Department::class);
+    }
 }
