@@ -30,19 +30,16 @@ class Interview extends Model
 
     public function interviewDate()
     {
-        // return date('F d, Y', strtotime($this->attributes['interview_date']));
         return Carbon::parse($this->interview_date)->format('F d, Y');
     }
 
     public function interviewTime()
     {
-        // return date('h:i A', strtotime($this->attributes['interview_time']));
         return Carbon::parse($this->interview_time)->format('h:i A');
     }
 
     public function getAppointedDateAttribute()
     {
-        // return date('h:i A', strtotime($this->attributes['created_at']));
         return Carbon::parse($this->created_at)->format('h:i A');
     }
 

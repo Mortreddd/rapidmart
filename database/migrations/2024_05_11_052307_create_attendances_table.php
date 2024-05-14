@@ -21,8 +21,6 @@ return new class extends Migration
             $table->timestamp('check_in');
             $table->timestamp('check_out');
             $table->float('total_hours')->nullable();
-            
-
         });
     }
 

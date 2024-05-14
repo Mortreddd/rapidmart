@@ -13,6 +13,7 @@ use App\Http\Controllers\HumanResource\ApplicantController;
 use App\Http\Controllers\HumanResource\Employee\EditEmployeeController;
 use App\Http\Controllers\HumanResource\EmployeeController;
 use App\Http\Controllers\HumanResource\Interview\InterviewController;
+use App\Http\Controllers\HumanResource\ScheduleController;
 use App\Http\Controllers\Sales\SalesReportController;
 use App\Http\Controllers\Sales\CheckInventoryController;
 use App\Http\Controllers\Sales\PromoInformationController;
@@ -74,6 +75,10 @@ Route::middleware(['auth', 'verified'])->group( function() {
             
         });
 
+
+        Route::prefix('schedules')->group(function() {
+            Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
+        });
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

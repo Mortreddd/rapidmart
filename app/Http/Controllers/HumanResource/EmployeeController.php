@@ -22,14 +22,18 @@ class EmployeeController extends Controller
     }
     public function index(Request $request)
     {
-        $employees = $this->employeeService->getEmployees();
+        $employees = $this->employeeService->getEmployees($request);
 
         if($request->has('search') && $request->search != null){
-            $employees = $this->employeeService->searchEmployees($request);
+            
+            $employees->orWhere(function($query) use ($request) {
+                            $query->where('last_name', 'like', "%{$request->search}%")
+                                ->where('first_name', 'like', "%{$request->search}%");
+                        });
         }
 
         return View::make('layouts.hr.employee', [
-            'employees' => $employees,
+            'employees' => $employees->paginate(50),
             'overallEmployeeCount' => Employee::count(),
             'departments' => Department::withCount(['employees'])->get(),
             'employmentStatusCounts' => Employee::groupBy('employment_status')->selectRaw('employment_status, count(*) as total')->get(),

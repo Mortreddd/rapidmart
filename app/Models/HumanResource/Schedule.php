@@ -15,4 +15,10 @@ class Schedule extends Model
         'time_start',
         'time_end'
     ];
+
+    public $timestamps = false;
+    public function position()
+    {
+        return static::belongsTo(Position::class);
+    }
 }

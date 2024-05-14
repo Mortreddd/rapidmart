@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->enum('shift', ['Day', 'Night'])->default('Day');
-            $table->timestamp('time_start');
-            $table->timestamp('time_end');
+            $table->string('time_start');
+            $table->string('time_end');
         });
     }
 
