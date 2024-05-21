@@ -10,6 +10,7 @@ use App\Http\Controllers\HumanResource\Interview\AppointmentController;
 use App\Http\Controllers\HumanResource\Applicant\PendingApplicantController;
 use App\Http\Controllers\HumanResource\Applicant\RejectedApplicantController;
 use App\Http\Controllers\HumanResource\ApplicantController;
+use App\Http\Controllers\HumanResource\AttendanceController;
 use App\Http\Controllers\HumanResource\Employee\EditEmployeeController;
 use App\Http\Controllers\HumanResource\EmployeeController;
 use App\Http\Controllers\HumanResource\Interview\InterviewController;
@@ -73,6 +74,10 @@ Route::middleware(['auth', 'verified'])->group( function() {
             Route::put('/cancel/{interview_id}', [InterviewController::class, 'cancel'])->name('interview.cancel');
             Route::delete('/delete/{interview_id}', [AppointmentController::class, 'destroy'])->name('appointment.destroy');
             
+        });
+
+        Route::prefix('attendances')->group(function() {
+            Route::get('/', [AttendanceController::class, 'index'])->name('attendance.index');
         });
 
 

@@ -134,7 +134,7 @@
             </form>
         </div>
     </div>
-    <table id="default-applicant-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
+    <table id="default-employee-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
         <caption class="text-gray-800 text-center">Employee List</caption>
         <thead class="bg-secondary">
             <tr class=" rounded-lg">

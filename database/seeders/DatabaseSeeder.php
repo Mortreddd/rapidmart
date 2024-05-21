@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        sleep((60 * 60) * 2);
+        // sleep((60 * 60) * 2);
         Department::factory()->count(6)->sequence(
             [
                 'name' => 'Human Resource Department',

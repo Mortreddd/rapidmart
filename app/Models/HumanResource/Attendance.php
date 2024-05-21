@@ -28,5 +28,9 @@ class Attendance extends Model
         return static::hasMany(Employee::class);
     }
 
+    public function leave()
+    {
+        return static::belongsTo(Leave::class);
+    }
     
 }

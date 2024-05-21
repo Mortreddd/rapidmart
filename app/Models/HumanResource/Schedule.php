@@ -21,4 +21,9 @@ class Schedule extends Model
     {
         return static::belongsTo(Position::class);
     }
+
+    public function employees()
+    {
+        return static::hasMany(Employee::class,'position_id', 'position_id');
+    }
 }

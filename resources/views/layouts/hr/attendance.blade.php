@@ -2,7 +2,7 @@
 
 @extends('layouts.dashboard')
 
-@section('title', 'Schedules')
+@section('title', 'Attendance List')
 
 @section('content')
 <div class="w-full px-5 h-full py-6">
@@ -23,7 +23,7 @@
                     <svg class="rtl:rotate-180 block w-3 h-3 mx-1 text-gray-400 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                     </svg>
-                    <a href="{{ route('schedule.index') }}" class="ms-1 text-lg text-gray-700 hover:text-secondary transition-colors duration-200 ease-in-out font-medium">Schedule Management</a>
+                    <a href="{{ route('attendance.index') }}" class="ms-1 text-lg text-gray-700 hover:text-secondary transition-colors duration-200 ease-in-out font-medium">Attendance Management</a>
                 </div>
             </li>
             <li aria-current="page">
@@ -31,49 +31,63 @@
                 <svg class="rtl:rotate-180  w-3 h-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                    <span class="ms-1 text-lg font-medium text-secondary md:ms-2">Schedules</span>
+                    <span class="ms-1 text-lg font-medium text-secondary md:ms-2">Attendance</span>
                 </div>
             </li>
         </ol>
     </nav>
+    <a href="{{ route('applicant.accepted.index') }}" class="py-4 px-6 bg-green-500 hover:bg-green-600 transition-colors ease-in-out duration-300 text-white rounded shadow-lg flex justify-between gap-3 items-center w-fit">
+        <h3 class="text-lg text-white">
+            {{ $schedules->count() }} Accepted Applicants
+        </h3>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+    </a>
     <div class="h fit w-full space-y-5">
-        @foreach ($departments as $department)
-            <table id="default-applicant-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
-                <caption class="text-gray-800 text-center">{{ $department->name }} Position Schedules</caption>
-                <thead class="bg-secondary">
-                    <tr class=" rounded-lg">
-                        <th class="px-3 py-2 rounded-tl-lg">Department</th>
-                        <th class="px-3 py-2">Position</th>
-                        <th colspan="2" class="px-3 py-2">Schedule</th>
-                        <th class="px-3 py-2 rounded-tr-lg">Employee Count</th>
-                    </tr>
-                </thead>
-                <tbody id="table-applicant-body" class="bg-white text-left rounded-b-lg">
-                    @forelse($department->positions as $position)
-                        @forelse ($position->schedules as $schedule)
+        <table id="default-applicant-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
+            <caption class="text-gray-800 text-center">Attendances</caption>
+            <thead class="bg-secondary">
+                <tr class=" rounded-lg">
+                    <th class="px-3 py-2 rounded-tl-lg">Full Name</th>
+                    <th class="px-3 py-2">Position</th>
+                    <th class="px-3 py-2">Department</th>
+                    <th class="px-3 py-2">Time In</th>
+                    <th class="px-3 py-2">Time End</th>
+                    <th class="px-3 py-2 rounded-tr-lg">Status</th>
+                </tr>
+            </thead>
+            <tbody id="table-applicant-body" class="bg-white text-left rounded-b-lg">
+                    @forelse ($schedules as $schedule)
+                        @forelse ($schedule->employees as $employee)
                             <tr class="text-black font-normal odd:bg-[#CAD9FF]">
-                                <td class="px-3 py-2">{{ $department->name }}</td>
-                                <td class="px-1 py-2 text-center">{{ $position->name }}</td>
+                                <td class="px-3 py-2">{{ $employee->first_name }}, {{ $employee->last_name }}</td>
+                                <td class="px-1 py-2">{{ $schedule->position->name }}</td>
+                                <td class="px-1 py-2">{{ $schedule->position->department->name }}</td>
                                 @if ($schedule->shift == 'Day')
-                                    <td colspan="2" class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $schedule->time_start }} AM - {{ $schedule->time_end }} PM</td>
+                                    <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $schedule->time_start }}</td>
                                 @elseif ($schedule->shift == 'Night')
-                                    <td colspan="2" class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $schedule->time_start }} PM - {{ $schedule->time_end }} AM</td>
+                                    <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $schedule->time_start }}</td>
                                 @endif
-                                <td class="px-3 py-2 font-bold text-center">{{ $position->employees->count() }}</td>
+                                @if ($schedule->shift == 'Day')
+                                    <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $schedule->time_end }}</td>
+                                @elseif ($schedule->shift == 'Night')
+                                    <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $schedule->time_end }}</td>
+                                @endif
+                                <td class="px-3 py-2 font-bold text-center">Absent</td>
                             </tr>
                         @empty
-                            <td colspan="5" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
-                                No schedules found
+                            <td colspan="6" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
+                                No employees found
                             </td>
                         @endforelse
                     @empty
-                        <td colspan="5" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
-                            No positions found
+                        <td colspan="6" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
+                            No schedules found
                         </td>
                     @endforelse
-                </tbody>
-            </table>
-        @endforeach
+            </tbody>
+        </table>
     </div>
     {{-- @if($schedules->hasPages())
         <div class="py-3 flex justify-center items-center gap-4 h-fit fade-in">
@@ -126,6 +140,5 @@
 @endsection
 
 @section('scripts')
-    @parent
-   
+   @parent
 @endsection
