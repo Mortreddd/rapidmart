@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Mail\Employee\TerminationMail;
 use App\Models\HumanResource\Employee;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -13,30 +14,28 @@ class EmployeeService
 {
     
 
-    private Employee  $employee;
-    public function __construct(){
-        $this->employee = new Employee();
-    }
+    public function __construct(  
+        private Employee  $employee = new Employee()
+    ){}
 
-    public function getEmployees()
+    public function getEmployees(Request $request)
     {
-        return $this->employee::with(['position.department'])
+        $employees = $this->employee::with(['position.department'])
                         ->whereNotIn('employment_status', ['Resigned', 'Terminated'])
-                        ->orderBy('created_at')
-                        ->paginate(50);
+                        ->orderBy('created_at');
+
+
+        if($request->has('department') && ($request->department != "All")){
+            $employees->where('department_id', $request->department);
+        }
+        else if($request->department == "All"){
+            $employees->where('department_id', operator: '!=', value: null);
+        }
+        
+        
+        return $employees;
     }
 
-    public function searchEmployees($request)
-    {
-        return $this->employee::whereNotIn('employment_status', ['Resigned', 'Terminated'])
-                ->orWhere(function($query) use ($request) {
-                        $query->where('last_name', 'like', "%{$request->search}%")
-                            ->where('first_name', 'like', "%{$request->search}%");
-                })
-                ->orderBy('created_at')
-                ->paginate(50);
-                
-    }
 
     public function employEmployee() {
         // return $this->employee::create
@@ -55,10 +54,10 @@ class EmployeeService
             )
         );
 
-        $this->employee::find($employee->id)->update(['status', 'Terminated']);
+        $employee->updateOrFail(['employment_status' => "Terminated"]);
         
        
-    }
+    }   
 
     public function forgotPassword()
     {

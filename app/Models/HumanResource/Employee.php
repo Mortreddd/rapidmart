@@ -13,7 +13,7 @@ class Employee extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    static $AUTHORIZED_POSITIONS_ID = [1, 2];
+    static $AUTHORIZED_POSITIONS_ID = [1, 2, 3];
     protected $fillable = [
         'first_name',
         'middle_name',

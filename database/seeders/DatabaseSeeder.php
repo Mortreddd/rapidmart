@@ -9,6 +9,7 @@ use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Interview;
 use App\Models\HumanResource\Position;
+use App\Models\HumanResource\Schedule;
 use App\Models\PO\Catergory;
 use App\Models\Po\supplier;
 use App\Models\Inventory\Product;
@@ -29,6 +30,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        // sleep((60 * 60) * 2);
         Department::factory()->count(6)->sequence(
             [
                 'name' => 'Human Resource Department',
@@ -254,6 +257,17 @@ class DatabaseSeeder extends Seeder
             'notes' => 'This is super ugly client'
         ]);
 
+        Position::all()->each(function (Position $position){
+            $start = ["10:00", "19:00"];
+            $end = ["19:00", "04:00"];
+            $index = fake()->numberBetween(0, 1);
+            Schedule::create([
+                'position_id' => $position->id,
+                'shift' => $index === 0 ? 'Day' : 'Night',
+                'time_start' => $start[$index],
+                'time_end' => $end[$index]
+            ]);
+        });
         Employee::factory(200)->create();
         Applicant::factory(302)->create();
         Supplier::factory(10)->create();

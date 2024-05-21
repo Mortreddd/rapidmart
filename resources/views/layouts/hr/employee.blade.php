@@ -110,7 +110,19 @@
             <canvas id="employment-chart" style="height: 300px; width: 700px;"></canvas>
         </div>
     </div>
-    <div class="pt-8 w-full fade-in-early flex justify-end gap-5 items-center">
+    <div class="pt-8 w-full fade-in-early flex justify-between gap-5 items-center">
+        <form id="department-filter" action="{{ route('employee.index') }}" method="get" class="w-fit">
+            <select id="department" name="department"  class="bg-gray-50 border focus:border-none outline-none border-gray-500 focus:ring-secondary text-gray-700 rounded-lg focus:ring-1 focus:border-secondary w-full p-2">
+                <option option="All">All</option>
+                @foreach ($departments as $department)
+                    @if($department->id == Request::get('department'))
+                        <option value="{{ $department->id }}" selected>{{ $department->name }}</option>
+                        @continue
+                        @endif
+                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                @endforeach
+            </select>
+        </form>
         <div class="w-fit">
             <form action=" {{ route('employee.index') }}" method="get" class="flex w-96 items-center gap-3">
                 <input type="search" name="search" value="{{ Request::get('search') }}" id="search-applicant-input" placeholder="Search Employee..." class="bg-gray-50 border border-secondary text-gray-700 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-primary block w-full p-2.5" autocomplete="off"/>
@@ -122,7 +134,7 @@
             </form>
         </div>
     </div>
-    <table id="default-applicant-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
+    <table id="default-employee-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
         <caption class="text-gray-800 text-center">Employee List</caption>
         <thead class="bg-secondary">
             <tr class=" rounded-lg">
@@ -177,7 +189,7 @@
                 </tr>
             @empty
                 <tr class="w-full">
-                    <td colspan="11" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
+                    <td colspan="10" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
                         No employees found
                     </td>
                 </tr>
@@ -280,5 +292,14 @@
                 text : "Overall Employment Status"
             }
         }})
+
+        const departmentFilter = document.getElementById('department-filter');
+
+        departmentFilter.addEventListener('submit', (e) => {
+            e.preventDefault();
+        });
+        departmentFilter.addEventListener('change', (e) => {
+            departmentFilter.submit();
+        });
     </script>
 @endsection

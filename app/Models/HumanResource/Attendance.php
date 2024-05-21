@@ -13,8 +13,24 @@ class Attendance extends Model
         'schedule_id',
         'employee_id',
         'date',
-        'check_id',
+        'check_in',
         'check_out',
         'total_hours'
     ];
+
+    public function schedule()
+    {
+        return static::belongsTo(Schedule::class);
+    }
+
+    public function emloyees()
+    {
+        return static::hasMany(Employee::class);
+    }
+
+    public function leave()
+    {
+        return static::belongsTo(Leave::class);
+    }
+    
 }
