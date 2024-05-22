@@ -7,29 +7,78 @@ use Illuminate\Http\Request;
 use App\Models\PO\PurchaseOrder;
 use App\Models\PO\QualityReports;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\ReturnShipmentMail;
+use App\Mail\ReportShipmentMail;
 use Illuminate\Support\Facades\Mail;
 use Auth;
+use Carbon\Carbon;
+use DB;
 
 class QirController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $PoNullInQR = PurchaseOrder::leftJoin('quality_reports', 'purchase_orders.id', '=', 'quality_reports.po_id')
-            ->leftJoin('suppliers', 'purchase_orders.supplier_id', '=', 'suppliers.id')
-            ->whereNull('quality_reports.po_id')
+        $status = $request->status;
+        $date = $request->date;
+
+        $PoNullInQR = PurchaseOrder::leftJoin('suppliers', 'purchase_orders.supplier_id', '=', 'suppliers.id')
             ->where('purchase_orders.status', '=', 'approved')
-            ->select('purchase_orders.*', 'suppliers.company_name')
+            ->whereNotExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('quality_reports')
+                    ->whereRaw('quality_reports.po_id = purchase_orders.id');
+            })
+            ->select('suppliers.company_name', 'purchase_orders.*')
             ->get();
+
+
+
 
         $QualityReportData = QualityReports::join('employees', 'quality_reports.inspector_id', '=', 'employees.id')
             ->selectRaw('quality_reports.*, employees.first_name, employees.last_name, DATE(quality_reports.created_at) AS report_date')
-            ->get();
+            ->whereNull('quality_reports.isEmailed_status');
 
+        if (!empty($status)) {
+            $QualityReportData = $QualityReportData->where('quality_reports.status', $status);
+        }
+
+        if (!empty($date) && $date != 'all') {
+            switch ($date) {
+                case 'today':
+                    $QualityReportData = $QualityReportData->whereDate('quality_reports.created_at', Carbon::today());
+                    break;
+                case 'yesterday':
+                    $QualityReportData = $QualityReportData->whereDate('quality_reports.created_at', Carbon::yesterday());
+                    break;
+                case 'this_week':
+                    $QualityReportData = $QualityReportData->whereBetween('quality_reports.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                    break;
+                case 'last_week':
+                    $QualityReportData = $QualityReportData->whereBetween('quality_reports.created_at', [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()]);
+                    break;
+                case 'this_month':
+                    $QualityReportData = $QualityReportData->whereMonth('quality_reports.created_at', Carbon::now()->month);
+                    break;
+                case 'last_month':
+                    $QualityReportData = $QualityReportData->whereMonth('quality_reports.created_at', Carbon::now()->subMonth()->month);
+                    break;
+                case 'this_year':
+                    $QualityReportData = $QualityReportData->whereYear('quality_reports.created_at', Carbon::now()->year);
+                    break;
+                case 'last_year':
+                    $QualityReportData = $QualityReportData->whereYear('quality_reports.created_at', Carbon::now()->subYear()->year);
+                    break;
+            }
+        }
+
+
+
+
+        $QualityReportData = $QualityReportData->orderBy('report_date', 'desc')->paginate(10);
 
         return view('layouts.po.Qir', compact('PoNullInQR', 'QualityReportData'));
-        // return response()->json($QualityReportData);
+        // return response()->json($PoNullInQR);
     }
+
 
     public function addQualitycheck(Request $request)
     {
@@ -169,11 +218,42 @@ class QirController extends Controller
                 ->where('quality_reports.id', '=', $id)
                 ->first();
 
+            $type = 'return';
             $description = $send->description;
             $report_path = public_path('storage/' . $send->reports_pdf_path);
             $po_path = public_path('storage/' . $send->pdf_path);
             $supplier = $send->company_name;
-            Mail::to($send->email)->send(new ReturnShipmentMail($description, $report_path, $po_path, $supplier));
+            Mail::to($send->email)->send(new ReportShipmentMail($description, $report_path, $po_path, $supplier, $type));
+            return response()->json(['status' => 'success', 'msg' => $send]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+
+    }
+
+
+    public function releaseOrder($id)
+    {
+
+        try {
+            QualityReports::where('id', $id)->update([
+                'isEmailed_status' => 'send',
+            ]);
+
+            $send = QualityReports::join('purchase_orders', 'quality_reports.po_id', '=', 'purchase_orders.id')
+                ->join('suppliers', 'purchase_orders.supplier_id', '=', 'suppliers.id')
+                ->select('purchase_orders.pdf_path', 'quality_reports.*', 'suppliers.email', 'suppliers.company_name')
+                ->where('quality_reports.id', '=', $id)
+                ->first();
+
+            $type = 'release';
+
+            $description = $send->description;
+            $report_path = public_path('storage/' . $send->reports_pdf_path);
+            $po_path = public_path('storage/' . $send->pdf_path);
+            $supplier = $send->company_name;
+            Mail::to($send->email)->send(new ReportShipmentMail($description, $report_path, $po_path, $supplier, $type));
             return response()->json(['status' => 'success', 'msg' => $send]);
 
         } catch (\Exception $e) {

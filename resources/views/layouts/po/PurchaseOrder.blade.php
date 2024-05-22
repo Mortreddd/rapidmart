@@ -7,9 +7,8 @@
 
 <div id="mainContainer" class=" h-fit  p-2">
 
-    <div id="delete-modal" data-modal-target="delete-modal" tabindex="-1"  aria-hidden="true"  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        @include('includes.PO.DeleteSupplier')
-    </div>
+
+    @include('includes.PO.DeletePO')
 
     {{-- BreadCrumbs --}}
     <nav class="flex px-5 py-3 mb-4 text-gray-700 border border-gray-200 bg-gray-50 rounded-md ">
@@ -213,7 +212,7 @@ $(document).ready(()=>{
             },
 
             success: (result) => {
-                // console.log("🚀 ~ create ~ result:", result);
+                console.log("🚀 ~ create ~ result:", result);
                 if (result.status == "success") {
                     new mp.openModal('static-modal')
                     $("#createPO").find("span").text("");

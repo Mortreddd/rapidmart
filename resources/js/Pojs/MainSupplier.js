@@ -2,33 +2,23 @@ import { Modal } from "flowbite";
 
 export {
     storeSupplier,
-    openSuccessModal,
-    closeSuccessModal,
+    getSupplier,
     openModal,
     closeModal,
     closedelete,
     openDeleteModal,
     editSupplier,
-    showedit,
     opendelete,
 };
 
-// for <script></script>
 function openModal(el) {
     let $myEl = document.getElementById(el);
-    // options with default values
     let o = {
         placement: "bottom-right",
         backdrop: "dynamic",
         backdropClasses:
             "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
         closable: false,
-        onHide: () => {
-            console.log("modal is hidden");
-        },
-        onShow: () => {
-            console.log("modal is shown");
-        },
     };
 
     const openModal = new Modal($myEl, o);
@@ -41,13 +31,8 @@ function closeModal(el) {
     openModal.hide();
     document.querySelector("body > div[modal-backdrop]")?.remove();
 }
-// end
 
-function openSuccessModal() {
-    const $targetEl = document.getElementById("static-modal");
-    const modal = new Modal($targetEl);
-    modal.show();
-}
+//! end
 
 function openEditModal() {
     const $OEM = document.getElementById("edit-toast");
@@ -61,18 +46,7 @@ function openDeleteModal() {
     dm.show();
 }
 
-function closeSuccessModal() {
-    const $targetEl = document.getElementById("static-modal");
-    const modal = new Modal($targetEl);
-    modal.hide();
-    document.querySelector("body > div[modal-backdrop]")?.remove();
-}
-
-function closeForm() {
-    const $a = document.getElementById("form-modal");
-    const m = new Modal($a);
-    m.hide();
-}
+//!end
 
 function closedelete() {
     const $b = document.getElementById("delete-modal");
@@ -89,43 +63,13 @@ function closeedit() {
     med.hide();
 }
 
-function showedit() {
-    let o = {
-        placement: "bottom-right",
-        backdrop: "dynamic",
-        backdropClasses:
-            "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
-        closable: false,
-        onHide: () => {
-            console.log("Edit modal is hidden");
-        },
-        onShow: () => {
-            console.log("Edit modal is shown");
-        },
-    };
-    const $ed = document.getElementById("edit-modal");
-    const med = new Modal($ed, o);
-    med.show();
-}
-
+// * Store-Form-Modal
 $("#open-form").on("click", () => {
     openModal("form-modal");
 });
 
-$("#static-button").on("click", () => {
-    closeSuccessModal();
-});
-
 $("#close-form").on("click", () => {
     closeModal("form-modal");
-});
-
-$("#close-s-Modal").on("click", () => {
-    closeModal("static-modal");
-});
-
-$("#edit-close-form").on("click", () => {
-    closeedit();
 });
 
 function storeSupplier(url, formData) {
@@ -143,14 +87,9 @@ function storeSupplier(url, formData) {
             $("#saveSupplier").prop("disabled", false);
         },
         success: (result) => {
-            // console.log("🚀 ~ storeSupplier ~ result:", result);
-
             if (result.status == "success") {
-                closeForm();
-                $("#storeSupplier").find("span").text("");
-                $("#storeSupplier")[0].reset();
-                openSuccessModal();
-                // .load() doesnt work it bugs the code for dropdwon btn for each user
+                closeModal("form-modal");
+                openModal("static-modal");
                 setTimeout(location.reload(true), 1000);
             } else if (result.status == "error") {
                 $("#storeSupplier").find("span").text("");
@@ -165,6 +104,23 @@ function storeSupplier(url, formData) {
         },
     });
 }
+
+// * Store-Form-Modal END
+
+$("#close-s-Modal").on("click", () => {
+    closeModal("static-modal");
+});
+
+$("#edit-close-form").on("click", () => {
+    closeedit();
+    $("#SupplierNameEdit").html("");
+    $("#edit_id").val("");
+    $("#edit_name").val("");
+    $("#edit_address").val("");
+    $("#edit_email").val("");
+    $("#edit_description").val("");
+    $("#pictureFile").html("");
+});
 
 //edit
 function editSupplier(url, formData) {
@@ -187,14 +143,46 @@ function editSupplier(url, formData) {
                 $("#editSupplier").find("span").text("");
                 $("#editSupplier")[0].reset();
                 openEditModal();
-                setTimeout(location.reload(true), 1000); //reloadpage if success
+                setTimeout(location.reload(true), 1000);
             } else if (result.status == "error") {
                 $("#storeSupplier").find("span").text("");
                 $.each(result.errors, function (key, value) {
                     var showerror = $(document).find("#" + key + "_error");
                     showerror.html(value);
                 });
+            } else if (result.status == "nothing") {
+                $("#isChanged").html(
+                    "Theres Nothing to Change Please Update Something"
+                );
             }
+        },
+        error: (error) => {
+            console.log(error.responseText);
+        },
+    });
+}
+
+function getSupplier(url, id) {
+    // AJAX request
+    $.ajax({
+        url: url,
+        data: {
+            id: id,
+        },
+        type: "GET",
+
+        success: (result) => {
+            // console.log("🚀 ~ getSupplier ~ result:", result);
+            $("#SupplierNameEdit").html(result.company_name);
+            $("#edit_id").val(result.id);
+            $("#edit_name").val(result.company_name);
+            $("#edit_address").val(result.address);
+            $("#edit_email").val(result.email);
+            $("#edit_description").val(result.description);
+            $("#pictureFile").html(
+                "Current Picture: " + result.picture.split("/")[1]
+            );
+            openModal("edit-modal");
         },
         error: (error) => {
             console.log(error.responseText);

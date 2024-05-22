@@ -4,6 +4,7 @@ namespace App\Models\PO;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Inventory\Product;
 
 class Catergory extends Model
 {
@@ -14,7 +15,8 @@ class Catergory extends Model
         'description'
     ];
 
-    public function product(){
+    public function product()
+    {
         return $this->hasMany(Product::class);
     }
 }
