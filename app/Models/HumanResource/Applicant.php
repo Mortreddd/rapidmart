@@ -18,10 +18,12 @@ class Applicant extends Model
         'gender',
         'age',
         'address',
+        'birthday',
         'phone',
         'email',
         'resume',
         'position_id',
+        'department_id',
         'employement_status',
         'status',
         'created_at',
@@ -47,6 +49,11 @@ class Applicant extends Model
     public function isAppointed()
     {
         return Interview::where('applicant_id', $this->id)->exists();
+    }
+
+    public function updatedDate()
+    {
+        return date('F d, Y', strtotime(Carbon::parse($this->updated_at))); 
     }
 
 }

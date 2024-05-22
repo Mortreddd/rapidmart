@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
-class supplier extends Model
+class Supplier extends Model
 {
     use HasFactory;
 

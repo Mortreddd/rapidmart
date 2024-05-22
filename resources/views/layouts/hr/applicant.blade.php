@@ -47,7 +47,7 @@
                 </svg>
                   
             </a>
-            <a class="py-4 px-6 bg-green-500 text-white rounded shadow-lg flex justify-between gap-3 items-center">
+            <a href="{{ route('applicant.accepted.index') }}" class="py-4 px-6 bg-green-500 hover:bg-green-600 transition-colors ease-in-out duration-300 text-white rounded shadow-lg flex justify-between gap-3 items-center">
                 <h3 class="text-lg text-white">
                     {{ $acceptedApplicant->count() }} Accepted Applicants
                 </h3>
@@ -55,7 +55,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                 </svg>
             </a>
-            <a href="{{ route('applicant.pending.index') }}" class="py-4 px-6 bg-amber-500 hover:bg-yellow-600 transition-colors duration-300 ease-in-out text-white rounded shadow-lg flex justify-between gap-3 items-center">
+            <a href="{{ route('applicant.pending.index') }}" class="py-4 px-6 bg-amber-500 hover:bg-amber-600 transition-colors duration-300 ease-in-out text-white rounded shadow-lg flex justify-between gap-3 items-center">
                 <h3 class="text-lg text-white">
                     {{ $pendingApplicant->count() }} Pending Applicants
                 </h3>
@@ -243,6 +243,10 @@
         <x-toast.danger>
             {{ Session::get('error') }}
         </x-toast.danger>
+    @elseif( Session::has('success') )
+        <x-toast.success>
+            {{ Session::get('success') }}
+        </x-toast.success>
     @endif
 @endsection
 

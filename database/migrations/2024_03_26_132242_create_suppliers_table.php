@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('address');
             $table->string('email', 255);
             $table->text('description');
-            $table->text('picture');
+            $table->string('picture');
             $table->timestamps();
         });
     }

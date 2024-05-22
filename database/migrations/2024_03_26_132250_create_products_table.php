@@ -11,18 +11,7 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void
-    {   // Created a seperate supplier :)
-        // Schema::create('suppliers', function(Blueprint $table){
-        //     $table->id();
-        //     $table->string('supplier_name');
-        //     $table->string('contact_name');
-        //     $table->string('email');
-        //     $table->string('address');
-        //     $table->string('postal_code');
-        //     $table->string('phone');
-        // });
-
-
+    {   
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('product_name');
@@ -31,7 +20,6 @@ return new class extends Migration {
             $table->float('price');
             $table->bigInteger('barcode');
             $table->foreignIdFor(Catergory::class)->constrained()->cascadeOnDelete();
-            // $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

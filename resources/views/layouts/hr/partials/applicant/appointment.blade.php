@@ -61,19 +61,12 @@
                         Invite <strong>{{ $applicant->last_name }}, {{ $applicant->first_name }}</strong> for an interview
                     </h3>
                 </div>
-                    @error ($errors->any())
-                    <div class="col-span-6">
-                        @foreach($errors->all() as $error )
-
-                            <p class="text-xs text-red-600 font-semibold">{{ $error }}</p>
-                        @endforeach
-                        
-                    </div>
-                @enderror
                 <div class="relative w-full gap-3 grid grid-cols-6">
                     <div class="col-span-6">
-
                         <label for="interview_date" class="block">Interview Date</label>
+                        @error('interview_date')
+                            <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
+                        @enderror
                         <input datepicker datepicker-format="mm-dd-yyyy" type="text" required autocomplete="off" name="interview_date" id="interview_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-auto ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
                     </div>
                 </div>
@@ -81,13 +74,18 @@
                 <div class="relative w-full gap-3 grid grid-cols-6">
                    
                     <div class="col-span-6">
-                        
                         <label for="interview_time" class="block">Interview Time</label>
-                        <input type="time" id="interview_time" name="interview_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-auto" value="00:00" required />                
+                        @error('interview_time')
+                            <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
+                        @enderror
+                        <input type="time" id="interview_time" value="this.value" placeholder="Select time" name="interview_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-auto" required />                
                     </div>
                 </div>
                 <div class="col-span-6">
                     <label for="interviewer_id" class="block">Interviewer</label>
+                    @error('interviewer_id')
+                            <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
+                    @enderror
                     <select id="interviewer_id" name="interviewer_id" class="bg-gray-50 border focus:border-none outline-none border-gray-500 text-gray-700 rounded-lg focus:ring-1 focus:ring-secondary focus:border-secondary w-auto p-2">
                         <option selected disabled>Choose a interviewer</option>
                         @foreach ($interviewers as $interviewer)

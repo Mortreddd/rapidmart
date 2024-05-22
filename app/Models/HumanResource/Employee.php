@@ -8,10 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class Employee extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    static $AUTHORIZED_POSITIONS_ID = [1, 2, 3];
     protected $fillable = [
         'first_name',
         'middle_name',
@@ -24,6 +26,7 @@ class Employee extends Authenticatable
         'image',
         'address',
         'position_id',
+        'department_id',
         'email',
         'password',
         'employment_status',
@@ -48,10 +51,18 @@ class Employee extends Authenticatable
         return date('F d, Y', strtotime(Carbon::parse($this->created_at)));
     }
 
-    // ? FOR ROLE-BASED AUTHENTICATION
-
     public function position()
     {
         return static::belongsTo(Position::class);
+    }
+
+    public function department()
+    {
+        return static::belongsTo(Department::class);
+    }
+
+    public function leave()
+    {
+        return static::belongsTo(Leave::class);
     }
 }

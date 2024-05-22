@@ -2,6 +2,7 @@
 use App\Models\HumanResource\Attendance;
 use App\Models\HumanResource\Benefit;
 use App\Models\HumanResource\Deduction;
+use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Payroll;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,6 +18,7 @@ return new class extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Attendance::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Deduction::class)->nullable();
             $table->foreignIdFor(Benefit::class)->nullable();
             $table->float('total_salary');
@@ -24,11 +26,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('payroll_receipts', function ( Blueprint $table ){
-            $table->id();
-            $table->foreignIdFor(Payroll::class)->constrained()->cascadeOnDelete();
-            $table->float('amount');
-        });
     }
 
     /**

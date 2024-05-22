@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Applicant;
 
+use App\Models\HumanResource\Position;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 class CreateApplicantRequest extends FormRequest
 {
     /**
@@ -11,7 +14,7 @@ class CreateApplicantRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return in_array(Auth::user()->position_id, [1,2]);
     }
 
     /**
@@ -30,9 +33,11 @@ class CreateApplicantRequest extends FormRequest
             'address' => 'string|required',
             'phone' => 'string|min:11|required',
             'email' => 'string|required|email',
+            'birthday' => 'required',
             'resume' => 'file|nullable|max:10240',
             'position_id' => 'required|integer',
-            'notes' => 'nullable'
+            'notes' => 'nullable',
+            'department_id' => 'nullable'
         ];
     }
 
@@ -55,4 +60,5 @@ class CreateApplicantRequest extends FormRequest
             'position_id.required' => 'Position is required'
         ];
     }
+
 }

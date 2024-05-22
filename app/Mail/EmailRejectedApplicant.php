@@ -9,6 +9,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
+use Illuminate\Support\Facades\Auth;
 
 class EmailRejectedApplicant extends Mailable
 {
@@ -25,6 +27,7 @@ class EmailRejectedApplicant extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+                from: new Address(Auth::user()->email, 'Rapidmart'),
                 subject: 'Applicantion Update: ' . $this->applicant->position->name . ' at RapidMart',
                 to: $this->applicant->email
         );

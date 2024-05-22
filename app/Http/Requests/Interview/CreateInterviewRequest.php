@@ -38,7 +38,6 @@ class CreateInterviewRequest extends FormRequest
             'interview_date.required' => 'Interview date is required',
             'interview_date.date' => 'Interview date must be a date',
             'interview_time.required' => 'Interview time is required',
-            'interview_time.date_format' => 'Interview time must be in format h:iA',
             'interviewer_id.required' => 'Interviewer ID is required',
             'interviewer_id.exists' => 'Interviewer ID does not exist',
             'interview_note.string' => 'Interview note must be a string',
