@@ -36,7 +36,47 @@
 
 
 
-    <h1 class="mb-4 text-sm font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">Invoice Approval</h1>
+    <div class=" mb-4 flex flex-col md:flex-row md:justify-between md:items-center">
+        <h1 class=" text-sm font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">Invoice Approval</h1>
+
+        <div>
+            <form method="get" class="flex" action="{{route('invoice.index')}}" id="findSupplier" class="max-w-md mx-2 flex"> 
+                <div>
+                <select name="supplier" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fit p-4">
+    
+                    <option value="" {{ Request::get('supplier') ? 'selected' : '' }}>Choose a Supplier</option>
+    
+                    @forelse ($SuppliersOnPR as $s)
+                        <option value="{{$s->id}}" {{ Request::get('supplier') == $s->id ? 'selected' : '' }}>{{$s->company_name}}</option>
+                    @empty
+                        <option value="">Empty...</option>
+                    @endforelse
+                </select>
+            </div> 
+                
+                <div class="flex flex-col">
+                    <div class="relative w-96">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                        </div>
+                        <input type="text" name="datasearch" class="block w-full p-4 ps-10 pe-20 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search ..." value="{{ Request::get('datasearch') }}"/>
+                    
+        
+                        <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Filter</button>
+                    </div>
+                    @error('datasearch')
+                    <span class=" h-2 text-sm text-red-500"> {{ $message}}</span>
+                    @enderror
+                </div>
+            </form>
+           
+        </div>
+        
+    
+    </div>
+
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -82,7 +122,7 @@
                     </tr>
                @empty
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4 text-center" colspan="4" >Empty Data Set</td>
+                        <td class="px-6 py-4 text-center" colspan="5" >Empty Data Set</td>
                     </tr>
                @endforelse
             </tbody>
@@ -107,11 +147,11 @@ $(document).ready(()=>{
 
     $('.reject').on('click',function(){
         new iv.openModal('delete-modal');
-        let id = $(this).attr('data-id');
+        dataID = $(this).attr('data-id');
 
         $('.deleteFinal').on('click',()=>{
         var url = '{{route('po.delete','id')}}';
-        url = url.replace('id',id);
+        url = url.replace('id',dataID);
 
             $.ajax({
                 url: url,
@@ -120,6 +160,8 @@ $(document).ready(()=>{
                 processData: false,
                     beforeSend: () => {
                         $("#remove").prop("disabled", true);
+                        $("#cancelremove").prop("disabled", true);
+                        
                     },
                     complete: () => {
                         $("#remove").prop("disabled", false);
@@ -159,6 +201,8 @@ $(document).ready(()=>{
                 processData: false,
                     beforeSend: () => {
                         $("#approve").prop("disabled", true);
+                        $("#cancelapprove").prop("disabled", true);
+                        
                     },
                     complete: () => {
                         $("#approve").prop("disabled", false);

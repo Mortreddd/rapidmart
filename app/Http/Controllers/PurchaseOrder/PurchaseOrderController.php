@@ -8,6 +8,7 @@ use App\Models\PO\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Storage;
 
 
 class PurchaseOrderController extends Controller
@@ -52,6 +53,7 @@ class PurchaseOrderController extends Controller
                 $status = 'onPr';
 
                 $PO = PurchaseOrder::create([
+                    'creator_id' => Auth::user()->id,
                     'subject' => $request->subject,
                     'supplier_id' => $supplier,
                     'pdf_path' => $pdf_path,
@@ -89,6 +91,8 @@ class PurchaseOrderController extends Controller
     public function deletePO($id)
     {
         try {
+            $deleteFile = PurchaseOrder::find($id, ['pdf_path']);
+            Storage::disk('public')->delete($deleteFile->pdf_path);
             $deleteSupplier = PurchaseOrder::where('id', $id)->delete();
             if ($deleteSupplier) {
                 return response()->json(['status' => 'success', $deleteSupplier]);//just for console :)

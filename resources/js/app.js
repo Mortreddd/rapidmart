@@ -1,5 +1,6 @@
 import "./bootstrap";
 import "flowbite";
+
 import * as mp from "./Pojs/MainPO";
 window.mp = mp;
 
@@ -11,6 +12,9 @@ window.iv = iv;
 
 import * as qr from "./Pojs/MainQir";
 window.qr = qr;
+
+import * as md from "./Pojs/MainDocument";
+window.md = md;
 
 import "flowbite-datepicker";
 import "flowbite/dist/datepicker.turbo.js";

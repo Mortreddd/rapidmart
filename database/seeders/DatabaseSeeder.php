@@ -11,6 +11,7 @@ use App\Models\HumanResource\Interview;
 use App\Models\HumanResource\Position;
 use App\Models\HumanResource\Schedule;
 use App\Models\PO\Catergory;
+use App\Models\PO\QualityReports;
 use App\Models\Po\supplier;
 use App\Models\Inventory\Product;
 use App\Models\PO\PurchaseOrder;
@@ -276,6 +277,7 @@ class DatabaseSeeder extends Seeder
 
         Employee::factory(5)->create();
         Applicant::factory(5)->create();
+
         Supplier::factory()->create([
             'company_name' => 'HighDen ni Erol',
             'address' => 'SkyStreet, Flowers Country, Greenny TExture',
@@ -285,9 +287,63 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Catergory::factory(5)->create();
-        Product::factory(5)->create();
-        Supplier::factory(50)->create();
-        PurchaseOrder::factory(5)->create();
+        Supplier::factory(10)->create();
+
+        PurchaseOrder::factory()->create([
+            'subject' => 'Hello. dear.',
+            'creator_id' => 1001,
+            'supplier_id' => 1,
+            'pdf_path' => 'PurchaseOrderPDF/default.pdf',
+            'status' => 'approved',
+            'total_cost' => rand(100, 10000),
+        ]);
+
+        PurchaseOrder::factory(10)->create([
+            'status' => 'approved',
+        ]);
+
+
+
+
+        // QualityReports::factory()->create([
+        //     'inspector_id' => 1000,
+        //     'po_id' => 1,
+        //     'reports_pdf_path' => 'QIR/default.pdf',
+        //     'status' => 'passed',
+        //     'description' => 'A meaningful Description....',
+        //     'isEmailed_status' => 'send',
+        //     'created_at' => Carbon::today(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::yesterday(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfWeek(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->subWeek()->startOfWeek(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfMonth(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->subMonth()->startOfMonth(),
+        // ]);
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfMonth(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfYear(),
+        // ]);
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->subYear()->startOfYear(),
+        // ]);
 
     }
 }

@@ -40,3 +40,11 @@ $("#close-edit-product-modal-form").on("click", function () {
 $("#cancelremove").on("click", function () {
     closeModal("delete-product-modal");
 });
+
+$("#category-modal-form").on("click", function () {
+    closeModal("category-modal");
+});
+
+$("#addcategory").on("click", function () {
+    openModal("category-modal");
+});

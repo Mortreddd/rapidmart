@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Attachment;
 
-class ReturnShipmentMail extends Mailable
+class ReportShipmentMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -22,13 +22,15 @@ class ReturnShipmentMail extends Mailable
     public $report_path;
     public $po_path;
     public $supplier;
+    public $type;
 
-    public function __construct($description, $report_path, $po_path, $supplier)
+    public function __construct($description, $report_path, $po_path, $supplier, $type)
     {
         $this->description = $description;
         $this->report_path = $report_path;
         $this->po_path = $po_path;
         $this->supplier = $supplier;
+        $this->type = $type;
     }
 
     /**
@@ -36,9 +38,16 @@ class ReturnShipmentMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(
-            subject: 'Return Shipment From Rapid Mart',
-        );
+        if ($this->type == 'return') {
+            return new Envelope(
+                subject: 'Return Shipment From Rapid Mart',
+            );
+        } else {
+            return new Envelope(
+                subject: 'Release Shipment From Rapid Mart',
+            );
+        }
+
     }
 
     /**
@@ -46,9 +55,16 @@ class ReturnShipmentMail extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
-            view: 'mail.ReturnShipment',
-        );
+        if ($this->type == 'return') {
+            return new Content(
+                view: 'mail.ReturnShipment',
+            );
+        } else {
+            return new Content(
+                view: 'mail.ReleaseShipment',
+            );
+        }
+
     }
 
     /**
