@@ -20,7 +20,7 @@ return new class extends Migration
             $table->time('interview_time');
             $table->foreignIdFor(Employee::class, 'interviewer_id')->constrained('employees')->cascadeOnDelete();
             $table->text('interview_note')->nullable();
-            $table->enum('status', ['Accepted', 'Pending', 'Rejected'])->default('Pending');
+            $table->enum('status', ['Accepted', 'Pending', 'Rejected', 'Cancelled'])->default('Pending');
             $table->timestamps();
         });
 

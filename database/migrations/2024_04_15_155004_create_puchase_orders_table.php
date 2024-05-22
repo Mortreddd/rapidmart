@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PO\Supplier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('creator_id')->constrained('employees')->cascadeOnDelete();
             $table->text('subject');
-            $table->foreignId('supplier_id')->constrained('suppliers')->cascadeOnDelete();
+            $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
             $table->text('pdf_path');
             $table->string('status');
             $table->string('total_cost');

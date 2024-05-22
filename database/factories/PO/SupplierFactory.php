@@ -19,7 +19,7 @@ class SupplierFactory extends Factory
     {
         return [
             'company_name' => fake()->name(),
-            'address' => fake()->realText(15),
+            'address' => fake()->address(),
             'email' => fake()->unique()->safeEmail(),
             'description' => fake()->realText(20),
             'picture' => 'SupplierImg/default.png',

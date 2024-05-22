@@ -5,30 +5,38 @@ namespace App\Http\Controllers\HumanResource;
 use App\Http\Controllers\Controller;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Employee;
+use App\Models\HumanResource\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use App\Services\EmployeeService;
+
 
 class EmployeeController extends Controller
 {
-    public function __invoke(Request $request)
+
+    private EmployeeService $employeeService;
+    public function __construct()
     {
-        $employees = Employee::with(['position.department'])
-                        ->orderBy('created_at')
-                        ->paginate(20);
+        $this->employeeService = new EmployeeService();
+    }
+    public function index(Request $request)
+    {
+        $employees = $this->employeeService->getEmployees($request);
 
         if($request->has('search') && $request->search != null){
-            $employees = Employee::where('first_name', 'like', "%{$request->search}%")
-                ->orWhere('last_name', 'like', "%{$request->search}%")
-                ->orderBy('created_at')
-                ->paginate(20);
+            
+            $employees->orWhere(function($query) use ($request) {
+                            $query->where('last_name', 'like', "%{$request->search}%")
+                                ->where('first_name', 'like', "%{$request->search}%");
+                        });
         }
+
         return View::make('layouts.hr.employee', [
-            'employees' => $employees,
-            'departments' => Department::with(['positions'])->get(),
+            'employees' => $employees->paginate(50),
             'overallEmployeeCount' => Employee::count(),
-            'overallDepartmentCount' => Employee::select('department_id')->distinct()->count(),
-                                
+            'departments' => Department::withCount(['employees'])->get(),
+            'employmentStatusCounts' => Employee::groupBy('employment_status')->selectRaw('employment_status, count(*) as total')->get(),
         ]);
     }
 }

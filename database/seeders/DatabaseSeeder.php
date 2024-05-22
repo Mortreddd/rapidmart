@@ -7,7 +7,9 @@ namespace Database\Seeders;
 use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Department;
+use App\Models\HumanResource\Interview;
 use App\Models\HumanResource\Position;
+use App\Models\HumanResource\Schedule;
 use App\Models\PO\Catergory;
 use App\Models\PO\QualityReports;
 use App\Models\Po\supplier;
@@ -30,6 +32,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        // sleep((60 * 60) * 2);
         Department::factory()->count(6)->sequence(
             [
                 'name' => 'Human Resource Department',
@@ -76,6 +80,13 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Recruitment Officer',
                 'department_id' => 1,
                 'salary_per_hour' => 20,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Attendance Manager',
+                'department_id' => 1,
+                'salary_per_hour' => 23,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -208,19 +219,61 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Manansala',
             'gender' => 'M',
             'age' => 21,
-            'birthday' => '2003-02-24', // '2002-03-15
             'phone' => '09053457036',
-            'image' => 'images/avatars/logo.png',
-            'position_id' => 17,
+            'image' => 'images/avatars/1337163.png',
+            'resume' => 'dummy-resume.pdf',
+            'birthday' => '2002-03-15', // '2002-03-15
+            'address' => 'San Juan San Simon Pampanga',
+            'position_id' => 1,
+            'department_id' => 1,
             'email' => 'manansalamarkerol@gmail.com',
             'password' => Hash::make('12345678'),
             'employment_status' => 'Full Time',
-            'email_verified_at' => now(),
+            'email_verified_at' => Carbon::now(),
             'salary' => 25000,
             'created_at' => now()->subYear(),
             'updated_at' => null,
             'notes' => 'HATDOG'
         ]);
+
+        Employee::factory()->create([
+            'first_name' => 'Emmanuel',
+            'middle_name' => 'Meneses',
+            'last_name' => 'Male',
+            'gender' => 'M',
+            'age' => 20,
+            'resume' => 'dummy-resume.pdf',
+            'birthday' => '2002-03-15', // '2002-03-15
+            'phone' => '09123456789',
+            'image' => 'images/avatars/sample-image.jpg',
+            'address' => 'San Juan San Simon Pampanga',
+            'position_id' => 1,
+            'department_id' => 1,
+            'email' => 'emmanmale@gmail.com',
+            'password' => Hash::make('12345678'),
+            'employment_status' => 'Full Time',
+            'email_verified_at' => now(),
+            'salary' => 25000,
+            'created_at' => Carbon::now()->subYear(),
+            'updated_at' => null,
+            'notes' => 'This is super ugly client'
+        ]);
+
+        Position::all()->each(function (Position $position) {
+            $start = ["10:00", "19:00"];
+            $end = ["19:00", "04:00"];
+            $index = fake()->numberBetween(0, 1);
+            Schedule::create([
+                'position_id' => $position->id,
+                'shift' => $index === 0 ? 'Day' : 'Night',
+                'time_start' => $start[$index],
+                'time_end' => $end[$index]
+            ]);
+        });
+        Employee::factory(200)->create();
+        Applicant::factory(302)->create();
+        Supplier::factory(10)->create();
+        Interview::factory(20)->create();
 
         Employee::factory(5)->create();
         Applicant::factory(5)->create();

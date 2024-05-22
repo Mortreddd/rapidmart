@@ -26,4 +26,14 @@ class Position extends Model
     {
         return static::belongsTo(Department::class);
     }
+
+    public function employees()
+    {
+        return static::hasMany(Employee::class);
+    }
+
+    public function schedules()
+    {
+        return static::hasMany(Schedule::class);
+    }
 }

@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Auth;
 
-use App\Models\HumanResource\Applicant;
-use App\Models\HumanResource\Interview;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class ApplicantAppointmentMail extends Mailable
+class SendForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,7 +18,8 @@ class ApplicantAppointmentMail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        public Interview $interview
+        public string $email,
+        public string $token
     ){}
 
     /**
@@ -29,9 +28,9 @@ class ApplicantAppointmentMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from : new Address("emmanmale@gmail.com", "Rapidmart"),
-            subject: 'Interview with Rapidmart for '.$this->interview->applicant->position->name.' position',
-            to: $this->interview->applicant->email
+            from: new Address(env('MAIL_USERNAME'), 'Rapidmart'),
+            subject: 'Forgot Password Notice',
+            to: [$this->email]
         );
     }
 
@@ -41,11 +40,10 @@ class ApplicantAppointmentMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.appointment-applicant',
+            view: 'mail.auth.reset-password',
             with: [
-                'applicantName' => $this->interview->applicant->last_name,
-                'positionName' => $this->interview->applicant->position->name,
-                'appointmentDate' => $this->interview->interviewDate(),
+                'token' => $this->token,
+                'email' => $this->email,
             ]
         );
     }

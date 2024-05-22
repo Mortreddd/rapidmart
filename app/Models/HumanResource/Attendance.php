@@ -10,12 +10,27 @@ class Attendance extends Model
     use HasFactory;
 
     protected $fillable = [
+        'schedule_id',
         'employee_id',
-        'start_date',
-        'time_in',
-        'time_out',
-        'total_hours',
+        'date',
+        'check_in',
+        'check_out',
+        'total_hours'
     ];
 
+    public function schedule()
+    {
+        return static::belongsTo(Schedule::class);
+    }
+
+    public function emloyees()
+    {
+        return static::hasMany(Employee::class);
+    }
+
+    public function leave()
+    {
+        return static::belongsTo(Leave::class);
+    }
     
 }
