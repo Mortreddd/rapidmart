@@ -33,7 +33,8 @@ class LoginController extends Controller
             $request->validated(), 
             (fn (Employee $employee) => 
                 in_array($employee->position_id, $AUTHORIZE_POSITION_IDS) || 
-                !in_array($employee->employment_status, ['Rejected', 'Terminated'])
+                !in_array($employee->employment_status, ['Rejected', 'Terminated']) ||
+                $employee->password !== null
             ),
             $request->has('remember')
             )

@@ -2,7 +2,7 @@
 
 @extends('layouts.dashboard')
 
-@section('title', 'Attendance List')
+@section('title', 'Attendances')
 
 @section('content')
 <div class="w-full px-5 h-full py-6">

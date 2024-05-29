@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\CreatePasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HumanResource\Interview\EditApplicantStatusController;
 use Illuminate\Support\Facades\Route;
@@ -39,13 +40,14 @@ Route::middleware(['auth', 'verified'])->group( function() {
         });
       
         // ? APPLICANT ROUTES
-        // ?
+        // ? http://BASE_URL/applicants
         Route::prefix('applicants')->group( function () {
             Route::get('/', ApplicantController::class)->name('applicant.index');
 
             Route::put('/edit/{interview_id}/{applicant_id}', [EditApplicantStatusController::class, 'edit'])->name('applicant.status.edit');
             // * ACCEPTED APPLICANT ROUTE
             Route::get('/accepted', [AcceptedApplicantController::class, 'index'])->name('applicant.accepted.index');
+            Route::post('/accepted/employ/{applicant_id}', [AcceptedApplicantController::class, 'employ'])->name('applicant.employ');
             // * PENDING APPLICANT ROUTE
             Route::get('/pending', [PendingApplicantController::class, 'index'])->name('applicant.pending.index');
             Route::put('/pending/reject/{applicant_id}', [RejectedApplicantController::class, 'store'])->name('applicant.reject');
@@ -64,6 +66,9 @@ Route::middleware(['auth', 'verified'])->group( function() {
             // ? UPDATE APPLICANT ROUTE 
             Route::get('/appoint/{applicant_id}', [AppointmentController::class, 'index'])->name('applicant.view.edit');
             Route::post('/appoint/create', [AppointmentController::class, 'store'])->name('interview.store');
+
+            Route::post('/employee/{applicant_id}', [CreatePasswordController::class, 'create'])->name('employee.applicant');
+            Route::get('/employ/create-password/{employee_id}', [CreatePasswordController::class, 'index'])->name('create.password');
         });
 
         Route::prefix('interviews')->group(function () {
@@ -87,7 +92,7 @@ Route::middleware(['auth', 'verified'])->group( function() {
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/testing/email', fn() => view('mail.auth.forgot-password'));
+    Route::get('/testing/email', fn() => view('mail.accepted-applicant'));
     
     Route::fallback(DashboardController::class);
 

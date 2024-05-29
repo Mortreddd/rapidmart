@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Mail\EmployedApplicantMail;
 use App\Mail\Employee\TerminationMail;
+use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class EmployeeService 
@@ -36,11 +39,6 @@ class EmployeeService
         return $employees;
     }
 
-
-    public function employEmployee() {
-        // return $this->employee::create
-    }
-
     public function terminateEmployee(Employee $employee, $request)
     {
         // Storage::delete('public/resumes/'.$employee->resume);
@@ -62,5 +60,43 @@ class EmployeeService
     public function forgotPassword()
     {
         //
+    }
+
+    public function employApplicant(Applicant $applicant, string $start_date)
+    {
+        // * Put the id of position allowed to have an account in here
+        $AUTHORIZE_POSITIONS_IDS = [1,2,3];
+        $isAuthorized = in_array($applicant->position_id, $AUTHORIZE_POSITIONS_IDS);
+
+        $employee = $this->employee::with(['position'])->create([
+            'first_name' => $applicant->first_name,
+            'middle_name' => $applicant->middle_name,
+            'last_name' => $applicant->last_name,
+            'gender' => $applicant->gender,
+            'age' => $applicant->age,
+            'resume' => $applicant->resume,
+            'birthday' => $applicant->birthday, // '2002-03-15
+            'phone' => $applicant->phone,
+            'image' => null,
+            'address' => $applicant->address,
+            'position_id' => $applicant->position_id,
+            'department_id' => $applicant->department_id,
+            'email' => $applicant->email,
+            'password' => null,
+            'employment_status' => 'Training',
+            'email_verified_at' => Carbon::now(),
+            'salary' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+            'notes' => $applicant->notes
+        ]);
+
+        Mail::to($applicant->email)->send(
+            new EmployedApplicantMail(
+                $employee,
+                $isAuthorized,
+                Carbon::parse($start_date)->format('F d, Y')
+            )
+        );
     }
 }

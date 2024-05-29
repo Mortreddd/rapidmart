@@ -28,7 +28,7 @@ return new class extends Migration
             $table->foreignIdFor(Position::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Department::class)->constrained()->cascadeOnDelete();
             $table->string('email');
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->enum('employment_status', ['Full Time', 'Part Time', 'Resigned', 'Terminated', 'Training']);
             $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->float('salary')->nullable();

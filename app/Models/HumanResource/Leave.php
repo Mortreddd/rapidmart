@@ -22,4 +22,9 @@ class Leave extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
+
+    public function attendances()
+    {
+        return static::belongsTo(Attendance::class);
+    }
 }

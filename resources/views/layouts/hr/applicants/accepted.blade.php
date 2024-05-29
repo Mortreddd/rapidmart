@@ -4,33 +4,11 @@
 @section('title', 'Accepted Applicants')
 
 @section('content')
-    <div id="danger-modal" class="w-full h-full z-10 absolute top-0 inset-0 flex justify-center items-center transition-colors ease-in-out duration-200 modal-inactive">
-        <form action="{{ route('applicant.destroy.all') }}" method="POST" id="danger-modal-content" class="h-fit w-80 space-y-2 modal-content fade-out-modal">
-            @method('DELETE')
-            @csrf
-            <button type="button" id="close-modal-button" class="absolute top-3 right-3 rounded-full h-fit w-fit p-3 hover:text-gray-700 bg-white hover:bg-gray-300 transition-colors duration-200 ease-in-out">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-            </button>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 p-3 h-16 mx-auto rounded-full bg-red-500 text-white" >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-            </svg>
-            
-            <h1 class="text-2xl block text-black font-semibold text-center">WARNING</h1>
-            <p class="text-gray-700 text-center text-md">Are you sure you want to delete all rejected applicants?</p>
-            <div class="w-full h fit justify-evenly mt-2 flex items-center">
-                <button id="cancel-modal-button" type="button" class="rounded bg-gray-200 hover:bg-gray-300 transition-colors duration-200 ease-in-out text-gray-700 px-3 py-2">Cancel</button>
-                <button type="submit" class="text-white rounded bg-red-500 hover:bg-red-600 transition-colors ease-in-out duration-200 px-3 py-2 border-600">Confirm</button>
-            </div>
-        </form>
-    </div>
 
     @foreach($applicants as $applicant)
 
-        <form action="{{ route('applicant.destroy', ['applicant_id' => $applicant->id ]) }}" method="post" id="{{$applicant->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <form action="{{ route('applicant.employ', ['applicant_id' => $applicant->id ]) }}" method="post" id="{{$applicant->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             @csrf
-            @method('DELETE')
             <div  class="relative p-4 w-full max-w-md max-h-full">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 transition-colors duration-200 ease-in-out hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="{{ $applicant->id }}">
@@ -43,7 +21,8 @@
                         <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete {{ $applicant->first_name }}, {{ $applicant->last_name}}?</h3>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to employ {{ $applicant->first_name }}, {{ $applicant->last_name}}?</h3>
+                        <input datepicker datepicker-format="mm-dd-yyyy" value="{{ old('start_date') }}" type="text" required autocomplete="off" name="start_date" id="start_date" class="bg-gray-50 py-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-auto ps-10 p-2.5" placeholder="Select starting date">
                         <button type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center transition-colors duration-200 ease-in-out">
                             Delete
                         </button>
