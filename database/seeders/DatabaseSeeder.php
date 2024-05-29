@@ -6,8 +6,10 @@ namespace Database\Seeders;
 
 use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
+use App\Models\HumanResource\Attendance;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Interview;
+use App\Models\HumanResource\Leave;
 use App\Models\HumanResource\Position;
 use App\Models\HumanResource\Schedule;
 use App\Models\PO\Catergory;
@@ -275,5 +277,40 @@ class DatabaseSeeder extends Seeder
         Catergory::factory(5)->create();
         Product::factory(10)->create();
 
+
+        
+
+        foreach(Employee::limit(10)->orderByDesc('id')->get() as $employee){
+            Leave::create([
+                'employee_id' => $employee->id,
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::now()->addDays(3),
+                'reason' => 'Sick Leave',
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+
+        $schedules = Schedule::with(['employees.leave', 'position'])->get();
+        $DAYS = 30;
+
+        while($DAYS > 0) {
+            $currentDate = Carbon::now()->subDays($DAYS);
+            foreach($schedules as $schedule){
+
+                foreach($schedule->employees as $employee){
+                    Attendance::create([
+                        'schedule_id' => $schedule->id,
+                        'employee_id' => $employee->id,
+                        'leave_id' => $employee->leave->id ?? null,
+                        'date' => $currentDate,
+                        'check_in' => $schedule->time_start,
+                        'check_out' => $schedule->time_end,
+                        'total_hours' => 8,
+                    ]);
+                }
+            } 
+            $DAYS--;
+        }
     }
 }

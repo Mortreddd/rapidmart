@@ -63,6 +63,11 @@ class Employee extends Authenticatable
 
     public function leave()
     {
-        return static::belongsTo(Leave::class);
+        return static::belongsTo(Leave::class, 'id', 'employee_id');
+    }
+
+    public function attendance()
+    {
+        return static::belongsTo(Attendance::class);
     }
 }

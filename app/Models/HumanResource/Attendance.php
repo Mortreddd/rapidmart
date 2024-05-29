@@ -16,7 +16,9 @@ class Attendance extends Model
         'date',
         'check_in',
         'check_out',
-        'total_hours'
+        'total_hours',
+        'created_at',
+        'updated_at'
     ];
 
     public function schedule()
@@ -24,9 +26,9 @@ class Attendance extends Model
         return static::belongsTo(Schedule::class);
     }
 
-    public function emloyees()
+    public function employees()
     {
-        return static::hasMany(Employee::class);
+        return static::hasMany(Employee::class, 'id', 'employee_id');
     }
 
     public function leave()

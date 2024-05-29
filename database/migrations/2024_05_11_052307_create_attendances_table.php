@@ -18,12 +18,13 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Schedule::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Leave::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('leave_id')->nullable();
             $table->date('date');
-            $table->timestamp('check_in');
-            $table->timestamp('check_out');
+            $table->string('check_in');
+            $table->string('check_out');
             $table->float('total_hours')->nullable();
-        });
+            $table->timestamps();
+        }); 
     }
 
     /**

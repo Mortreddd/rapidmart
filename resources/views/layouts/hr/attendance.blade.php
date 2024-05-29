@@ -36,14 +36,31 @@
             </li>
         </ol>
     </nav>
-    <a href="{{ route('applicant.accepted.index') }}" class="py-4 px-6 bg-green-500 hover:bg-green-600 transition-colors ease-in-out duration-300 text-white rounded shadow-lg flex justify-between gap-3 items-center w-fit">
-        <h3 class="text-lg text-white">
-            {{ $schedules->count() }} Accepted Applicants
-        </h3>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-        </svg>
-    </a>
+
+    <div class="bg-gray-100 p-5 flex-justify-start rounded w-full h-fit">    
+        <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">{{ $selectedDepartment->name }}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg>
+        </button>
+            
+            <!-- Dropdown menu -->
+            <div id="dropdownDivider" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
+                    @foreach ($departments as $department)
+                        @if ($department->id === $selectedDepartment->id)
+                            <li>
+                                <a href="{{ route('attendance.index', ['department' => $selectedDepartment->id]) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $department->name }}</a>
+                            </li>
+                            @continue
+                        @endif
+                        <li>
+                            <a href="{{ route('attendance.index', ['department' => $department->id]) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $department->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+    
+    </div>
     <div class="h fit w-full space-y-5">
         <table id="default-applicant-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
             <caption class="text-gray-800 text-center">Attendances</caption>
@@ -58,25 +75,36 @@
                 </tr>
             </thead>
             <tbody id="table-applicant-body" class="bg-white text-left rounded-b-lg">
-                    @forelse ($schedules as $schedule)
-                        @forelse ($schedule->employees as $employee)
-                            <tr class="text-black font-normal odd:bg-[#CAD9FF]">
-                                <td class="px-3 py-2">{{ $employee->first_name }}, {{ $employee->last_name }}</td>
-                                <td class="px-1 py-2">{{ $schedule->position->name }}</td>
-                                <td class="px-1 py-2">{{ $schedule->position->department->name }}</td>
-                                @if ($schedule->shift == 'Day')
-                                    <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $schedule->time_start }}</td>
-                                @elseif ($schedule->shift == 'Night')
-                                    <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $schedule->time_start }}</td>
-                                @endif
-                                @if ($schedule->shift == 'Day')
-                                    <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $schedule->time_end }}</td>
-                                @elseif ($schedule->shift == 'Night')
-                                    <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $schedule->time_end }}</td>
-                                @endif
-                                <td class="px-3 py-2 font-bold text-center">Absent</td>
-                            </tr>
-                        @empty
+                    @forelse ($attendances as $attendance)
+                        @forelse ($attendance->employees as $employee)
+                            @if ($selectedDepartment->id === $employee->department_id)
+                                <tr class="text-black font-normal odd:bg-[#CAD9FF]">
+                                    <td class="px-3 py-2">{{ $employee->first_name }}, {{ $employee->last_name }}</td>
+                                    <td class="px-1 py-2">{{ $employee->position->name }}</td>
+                                    <td class="px-1 py-2">{{ $employee->position->department->name }}</td>
+                                    @if ($attendance->schedule->shift == 'Day')
+                                        <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $attendance->check_in }}</td>
+                                    @elseif ($attendance->schedule->shift == 'Night')
+                                        <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $attendance->check_in }}</td>
+                                    @endif
+                                    @if ($attendance->schedule->shift == 'Day')
+                                        <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $attendance->check_out }}</td>
+                                    @elseif ($attendance->schedule->shift == 'Night')
+                                        <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $attendance->check_out }}</td>
+                                    @endif
+                                    
+                                    @if (optional($employee->leave)->id === null && $attendance->id !== null)
+                                        <td class="px-3 py-2 font-bold rounded text-center bg-green-500">Present</td>
+                                    @elseif (optional($employee->leave)->id !== null)
+                                        <td class="px-3 py-2 font-bold rounded text-center bg-amber-500">On Leave</td>
+                                    @elseif ($attendance->id !== null)
+                                        <td class="px-3 py-2 font-bold rounded text-center bg-green-500">Present</td>
+                                    @else
+                                        <td class="px-3 py-2 font-bold rounded text-center bg-red-500">Absent</td>
+                                    @endif
+                                </tr>
+                            @endif
+                            @empty
                             <td colspan="6" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
                                 No employees found
                             </td>
@@ -141,4 +169,11 @@
 
 @section('scripts')
    @parent
+
+
+   <script>
+        document.addEventListener('change', function(){
+
+        });
+    </script>
 @endsection

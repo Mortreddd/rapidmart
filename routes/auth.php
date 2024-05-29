@@ -82,7 +82,7 @@ Route::middleware(['auth', 'verified'])->group( function() {
         });
 
         Route::prefix('attendances')->group(function() {
-            Route::get('/', [AttendanceController::class, 'index'])->name('attendance.index');
+            Route::get('/{department?}', [AttendanceController::class, 'index'])->name('attendance.index');
         });
 
 

@@ -27,4 +27,10 @@ class Leave extends Model
     {
         return static::belongsTo(Attendance::class);
     }
+
+
+    public function employee()
+    {
+        return static::belongsTo(Employee::class);
+    }
 }
