@@ -102,7 +102,7 @@
                             <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
                         @enderror
                     <label for="phone" class="block">Contact Number</label>
-                    <input type="number" name="phone" id="phone" autocomplete="off" value="{{ $employee->phone }}" placeholder="Contact Number" class="w-full outline-none focus:border-none focus:ring-1 focus:ring-secondary border border-gray-500 placeholder:text-gray-700 rounded p-2">
+                    <input type="text" name="phone" id="phone" autocomplete="off" value="{{ $employee->phone }}" placeholder="Contact Number" class="w-full outline-none focus:border-none focus:ring-1 focus:ring-secondary border border-gray-500 placeholder:text-gray-700 rounded p-2">
                 </div>
 
                 <div class="relative w-full gap-3 grid grid-cols-6">

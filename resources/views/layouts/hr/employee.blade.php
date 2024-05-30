@@ -123,7 +123,7 @@
                 @endforeach
             </select>
         </form>
-        <div class="w-fit">
+        <div class="w-fit flex gap-3">
             <form action=" {{ route('employee.index') }}" method="get" class="flex w-96 items-center gap-3">
                 <input type="search" name="search" value="{{ Request::get('search') }}" id="search-applicant-input" placeholder="Search Employee..." class="bg-gray-50 border border-secondary text-gray-700 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-primary block w-full p-2.5" autocomplete="off"/>
                 <button id="search-applicant-button" type="submit" class="rounded-lg p-2 transition-colors duration-200 ease-in-out bg-secondary hover:bg-secondary/80 text-white ">
@@ -132,7 +132,14 @@
                     </svg>
                 </button>
             </form>
+            <a href="{{ route('employee.create') }}" class="rounded-lg py-2 px-3 transition-colors text-lg duration-200 ease-in-out flex gap-3 items-center bg-orange-500 text-white hover:bg-orange-600 cursor-pointer pointer-events-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                </svg>
+                Add Employee 
+            </a>
         </div>
+        
     </div>
     <table id="default-employee-table" class="fade-in font-semibold text-md table-fixed border text-white w-full shadow">
         <caption class="text-gray-800 text-center">Employee List</caption>

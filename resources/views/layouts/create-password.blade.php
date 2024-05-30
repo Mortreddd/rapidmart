@@ -12,7 +12,7 @@
         <main id="content" class="w-full h-[100vh] flex">
             <div class="flex w-full h-full justify-center items-center">
                 <section class="mx-auto h-full flex justify-center flex-col w-full md:px-0 px-10 md:w-[50%] bg-contain bg-right bg-no-repeat">
-                    <form action="" method="post" class="w-full fade-in mx-auto space-y-6 rounded-lg md:p-7 bg-gray-100 md:w-96 xl:w-[26rem]">
+                    <form action="{{ route('create.password.store') }}" method="post" class="w-full fade-in mx-auto space-y-6 rounded-lg md:p-7 bg-gray-100 md:w-96 xl:w-[26rem]">
                         @csrf
                         <input type="hidden" name="employee_id" value="{{ $employee->id }}">
                         <div class="w-full space-y-3 h-fit">

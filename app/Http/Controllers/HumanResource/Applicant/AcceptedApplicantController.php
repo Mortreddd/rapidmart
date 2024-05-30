@@ -49,7 +49,7 @@ class AcceptedApplicantController extends Controller
         $applicant = Applicant::with(['position'])->findOrFail($applicant_id);
 
         // @return Employee
-        $this->employeeService->employApplicant($applicant,  $validated->validated()['start_date']);
+        $this->employeeService->employApplicant($applicant,  $request->start_date);
 
         return Redirect::route('applicant.accepted.index')->with(['success', 'Applicant has been employed']);
     }
