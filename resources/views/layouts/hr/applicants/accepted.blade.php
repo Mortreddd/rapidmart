@@ -123,9 +123,13 @@
                         </th>
                         <td class="px-3 py-2">{{ $applicant->updatedDate() }}</td>
                         <td class="px-6 py-2 flex items-center justify-between gap-1 rounded-br-lg">
+                            @if ( $applicant->status === "Employed")
+                                <p class="p-3 rounded bg-blue-500 text-white">Already Employed</p>
+                            @else
                             <button data-modal-target="{{$applicant->id}}" data-modal-toggle="{{$applicant->id}}" type="submit" class="rounded text-white my-2 hover:text-gray-200 p-3 bg-green-500 hover:bg-green-600 transition-colors duration-300 ease-in-out">
                                 Employ
                             </button>
+                            @endif
                         </td>
                     </tr>
                 @empty

@@ -9,6 +9,7 @@ class Payroll extends Model
 {
     use HasFactory;
 
+    public static array $STATUSES = ['Pending', 'Approved', 'Rejected'];
     protected $fillable = [
         'attendance_id',
         'employee_id',

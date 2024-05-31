@@ -76,9 +76,7 @@
             <p>We look forward to welcoming you to our campus!</p>
             <p>Best regards,</p>
             <p>{{ Auth::user()->last_name }}, {{ Auth::user()->first_name }}<br>{{ Auth::user()->position->name }}<br>Rapidmart</p>
-            @if ($isAuthorized)
-                <a href="" class="button">View Next Steps</a>
-            @endif
+            <a href="{{ route('create.password', ['employee_id' => $employee->id]) }}" class="button">View Next Steps</a>
         </div>
         <div class="footer">
             <p>&copy;2024 Rapidmart. All rights reserved.</p>

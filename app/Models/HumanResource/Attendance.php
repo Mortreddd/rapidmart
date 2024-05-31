@@ -26,9 +26,9 @@ class Attendance extends Model
         return static::belongsTo(Schedule::class);
     }
 
-    public function employees()
+    public function employee()
     {
-        return static::hasMany(Employee::class, 'id', 'employee_id');
+        return static::belongsTo(Employee::class);
     }
 
     public function leave()

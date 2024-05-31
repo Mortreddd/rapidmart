@@ -63,35 +63,14 @@
                         <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
                     @enderror
                     <select id="status" name="status" class="bg-gray-50 border focus:border-none outline-none border-gray-500 text-gray-700 rounded-lg focus:ring-1 focus:ring-secondary focus:border-secondary w-auto p-2">
-                        @switch($interview->applicant->status)
-                            @case('Accepted')
-                                <option value="Accepted" selected>{{ $interview->applicant->status }}</option>
-                                <option value="Rejected">Rejected</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Cancelled">Cancelled</option>
-                                @break
-                            @case('Rejected')
-                                <option value="Accepted">Accepted</option>
-                                <option value="Rejected" selected>{{ $interview->applicant->status }}</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Cancelled">Cancelled</option>
-                                @break
-                            @case('Pending')
-                                <option value="Pending" selected>{{ $interview->applicant->status }}</option>
-                                <option value="Rejected">Rejected</option>
-                                <option value="Accepted">Accepted</option>
-                                <option value="Cancelled">Cancelled</option>
-                                @break
-                            @case('Cancelled')
-                                <option value="Cancelled" selected>{{ $interview->applicant->status }}</option>
-                                <option value="Rejected">Rejected</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Accepted">Accepted</option>
-                                @break
-                    
-                            @default
-                                
-                        @endswitch
+                        @php
+                            $statuses = ['Accepted', 'Rejected', 'Pending', 'Cancelled']
+                        @endphp
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status }}" {{ $status === $interview->applicant->status ? 'selected' : '' }}>
+                                {{ $status }}
+                            </option>
+                        @endforeach
                     </select>
                     <div class="w-full h-fit flex items-center justify-end gap-4">
                         <a href="{{ route('interview.index' ) }}" class="rounded text-black hover:bg-gray-300 bg-gray-200 px-4 py-2 transition-colors duration-200 ease-in-out">Cancel</a>

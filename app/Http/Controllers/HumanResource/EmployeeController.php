@@ -24,13 +24,6 @@ class EmployeeController extends Controller
     {
         $employees = $this->employeeService->getEmployees($request);
 
-        if($request->has('search') && $request->search != null){
-            
-            $employees->orWhere(function($query) use ($request) {
-                            $query->where('last_name', 'like', "%{$request->search}%")
-                                ->where('first_name', 'like', "%{$request->search}%");
-                        });
-        }
 
         return View::make('layouts.hr.employee', [
             'employees' => $employees->paginate(50),

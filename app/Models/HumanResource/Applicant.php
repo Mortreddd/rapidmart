@@ -56,4 +56,9 @@ class Applicant extends Model
         return date('F d, Y', strtotime(Carbon::parse($this->updated_at))); 
     }
 
+    public function interview()
+    {
+        return static::belongsTo(Interview::class);
+    }
+
 }

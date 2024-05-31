@@ -32,8 +32,8 @@ class Position extends Model
         return static::hasMany(Employee::class);
     }
 
-    public function schedules()
+    public function schedule()
     {
-        return static::hasMany(Schedule::class);
+        return static::hasOne(Schedule::class);
     }
 }
