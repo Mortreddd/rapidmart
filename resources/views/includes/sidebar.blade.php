@@ -49,8 +49,13 @@
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        Transaction & Documentation
+                    <a href="{{ route('qir.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                        Quality Inspection Report
+                    </a>
+                </li>
+                <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
+                    <a href="{{ route('document.index')}}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                        PO Reports Documentation
                     </a>
                 </li>
             </ul>
@@ -82,6 +87,7 @@
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
                     <a href="{{ route('sales.salesreport.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Daily Sales Report
+                        {{-- {{ route('sales.salesreport.index') }} --}}
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
@@ -90,8 +96,9 @@
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a href="" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                    <a href="{{ route('sales.promoinformation.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Promo Information
+                        {{-- {{ route('sales.promoinformation.index') }} --}}
                     </a>
                 </li>
             </ul>
@@ -115,28 +122,13 @@
         <li class="w-full overflow-y-hidden bg-gray-100 rounded inventory grid-template-row-0 height-transition">
             <ul class="flex flex-col w-full space-y-2 rounded h-fit">
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        Suppliers Data
-                    </a>
-                </li>
-                <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        Point of Sales
-                    </a>
-                </li>
-                <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
                     <a href="{{ route('product.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
                         Warehouse
                     </a>
                 </li>
                 <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a  class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        FIFO
-                    </a>
-                </li>
-                <li class="flex flex-col items-end w-full px-3 py-1 h-fit">
-                    <a class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
-                        Module for Receiving
+                    <a href="{{ route('stock.index') }}" class="text-sm text-black transition-colors duration-200 ease-in-out cursor-pointer text hover:text-secondary/80">
+                        Product Stock
                     </a>
                 </li>
             </ul>

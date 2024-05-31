@@ -7,9 +7,8 @@
 
 <div id="mainContainer" class=" h-fit  p-2">
 
-    <div id="delete-modal" data-modal-target="delete-modal" tabindex="-1"  aria-hidden="true"  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        @include('includes.PO.DeleteSupplier')
-    </div>
+
+    @include('includes.PO.DeletePO')
 
     {{-- BreadCrumbs --}}
     <nav class="flex px-5 py-3 mb-4 text-gray-700 border border-gray-200 bg-gray-50 rounded-md ">
@@ -60,9 +59,9 @@
                 <span id="supplier_error"  class=" h-2 text-sm text-red-500"></span>
             </div>
 
-            <div class="col-span-2 md:col-span-1 md:row-span-2">
+            <div class="col-span-2 md:col-span-1 md:row-span-3">
                 <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Subject</label>
-                <textarea id="subject" name="subject" rows="6" class="md:max-h-[124.3px] block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write the Purchase Order Subject here..."></textarea>
+                <textarea id="subject" name="subject" rows="6" class="md:max-h-[233px] md:min-h-[233px] block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write the Purchase Order Subject here..."></textarea>
                 <span id="subject_error"  class=" h-2 text-sm text-red-500"></span>
             </div>
 
@@ -71,14 +70,28 @@
                 <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file" name="pdf_path" type="file"  accept="application/pdf" >
                 <span id="pdf_path_error"  class=" h-2 text-sm text-red-500"></span>
             </div>
+
+            <div class="col-span-2 md:col-span-1">
+                <label class="block mb-2 text-sm text-gray-900 dark:text-white mr-1 font-bold" for="file">Total Cost (₱)</label>
+                <input class="block w-full md:w-1/2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="total_cost" name="total_cost" type="text"  accept="application/pdf" >
+                <span id="total_cost_error"  class=" h-2 text-sm text-red-500"></span>
+            </div>
+
+
         </div>
 
         <button type="submit" data-target-model="popup-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit</button>
     </form>
 
     <div>
-        <h1 class="my-4 text-sm font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">Puchase Requisite</h1>
-        <div > <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <div class="flex justify-between items-center flex-wrap">
+            <h1 class="my-4 text-sm font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">Puchase Requisite</h1>
+
+        </div>
+     
+
+        <div >
+             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">
@@ -86,6 +99,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Purchase Order File
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Total_Cost
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
@@ -117,7 +133,7 @@ function getPR(){
         processData: false,
         success: (result) => {
             $('#PR').empty();
-            // console.log("🚀 ~ getPR ~ result:", result)
+            console.log("🚀 ~ getPR ~ result:", result)
             if(result.PR.length > 0){
                 result.PR.forEach(item => {
                     let downloadURL = '{{ route("po.download", ":id") }}';
@@ -133,6 +149,9 @@ function getPR(){
                         <td class="px-6 py-4">
                             <a href='${downloadURL}' class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
                         </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            ₱${item.total_cost}
+                        </th>
                         <td class="px-6 py-4">
                             <button data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="cancelpr focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"  data-id="${item.id}">Cancel</button>
                         </td>
@@ -142,7 +161,7 @@ function getPR(){
             } else {
                 $('#PR').append(`
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td class="px-6 py-4 text-center" colspan="3" >Empty Data Set</td>
+                    <td class="px-6 py-4 text-center" colspan="4" >Empty Data Set</td>
                 </tr>
                 `);
             }
@@ -193,7 +212,7 @@ $(document).ready(()=>{
             },
 
             success: (result) => {
-                // console.log("🚀 ~ create ~ result:", result);
+                console.log("🚀 ~ create ~ result:", result);
                 if (result.status == "success") {
                     new mp.openModal('static-modal')
                     $("#createPO").find("span").text("");

@@ -13,10 +13,12 @@ return new class extends Migration {
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('creator_id')->constrained('employees')->cascadeOnDelete();
             $table->text('subject');
             $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
             $table->text('pdf_path');
             $table->string('status');
+            $table->string('total_cost');
             $table->timestamps();
         });
     }

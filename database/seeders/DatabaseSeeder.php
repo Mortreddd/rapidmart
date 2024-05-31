@@ -13,8 +13,10 @@ use App\Models\HumanResource\Leave;
 use App\Models\HumanResource\Position;
 use App\Models\HumanResource\Schedule;
 use App\Models\PO\Catergory;
+use App\Models\PO\QualityReports;
 use App\Models\Po\supplier;
 use App\Models\Inventory\Product;
+use App\Models\PO\PurchaseOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -210,12 +212,12 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ],
         )
-        ->create();
+            ->create();
 
         // ? ADD YOUR MANAGER ACCOUNT HERE
         Employee::factory()->create([
-            'first_name' => 'Mark Erol',
-            'middle_name' => 'Garcia',
+            'first_name' => 'Mark',
+            'middle_name' => 'G',
             'last_name' => 'Manansala',
             'gender' => 'M',
             'age' => 21,
@@ -235,8 +237,8 @@ class DatabaseSeeder extends Seeder
             'updated_at' => null,
             'notes' => 'HATDOG'
         ]);
-      
-      Employee::factory()->create([
+
+        Employee::factory()->create([
             'first_name' => 'Emmanuel',
             'middle_name' => 'Meneses',
             'last_name' => 'Male',
@@ -259,7 +261,7 @@ class DatabaseSeeder extends Seeder
             'notes' => 'This is super ugly client'
         ]);
 
-        Position::all()->each(function (Position $position){
+        Position::all()->each(function (Position $position) {
             $start = ["10:00", "19:00"];
             $end = ["19:00", "04:00"];
             $index = fake()->numberBetween(0, 1);
@@ -274,8 +276,76 @@ class DatabaseSeeder extends Seeder
         Applicant::factory(302)->create();
         Supplier::factory(10)->create();
         Interview::factory(20)->create();
+
+        Employee::factory(5)->create();
+        Applicant::factory(5)->create();
+
+        Supplier::factory()->create([
+            'company_name' => 'HighDen ni Erol',
+            'address' => 'SkyStreet, Flowers Country, Greenny TExture',
+            'email' => 'manansalamarkerol@gmail.com',
+            'description' => 'Embracing cannabis, they find joy in its euphoric embrace, sharing laughter and creativity with friends, basking in the moments bliss.',
+            'picture' => 'SupplierImg/cana.jpeg'
+        ]);
+
         Catergory::factory(5)->create();
-        Product::factory(10)->create();
+        Supplier::factory(10)->create();
+
+        PurchaseOrder::factory()->create([
+            'subject' => 'Hello. dear.',
+            'creator_id' => 1001,
+            'supplier_id' => 1,
+            'pdf_path' => 'PurchaseOrderPDF/default.pdf',
+            'status' => 'approved',
+            'total_cost' => rand(100, 10000),
+        ]);
+
+        PurchaseOrder::factory(10)->create([
+            'status' => 'approved',
+        ]);
+
+
+
+
+        // QualityReports::factory()->create([
+        //     'inspector_id' => 1000,
+        //     'po_id' => 1,
+        //     'reports_pdf_path' => 'QIR/default.pdf',
+        //     'status' => 'passed',
+        //     'description' => 'A meaningful Description....',
+        //     'isEmailed_status' => 'send',
+        //     'created_at' => Carbon::today(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::yesterday(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfWeek(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->subWeek()->startOfWeek(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfMonth(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->subMonth()->startOfMonth(),
+        // ]);
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfMonth(),
+        // ]);
+
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->startOfYear(),
+        // ]);
+        // QualityReports::factory(1)->create([
+        //     'created_at' => Carbon::now()->subYear()->startOfYear(),
+        // ]);
 
 
         

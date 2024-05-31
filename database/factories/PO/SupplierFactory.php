@@ -2,8 +2,6 @@
 
 namespace Database\Factories\PO;
 
-use App\Models\Po\SupplierAddress;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 
@@ -24,7 +22,7 @@ class SupplierFactory extends Factory
             'address' => fake()->address(),
             'email' => fake()->unique()->safeEmail(),
             'description' => fake()->realText(20),
-            'picture'=>'SupplierImg/default.png',
+            'picture' => 'SupplierImg/default.png',
         ];
     }
 }

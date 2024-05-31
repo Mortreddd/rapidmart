@@ -12,8 +12,10 @@ class PurchaseOrder extends Model
     protected $fillable = [
         'subject',
         'supplier_id',
+        'creator_id',
         'pdf_path',
         'status',
+        'total_cost'
     ];
 
     // public function supplier(): BelongsTo

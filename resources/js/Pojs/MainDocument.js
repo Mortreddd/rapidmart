@@ -1,5 +1,4 @@
 import { Modal } from "flowbite";
-
 export { openModal, closeModal };
 
 function openModal(el) {
@@ -32,6 +31,15 @@ function closeModal(el) {
     openModal.hide();
 }
 
-$("#cancelapprove").on("click", function () {
-    closeModal("approve-modal");
+$("#close-description").on("click", function () {
+    closeModal("description-modal");
+});
+
+$("#delete-btn").on("click", () => {
+    openModal("delete-modal");
+});
+
+$("#cancelDelete").on("click", () => {
+    closeModal("delete-modal");
+    $("#none").html("");
 });

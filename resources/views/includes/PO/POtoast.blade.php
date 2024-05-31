@@ -29,7 +29,7 @@
             <!-- Modal body -->
             <div class="p-4 md:p-5 space-y-4">
                 <p class="text-base leading-relaxed text-black dark:text-gray-400">
-                  New Supplier is Succesfully Added!
+                  New Purchase Order is Succesfully Added!
                 </p>
             </div>
 
