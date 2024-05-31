@@ -11,10 +11,13 @@ use App\Http\Controllers\HumanResource\Interview\AppointmentController;
 use App\Http\Controllers\HumanResource\Applicant\PendingApplicantController;
 use App\Http\Controllers\HumanResource\Applicant\RejectedApplicantController;
 use App\Http\Controllers\HumanResource\ApplicantController;
+use App\Http\Controllers\HumanResource\Attendance\UpdateAttendanceController;
 use App\Http\Controllers\HumanResource\AttendanceController;
+use App\Http\Controllers\HumanResource\Employee\CreateEmployeeController;
 use App\Http\Controllers\HumanResource\Employee\EditEmployeeController;
 use App\Http\Controllers\HumanResource\EmployeeController;
 use App\Http\Controllers\HumanResource\Interview\InterviewController;
+use App\Http\Controllers\HumanResource\Leave\LeaveController;
 use App\Http\Controllers\HumanResource\ScheduleController;
 use App\Http\Controllers\Sales\SalesReportController;
 use App\Http\Controllers\Sales\CheckInventoryController;
@@ -24,7 +27,7 @@ use App\Http\Controllers\Sales\PromoInformationController;
 // * CREATE A MIDDLEWARE FOR YOUR OWN PART
 // * THE ROLEMIDDLEWARE IS ALREADY CONFIGURED JUST ASSIGN THE POSITIONS OR ACCESS LEVEL OF YOUR AUTHORIZED ACCOUNTS
 // * role:hr IS AN EXAMPLE FOR HUMAN RESOURCE MANAGEMENT PART WHERE THE AUTHORIZED ACCOUNT ONLY IS THE HR MANAGER AND THE RECRUITER
-
+Route::get('/employ/create-password/{employee_id}', [CreatePasswordController::class, 'index'])->name('create.password');
 
 Route::middleware(['auth', 'verified'])->group( function() {
 
@@ -37,6 +40,12 @@ Route::middleware(['auth', 'verified'])->group( function() {
             Route::get('/edit/{employee_id}', [EditEmployeeController::class, 'index'])->name('employee.show');
             Route::put('/edit/{employee_id}', [EditEmployeeController::class, 'update'])->name('employee.update');
             Route::put('/terminate/{employee_id}', [EditEmployeeController::class, 'terminate'])->name('employee.terminate');
+
+            Route::get('/create', [CreateEmployeeController::class, 'index'])->name('employee.create');
+            Route::post('/create', [CreateEmployeeController::class, 'store'])->name('employee.store');
+
+
+            Route::get('/on-leaves', [LeaveController::class, 'index'])->name('leave.index');
         });
       
         // ? APPLICANT ROUTES
@@ -66,9 +75,10 @@ Route::middleware(['auth', 'verified'])->group( function() {
             // ? UPDATE APPLICANT ROUTE 
             Route::get('/appoint/{applicant_id}', [AppointmentController::class, 'index'])->name('applicant.view.edit');
             Route::post('/appoint/create', [AppointmentController::class, 'store'])->name('interview.store');
-
+            
             Route::post('/employee/{applicant_id}', [CreatePasswordController::class, 'create'])->name('employee.applicant');
-            Route::get('/employ/create-password/{employee_id}', [CreatePasswordController::class, 'index'])->name('create.password');
+            Route::post('/employ/create-password', [CreatePasswordController::class, 'store'])->name('create.password.store');
+            
         });
 
         Route::prefix('interviews')->group(function () {
@@ -83,6 +93,8 @@ Route::middleware(['auth', 'verified'])->group( function() {
 
         Route::prefix('attendances')->group(function() {
             Route::get('/{department?}', [AttendanceController::class, 'index'])->name('attendance.index');
+
+            Route::post('/update/{attendance_id}', [UpdateAttendanceController::class, 'update'])->name('attendance.update');
         });
 
 

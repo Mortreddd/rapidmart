@@ -23,18 +23,22 @@ class EmployeeService
 
     public function getEmployees(Request $request)
     {
-        $employees = $this->employee::with(['position.department'])
-                        ->whereNotIn('employment_status', ['Resigned', 'Terminated'])
-                        ->orderBy('created_at');
-
-
-        if($request->has('department') && ($request->department != "All")){
+        $employees = $this->employee->with(['position.department']);
+        if($request->has('department') && ($request->department !== "All")){
             $employees->where('department_id', $request->department);
         }
         else if($request->department == "All"){
             $employees->where('department_id', operator: '!=', value: null);
         }
-        
+        if($request->has('search') || $request->search !== null){
+            $employees->orWhere(function($query) use ($request){
+                $query->where('last_name', 'like', "%{$request->search}%")
+                ->orWhere('first_name', 'like', "%{$request->search}%")
+                ->orWhere('email', 'like', "%{$request->search}%");
+            });
+        }
+
+       
         
         return $employees;
     }
@@ -65,9 +69,6 @@ class EmployeeService
     public function employApplicant(Applicant $applicant, string $start_date)
     {
         // * Put the id of position allowed to have an account in here
-        $AUTHORIZE_POSITIONS_IDS = [1,2,3];
-        $isAuthorized = in_array($applicant->position_id, $AUTHORIZE_POSITIONS_IDS);
-
         $employee = $this->employee::with(['position'])->create([
             'first_name' => $applicant->first_name,
             'middle_name' => $applicant->middle_name,
@@ -94,8 +95,7 @@ class EmployeeService
         Mail::to($applicant->email)->send(
             new EmployedApplicantMail(
                 $employee,
-                $isAuthorized,
-                Carbon::parse($start_date)->format('F d, Y')
+                $start_date
             )
         );
     }

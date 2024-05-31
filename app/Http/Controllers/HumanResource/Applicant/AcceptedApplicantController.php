@@ -7,6 +7,7 @@ use App\Models\HumanResource\Applicant;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\Models\HumanResource\Employee;
+use App\Models\HumanResource\Interview;
 use App\Services\EmployeeService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -22,13 +23,14 @@ class AcceptedApplicantController extends Controller
     {
         $applicants = Applicant::with(['position'])
                             ->where('status', 'Accepted')
-                            ->latest()
+                            ->latest('updated_at')
                             ->paginate(20);
 
         if($request->has('search') && $request->search != null){
             $applicants = Applicant::where('first_name', 'like', "%{$request->search}%")
                 ->orWhere('last_name', 'like', "%{$request->search}%")
                 ->where('status', 'Accepted')
+                ->orWhere('status', 'Employed')
                 ->latest('created_at')
                 ->paginate(20);
         }
@@ -46,10 +48,11 @@ class AcceptedApplicantController extends Controller
             'start_date' => 'required'
         ]);
         
-        $applicant = Applicant::with(['position'])->findOrFail($applicant_id);
-
-        // @return Employee
-        $this->employeeService->employApplicant($applicant,  $validated->validated()['start_date']);
+        $applicant = Applicant::with(['position', 'interview'])->findOrFail($applicant_id);
+        Interview::where('applicant_id', $applicant->id)->update(['status' => 'Employed']);
+        
+        $this->employeeService->employApplicant($applicant,  $request->start_date); 
+        $applicant->update(['status' => "Employed"]);
 
         return Redirect::route('applicant.accepted.index')->with(['success', 'Applicant has been employed']);
     }

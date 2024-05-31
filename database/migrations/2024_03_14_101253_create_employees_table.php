@@ -29,7 +29,7 @@ return new class extends Migration
             $table->foreignIdFor(Department::class)->constrained()->cascadeOnDelete();
             $table->string('email');
             $table->string('password')->nullable();
-            $table->enum('employment_status', ['Full Time', 'Part Time', 'Resigned', 'Terminated', 'Training']);
+            $table->enum('employment_status', ['Full Time', 'Part Time', 'Resigned', 'Terminated', 'Training'])->default('Training');
             $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->float('salary')->nullable();
             $table->rememberToken();

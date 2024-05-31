@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('leave_id')->nullable();
             $table->date('date');
-            $table->string('check_in');
-            $table->string('check_out');
+            $table->string('check_in')->nullable();
+            $table->string('check_out')->nullable();
             $table->float('total_hours')->nullable();
             $table->timestamps();
         }); 

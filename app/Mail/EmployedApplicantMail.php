@@ -21,7 +21,6 @@ class EmployedApplicantMail extends Mailable
      */
     public function __construct(
         private $employee,
-        private bool $isAuthorized,
         private string $start_date
 
     ){} 
@@ -47,7 +46,6 @@ class EmployedApplicantMail extends Mailable
             view: 'mail.accepted-applicant',
             with: [
                 'employee' => $this->employee,
-                'isAuthorized' => $this->isAuthorized,
                 'startDate' => $this->start_date
             ],
         );

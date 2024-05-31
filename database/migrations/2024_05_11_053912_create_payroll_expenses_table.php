@@ -14,8 +14,9 @@ return new class extends Migration
     {
         Schema::create('payroll_expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Payroll::class)->constrained()->cascadeOnDelete();
+            $table->string('date');
             $table->float('total_amount');
+            $table->enum('status', Payroll::$STATUSES)->default('Pending'); // Pending, Approved, Rejected
             $table->timestamps();
         });
     }
