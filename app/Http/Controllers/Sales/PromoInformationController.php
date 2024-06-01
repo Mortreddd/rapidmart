@@ -14,8 +14,9 @@ class PromoInformationController extends Controller
                         ->select('promos.code as code', 'promos.percent as discount', 'promos.from_date as start', 'promos.till_date as end', 'products.name as product')
                         ->where('promos.till_date','>=',now())
                         ->where('promos.from_date','<=', now())
+                        ->orderBy('promos.from_date','asc')
                         ->paginate(10);
 
-        return  view('layouts.sales.promoinformation', ['promo' => $promo])->with('i',(request()->input('page', 1) -1) *10);
+        return view('layouts.sales.promoinformation', ['promo' => $promo])->with('i',(request()->input('page', 1) -1) *10);
     }
 }

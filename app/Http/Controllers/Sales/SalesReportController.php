@@ -14,10 +14,16 @@ class SalesReportController extends Controller
     {
         $sales = Sales::join('products', 'sales.product_id','=', 'products.id')
                         ->join('catergories','products.catergory_id','=','catergories.id')
+                        ->leftJoin('discounts','sales.discount_id','=','discounts.id')
+                        ->leftJoin('promos','sales.promo_id','=','promos.id')
                         ->select(
                             'sales.quantity as quantity',
                             'sales.amount as amount',
                             'sales.created_at as created_at',
+                            'sales.cash as cash',
+                            'sales.change as change',
+                            'promos.percent as promo',
+                            'discounts.percent as discount',
                             'products.price as price',
                             'products.name as product_name',
                             'catergories.name as category_name'
