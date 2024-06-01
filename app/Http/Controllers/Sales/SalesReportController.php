@@ -17,6 +17,7 @@ class SalesReportController extends Controller
                         ->leftJoin('discounts','sales.discount_id','=','discounts.id')
                         ->leftJoin('promos','sales.promo_id','=','promos.id')
                         ->select(
+                            'sales.id as id',
                             'sales.quantity as quantity',
                             'sales.amount as amount',
                             'sales.created_at as created_at',

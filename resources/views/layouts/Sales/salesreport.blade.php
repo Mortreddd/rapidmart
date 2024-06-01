@@ -13,7 +13,8 @@
         <caption class="text-gray-800 text-center">Daily Sales Report</caption> 
         <thead class="bg-secondary ">
                 <tr class=" rounded-lg">
-                    <th class="px-6 py-4 rounded-tl-lg">Date</th>
+                    <th class="px-4 py-4 rounded-tl-lg">Receipt #</th>
+                    <th class="px-6 py-4 ">Date</th>
                     <th class="px-6 py-4">Product</th>
                     <th class="px-6 py-4">Category</th>
                     <th class="px-6 py-4">Quantity Sold</th>
@@ -29,6 +30,7 @@
                 
                 @forelse($sales as $sale)
                     <tr class="text-black font-normal odd:bg-[#CAD9FF]">
+                        <td class="px-4 py-4">{{ $sale->id }}</td>
                         <td class="px-6 py-2">{{ $sale->created_at->format('d-M-y') }}</td>
                         <td class="px-6 py-2">{{ $sale->product_name}}</td>
                         <td class="px-6 py-2">{{ $sale->category_name }}</td>
@@ -46,6 +48,7 @@
                         @if($i == 5)
                             <tr class="text-black font-normal odd:bg-[#CAD9FF]">
                                 <td class="w-full py-2 text-center">No Recorded Sales</td>
+                                <td class="px-6 py-2"></td>
                                 <td class="px-6 py-2"></td>
                                 <td class="px-6 py-2"></td>
                                 <td class="px-6 py-2"></td>
