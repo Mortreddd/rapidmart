@@ -16,6 +16,8 @@ class Sales extends Model
         'discount_id',
         'promo_id',
         'amount',
+        'cash',
+        'change',
         'created_at',
         'updated_at'
     ];
