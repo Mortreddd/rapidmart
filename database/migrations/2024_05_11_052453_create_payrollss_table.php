@@ -17,7 +17,6 @@ return new class extends Migration
     {
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Attendance::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Deduction::class)->nullable();
             $table->foreignIdFor(Benefit::class)->nullable();

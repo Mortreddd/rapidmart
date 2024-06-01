@@ -70,4 +70,6 @@ class Employee extends Authenticatable
     {
         return static::belongsTo(Attendance::class);
     }
+
+
 }

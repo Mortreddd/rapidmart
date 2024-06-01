@@ -50,22 +50,16 @@
                 </thead>
                 <tbody id="table-applicant-body" class="bg-white text-left rounded-b-lg">
                     @forelse($department->positions as $position)
-                        @forelse ($position->schedules as $schedule)
                             <tr class="text-black font-normal odd:bg-[#CAD9FF]">
                                 <td class="px-3 py-2">{{ $department->name }}</td>
                                 <td class="px-1 py-2 text-center">{{ $position->name }}</td>
-                                @if ($schedule->shift == 'Day')
-                                    <td colspan="2" class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $schedule->time_start }} AM - {{ $schedule->time_end }} PM</td>
-                                @elseif ($schedule->shift == 'Night')
-                                    <td colspan="2" class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $schedule->time_start }} PM - {{ $schedule->time_end }} AM</td>
+                                @if ($position->schedule->shift == 'Day')
+                                    <td colspan="2" class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $position->schedule->time_start }} AM - {{ $position->schedule->time_end }} PM</td>
+                                @elseif ($position->schedule->shift == 'Night')
+                                    <td colspan="2" class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $position->schedule->time_start }} PM - {{ $position->schedule->time_end }} AM</td>
                                 @endif
                                 <td class="px-3 py-2 font-bold text-center">{{ $position->employees->count() }}</td>
                             </tr>
-                        @empty
-                            <td colspan="5" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
-                                No schedules found
-                            </td>
-                        @endforelse
                     @empty
                         <td colspan="5" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
                             No positions found
@@ -75,33 +69,7 @@
             </table>
         @endforeach
     </div>
-    {{-- @if($schedules->hasPages())
-        <div class="py-3 flex justify-center items-center gap-4 h-fit fade-in">
-            @if($schedules->previousPageUrl())
-                <a href="{{ $schedules->previousPageUrl() }}" class="rounded bg-secondary px-4 py-2 text-white font-sans transition-colors hover:bg-secondary/70 duration-300 ease-in-out">
-                    Prev
-                </a>
-            @else
-                <a href="" class="rounded hover:cursor-not-allowed px-4 py-2 pointer-events-none border-gray-700 bg-gray-100 hover:bg-gray-200 font-sans transition-colors duration-300 ease-in-out">
-                    Prev
-                </a>
-            @endif
-            <div class="w-auto px-2 h-fit">
-                <span class="text-sm text-gray-700 dark:text-gray-400">
-                    Showing <span class="font-semibold text-gray-900">{{ $schedules->firstItem() }}</span> to <span class="font-semibold text-gray-900">{{ $schedules->lastItem() }}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $schedules->total() }}</span> Entries
-                </span>
-            </div>
-            @if($schedules->nextPageUrl())
-                <a href="{{ $schedules->nextPageUrl() }}" class="rounded bg-secondary px-4 py-2 text-white font-sans transition-colors hover:bg-secondary/70 duration-300 ease-in-out">
-                    Next
-                </a>
-            @else
-                <a href="" class="rounded hover:cursor-not-allowed px-4 py-2 pointer-events-none border-gray-700 bg-gray-100 hover:bg-gray-200 font-sans transition-colors duration-300 ease-in-out">
-                    Next
-                </a>
-            @endif
-        </div>
-    @endif --}}
+    
     @if ( Session::has('created') )
     <x-toast.success>
         {{ Session::get('created') }}

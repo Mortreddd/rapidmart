@@ -80,6 +80,8 @@
         </form>
     @endforeach
 
+
+
     <div class="bg-gray-100 p-5 rounded w-full h-fit">
         <div class="w-full h-fit flex justify-between">
             <div class="w-fit h-fit">
@@ -104,13 +106,35 @@
                             @endforeach
                         </ul>
                 </div>
+
+                <button id="datesButton" data-dropdown-toggle="dates" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">{{ $currentDate !== Carbon\Carbon::now() || $currentDate !== null ? Carbon\Carbon::createFromTimeString($currentDate)->format('Y-m-d') : Carbon\Carbon::parse($dateAttendances->first()->date)->format('Y-m-d') }}<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+                
+                <!-- Dropdown menu -->
+                <div id="dates" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 h-72 overflow-y-auto" aria-labelledby="datesButton">
+                        @foreach ($dateAttendances as $date)
+                            <li>
+                                <form class="dates" action="{{ route('attendance.index', ['department' => $selectedDepartment->id]) }}" method="get">
+                                    <button type="submit" class="block px-4 py-2 hover:bg-gray-200 duration-200 ease-in-out dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer bg-none w-full">
+                                        {{ Carbon\Carbon::parse($date->date)->format('d F Y') }}
+                                    </button>
+                                    <input type="hidden" name="date" value="{{ $date->date }}">
+                                </form>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
             </div>
             <div class="w-fit h-fit">
                 <p class="px-4 py-2 bg-green-500 text-white rounded-lg">
-                    {{ $currentDateFormatted }}
+                    {{ Carbon\Carbon::parse($currentDate)->format('Y-m-d') }}
                 </p>
             </div>
-            
+        
         </div>
     </div>
     <div class="h fit w-full space-y-5">
@@ -133,47 +157,45 @@
             <tbody id="table-applicant-body" class="bg-white text-left rounded-b-lg">
 
                     @forelse ($attendances as $attendance)
-                                <tr class="text-black font-normal odd:bg-[#CAD9FF]">
-                                    <td class="px-3 py-2">{{ $attendance->employee->first_name }}, {{ $attendance->employee->last_name }}</td>
-                                    <td class="px-1 py-2">{{ $attendance->employee->position->name }}</td>
-                                    <td class="px-1 py-2">{{ $attendance->employee->position->department->name }}</td>
-                                    <td class="px-1 py-2 text-center">{{ Carbon\Carbon::parse($attendance->date)->format('Y-m-d') }}</td>
-                                    <td class="px-1 py-2 text-center">{{ $attendance->schedule->time_start }} - {{ $attendance->schedule->time_end }}</td>
-                                    @if ($attendance->schedule->shift == 'Day')
-                                        <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $attendance->check_in !== null ? $attendance->check_in : "--:--" }}</td>
-                                    @elseif ($attendance->schedule->shift == 'Night')
-                                        <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $attendance->check_in !== null ? $attendance->check_in : "--:--" }}</td>
-                                    @endif
+                            <tr class="text-black font-normal odd:bg-[#CAD9FF]">
+                                <td class="px-3 py-2">{{ $attendance->employee->first_name }}, {{ $attendance->employee->last_name }}</td>
+                                <td class="px-1 py-2">{{ $attendance->employee->position->name }}</td>
+                                <td class="px-1 py-2">{{ $attendance->employee->position->department->name }}</td>
+                                <td class="px-1 py-2 text-center">{{ Carbon\Carbon::parse($attendance->date)->format('Y-m-d') }}</td>
+                                <td class="px-1 py-2 text-center">{{ $attendance->schedule->time_start }} - {{ $attendance->schedule->time_end }}</td>
+                                @if ($attendance->schedule->shift == 'Day')
+                                    <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $attendance->check_in !== null ? $attendance->check_in : "--:--" }}</td>
+                                @elseif ($attendance->schedule->shift == 'Night')
+                                    <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $attendance->check_in !== null ? $attendance->check_in : "--:--" }}</td>
+                                @endif
 
-                                    @if ($attendance->schedule->shift == 'Day')
-                                        <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $attendance->check_out !== null ? $attendance->check_out : "--:--" }}</td>
-                                    @elseif ($attendance->schedule->shift == 'Night')
-                                        <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $attendance->check_out !== null ? $attendance->check_out : "--:--" }}</td>
-                                    @endif
-                                        
-                                    @if ($attendance->total_hours !== null)
-                                        <td class="px-3 py-2 w-fit text-center text-black">{{ $attendance->total_hours }} Hours</td>
-                                    @else
-                                        <td class="px-3 py-2 w-fit text-center text-black">{{ "--:--" }}</td>
-                                        
-                                    @endif
-                                
-                                    @if ($attendance->check_in === null && $attendance->check_out === null)
-                                        <td class="px-2 py-1 w-auto">
-                                            <button data-modal-target="{{$attendance->id}}" data-modal-toggle="{{$attendance->id}}" class="block m-auto text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                </svg> 
-                                            </button> 
-                                        </td>
-                                    @else
-                                        <td class="px-2 py-1 w-auto">
-                                            <p class="text-white bg-green-500 rounded px-3 py-1 m-auto w-fit">Present</p>
-                                        </td>
-                                    @endif
-                                   
-
-                                </tr>
+                                @if ($attendance->schedule->shift == 'Day')
+                                    <td class="px-3 text-white bg-amber-500 py-2 w-fit text-center">{{ $attendance->check_out !== null ? $attendance->check_out : "--:--" }}</td>
+                                @elseif ($attendance->schedule->shift == 'Night')
+                                    <td class="px-3 text-white bg-slate-700 py-2 w-fit text-center">{{ $attendance->check_out !== null ? $attendance->check_out : "--:--" }}</td>
+                                @endif
+                                    
+                                @if ($attendance->total_hours !== null)
+                                    <td class="px-3 py-2 w-fit text-center text-black">{{ $attendance->total_hours }} Hours</td>
+                                @else
+                                    <td class="px-3 py-2 w-fit text-center text-black">{{ "--:--" }}</td>
+                                    
+                                @endif
+                            
+                                @if ($attendance->check_in === null && $attendance->check_out === null)
+                                    <td class="px-2 py-1 w-auto">
+                                        <button data-modal-target="{{$attendance->id}}" data-modal-toggle="{{$attendance->id}}" class="block m-auto text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                            </svg> 
+                                        </button> 
+                                    </td>
+                                @else
+                                    <td class="px-2 py-1 w-auto">
+                                        <p class="text-white bg-green-500 rounded px-3 py-1 m-auto w-fit">Present</p>
+                                    </td>
+                                @endif
+                            </tr>
                     @empty
                         <td colspan="7" class="text-center rounded-b-lg h-96 font-medium text-gray-700">
                             No attendances found
@@ -210,8 +232,13 @@
 
 
    <script>
-        document.addEventListener('change', function(){
+        const dates = querySelectorAll('dates');
 
-        });
+
+        dates.forEach(date => {
+            date.addEventListener('click', function(){
+                date.submit();
+            })
+        })
     </script>
 @endsection
