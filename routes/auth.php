@@ -18,6 +18,7 @@ use App\Http\Controllers\HumanResource\Employee\EditEmployeeController;
 use App\Http\Controllers\HumanResource\EmployeeController;
 use App\Http\Controllers\HumanResource\Interview\InterviewController;
 use App\Http\Controllers\HumanResource\Leave\LeaveController;
+use App\Http\Controllers\HumanResource\PayrollController;
 use App\Http\Controllers\HumanResource\ScheduleController;
 use App\Http\Controllers\Sales\SalesReportController;
 use App\Http\Controllers\Sales\CheckInventoryController;
@@ -100,6 +101,11 @@ Route::middleware(['auth', 'verified'])->group( function() {
 
         Route::prefix('schedules')->group(function() {
             Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
+        });
+
+
+        Route::prefix('payrolls')->group(function(){
+            Route::get('/', [PayrollController::class, 'index'])->name('payroll.index');
         });
     });
 

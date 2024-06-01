@@ -36,17 +36,25 @@ class AttendanceController extends Controller
             }
         }
 
-        $department_id = $department;
-        $currentDateFormatted = Carbon::now()->format('Y-m-d');
-        $selectedDepartment = Department::findOrFail($department_id);
+        $selectedDepartment = Department::findOrFail($department);
+        $currentDate = Carbon::now();
+        if($request->has('date') || $request->date !== null ){
+            $currentDate = Carbon::parse($request->date);
+        }
+        
+        
         $departments = Department::all();
+        $dateAttendances = Attendance::latest('date')->groupBy('date')->get();
+
         $attendances = Attendance::with(['employee.position.department'])
-                        ->whereDate('date', Carbon::now())
-                        ->whereHas('employee', function($query) use ($department_id){
-                            $query->where('department_id', $department_id);
+                        ->whereDate('date', $currentDate)
+                        ->whereHas('employee', function($query) use ($department){
+                            $query->where('department_id', $department);
                         })
                         ->get();
 
-        return View::make('layouts.hr.attendance', compact('attendances', 'departments', 'selectedDepartment', 'currentDateFormatted'));
+        return View::make('layouts.hr.attendance', compact(
+            'attendances', 'departments', 'selectedDepartment', 'currentDate', 'dateAttendances'
+        ));
     }
 } 
