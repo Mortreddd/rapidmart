@@ -112,7 +112,11 @@ Route::middleware(['auth', 'verified'])->group( function() {
         Route::prefix('sales')->group(function (){
             Route::get('/',[SalesReportController::class,'index'])->name('sales.salesreport.index');
             Route::get('/check-inventory',[CheckInventoryController::class,'index'])->name('sales.checkinventory.index');
-            Route::get('/check-inventory/search',[CheckInventoryController::class,'search'])->name('sales.checkinventory.search');   
+            Route::get('/check-inventory/search',[CheckInventoryController::class,'search'])->name('sales.checkinventory.search');
+            Route::get('/add-promo', [AddPromoController::class, 'index'])->name('sales.addpromo.index');
+            Route::post('/add-promo', [AddPromoController::class, 'store'])->name('sales.addpromo.store');
+            Route::get('/create', [RecordSalesController::class, 'create'])->name('sales.create');
+            Route::post('/store', [RecordSalesController::class, 'store'])->name('sales.store');   
         });
 
     });
