@@ -4,6 +4,11 @@
 
 @section('content')
 <div class="w-full px-5 h-full py-6">
+        <div class="pt-8 w-full flex justify-between items-center">
+            <div class="w-fit mb-4 ml-auto">
+                    <a href="{{ route('sales.create') }}" class="bg-secondary px-2 py-2 text-white rounded-md">Record Sale</a>
+            </div>
+        </div>
         <table id="default-sales-table" class="fade-in font-semibold text-md table-auto border text-white w-full shadow">
         <caption class="text-gray-800 text-center">Daily Sales Report</caption> 
         <thead class="bg-secondary ">
@@ -13,6 +18,10 @@
                     <th class="px-6 py-4">Category</th>
                     <th class="px-6 py-4">Quantity Sold</th>
                     <th class="px-6 py-4">Unit Price</th>
+                    <th class="px-6 py-4">Discount</th>
+                    <th class="px-6 py-4">Promo</th>
+                    <th class="px-6 py-4">Cash</th>
+                    <th class="px-6 py-4">Change</th>
                     <th class="px-6 py-4">Total Sales</th>
                 </tr>
             </thead>
@@ -25,6 +34,10 @@
                         <td class="px-6 py-2">{{ $sale->category_name }}</td>
                         <td class="px-6 py-2">{{ $sale->quantity }}</td>
                         <td class="px-6 py-2">{{ $sale->price }}</td>
+                        <td class="px-6 py-2">{{ $sale->discount ?? 0 }}</td>
+                        <td class="px-6 py-2">{{ $sale->promo ?? 0 }}</td>
+                        <td class="px-6 py-2">{{ $sale->cash }}</td>
+                        <td class="px-6 py-2">{{ $sale->change }}</td>
                         <td class="px-6 py-2">{{ $sale->amount }}</td>
                 </tr>
 
@@ -33,19 +46,18 @@
                         @if($i == 5)
                             <tr class="text-black font-normal odd:bg-[#CAD9FF]">
                                 <td class="w-full py-2 text-center">No Recorded Sales</td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
+                                <td class="px-6 py-2"></td>
                             </tr>
                             @continue
                         @endif
-                        <tr class="text-black font-normal odd:bg-[#CAD9FF]">
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                        </tr>
                     @endfor
                 @endforelse
             </tbody>

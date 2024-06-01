@@ -6,7 +6,7 @@
 <div class="w-full px-5 h-full py-6">
         <div class="pt-8 w-full flex justify-between items-center">
             <div class="w-fit mb-4 ml-auto">
-                    <a href="" class="bg-secondary px-2 py-2 text-white rounded-md">Add Promo</a>
+                    <a href="{{ route('sales.addpromo.index') }}" class="bg-secondary px-2 py-2 text-white rounded-md">Add Promo</a>
             </div>
         </div>
         <table id="default-promo-table" class="fade-in font-semibold text-md table-auto border text-white w-full shadow">
@@ -14,15 +14,11 @@
         <caption class="text-gray-800 text-center">Promo Information</caption> 
         <thead class="bg-secondary ">
                 <tr class=" rounded-lg">
-                    @if($promo->count()>1)
-                        <th class="px-6 py-4">No Promo Available</th>
-                    @else 
                         <th class="px-6 py-4 rounded-tl-lg">Promo Code</th>
                         <th class="px-6 py-4">Discount (%)</th>
                         <th class="px-6 py-4">Duration Start</th>
                         <th class="px-6 py-4">Valid Until</th>
                         <th class="px-6 py-4">Product</th>
-                    @endif
                 </tr>
             </thead>
             <tbody id="table-promo-body" class="bg-white text-center rounded-b-lg">
@@ -44,16 +40,6 @@
                             </tr>
                             @continue
                         @endif
-                        <tr class="text-black font-normal odd:bg-[#CAD9FF]">
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                            <td class=""></td>
-                        </tr>
                     @endfor
                 @endforelse
             </tbody>
