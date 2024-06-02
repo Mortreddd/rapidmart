@@ -68,8 +68,11 @@ class Employee extends Authenticatable
 
     public function attendance()
     {
-        return static::belongsTo(Attendance::class);
+        return static::hasOne(Attendance::class);
     }
 
-
+    public function payroll()
+    {
+        return static::hasOne(Payroll::class);
+    }
 }

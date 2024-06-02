@@ -18,8 +18,9 @@ return new class extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Employee::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Deduction::class)->nullable();
-            $table->foreignIdFor(Benefit::class)->nullable();
+            $table->unsignedBigInteger('deduction_id')->nullable();
+            $table->unsignedBigInteger('benefit_id')->nullable();
+            $table->enum('status', Payroll::$STATUSES)->default('Pending');
             $table->float('total_salary');
             $table->float('net_pay');
             $table->timestamps();

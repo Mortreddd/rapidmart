@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-span-2">
                         @error('last_name')
-                            <p class="text-xs text-red-600 font-semibold">{{ Session::get('last_name') }}</p>
+                            <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
                         @enderror
                         <label for="last_name" class="block">Last Name</label>
                         <input type="text" name="last_name" autocomplete="off" value="{{ old('last_name') }}" id="last_name" placeholder="Last Name" class="w-auto outline-none focus:ring-1 focus:border-none focus:ring-secondary border border-gray-500 placeholder:text-gray-700 rounded p-2">

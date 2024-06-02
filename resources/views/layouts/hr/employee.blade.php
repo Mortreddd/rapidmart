@@ -98,7 +98,7 @@
                 </svg>     
             </span>
         @endforeach
-        <a href="" class="py-4 px-6 text-white bg-red-500 hover:bg-red-600 transition-colors ease-in-out duration-200 rounded shadow-lg flex justify-between gap-3 items-center">
+        <a href="{{ route('leave.index') }}" class="py-4 px-6 text-white bg-red-500 hover:bg-red-600 transition-colors ease-in-out duration-200 rounded shadow-lg flex justify-between gap-3 items-center">
             <h3 class="text-lg text-white">
                 On Leave Employees
             </h3>

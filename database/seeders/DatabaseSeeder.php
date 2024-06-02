@@ -7,9 +7,12 @@ namespace Database\Seeders;
 use App\Models\HumanResource\Employee;
 use App\Models\HumanResource\Applicant;
 use App\Models\HumanResource\Attendance;
+use App\Models\HumanResource\Benefit;
+use App\Models\HumanResource\Deduction;
 use App\Models\HumanResource\Department;
 use App\Models\HumanResource\Interview;
 use App\Models\HumanResource\Leave;
+use App\Models\HumanResource\Payroll;
 use App\Models\HumanResource\Position;
 use App\Models\HumanResource\Schedule;
 use App\Models\PO\Catergory;
@@ -290,7 +293,19 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        Deduction::create([
+            'description' => 'Tax',
+            'amount' => 400,
+        ]);
 
+
+        Benefit::create([
+            'description' => 'Holiday Bonus',
+            'amount' => 500,
+        ]);
+
+
+        
         $schedules = Schedule::with(['employees.leave', 'position'])->get();
         $DAYS = 30;
 
@@ -312,5 +327,21 @@ class DatabaseSeeder extends Seeder
             } 
             $DAYS--;
         }
+
+        $startOfMonth = Carbon::now()->startOfMonth();
+
+        $employees = Employee::with('position')->withSum('attendance', 'total_hours')->get();
+
+        
+        foreach($employees as $employee){
+            Payroll::create([
+                'employee_id' => $employee->id,
+                'benefit_id' => null,
+                'deduction_id' => null,
+                'total_salary' => $employee->position->salary_per_hour * $employee->attendance_sum_total_hours,
+                'net_pay' => $employee->position->salary_per_hour * $employee->attendance_sum_total_hours
+            ]);
+        }
+        
     }
 }

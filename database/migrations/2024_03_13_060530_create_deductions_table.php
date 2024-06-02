@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('deductions', function (Blueprint $table) {
             $table->id();
-            $table->string('deduction_description');
-            $table->float('amount');
-            $table->datetime('deduction_date');
+            $table->string('description');
+            $table->float('amount')->default(0);
+            $table->timestamps();
         });
     }
 

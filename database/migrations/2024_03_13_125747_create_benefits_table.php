@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('benefits', function (Blueprint $table) {
             $table->id();
-            $table->string('benefit_description');
-            $table->float('amount');
-            $table->datetime('benefit_date')->nullable()->default(now()->toDateString());
+            $table->string('description');
+            $table->float('amount')->default(0);
+            $table->timestamps();
         });
     }
 

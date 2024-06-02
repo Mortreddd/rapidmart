@@ -10,8 +10,7 @@ class Benefit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'benefit_description',
         'amount',
-        'benefit_date'
+        'description',
     ];
 }

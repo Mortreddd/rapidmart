@@ -45,7 +45,16 @@ class AttendanceController extends Controller
         
         $departments = Department::all();
         $dateAttendances = Attendance::latest('date')->groupBy('date')->get();
-
+        $onLeaveEmployees = Employee::whereHas('leave', function ($query) {
+                            $query->whereNotNull('employee_id')
+                                ->whereDate('start_date', '<=', Carbon::now())
+                                ->whereDate('end_date', '>=', Carbon::now());
+                        })->with(['leave' => function ($query) {
+                            $query->whereNotNull('employee_id')
+                                ->whereDate('start_date', '<=', Carbon::now())
+                                ->whereDate('end_date', '>=', Carbon::now());
+                        }])->get(['id'])
+                        ->toArray();
         $attendances = Attendance::with(['employee.position.department'])
                         ->whereDate('date', $currentDate)
                         ->whereHas('employee', function($query) use ($department){
@@ -54,7 +63,7 @@ class AttendanceController extends Controller
                         ->get();
 
         return View::make('layouts.hr.attendance', compact(
-            'attendances', 'departments', 'selectedDepartment', 'currentDate', 'dateAttendances'
+            'attendances', 'departments', 'selectedDepartment', 'currentDate', 'dateAttendances', 'onLeaveEmployees'
         ));
     }
 } 

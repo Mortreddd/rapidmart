@@ -13,6 +13,8 @@ use App\Http\Controllers\HumanResource\Applicant\RejectedApplicantController;
 use App\Http\Controllers\HumanResource\ApplicantController;
 use App\Http\Controllers\HumanResource\Attendance\UpdateAttendanceController;
 use App\Http\Controllers\HumanResource\AttendanceController;
+use App\Http\Controllers\HumanResource\Benefit\BenefitController;
+use App\Http\Controllers\HumanResource\Deduction\DeductionController;
 use App\Http\Controllers\HumanResource\Employee\CreateEmployeeController;
 use App\Http\Controllers\HumanResource\Employee\EditEmployeeController;
 use App\Http\Controllers\HumanResource\EmployeeController;
@@ -45,8 +47,8 @@ Route::middleware(['auth', 'verified'])->group( function() {
             Route::get('/create', [CreateEmployeeController::class, 'index'])->name('employee.create');
             Route::post('/create', [CreateEmployeeController::class, 'store'])->name('employee.store');
 
-
             Route::get('/on-leaves', [LeaveController::class, 'index'])->name('leave.index');
+            Route::post('/leaves/create', [LeaveController::class, 'store'])->name('leave.store');
         });
       
         // ? APPLICANT ROUTES
@@ -103,10 +105,18 @@ Route::middleware(['auth', 'verified'])->group( function() {
             Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
         });
 
-
         Route::prefix('payrolls')->group(function(){
-            Route::get('/', [PayrollController::class, 'index'])->name('payroll.index');
+            Route::get('/{department_id}', [PayrollController::class, 'index'])->name('payroll.index');
+            Route::put('/{department_id}/{payroll_id}', [PayrollController::class, 'update'])->name('payroll.update');
         });
+        Route::get('/deductions', [DeductionController::class, 'index'])->name('deduction.index');
+        Route::post('/deductions/create', [DeductionController::class, 'store'])->name('deduction.store');
+        Route::put('/dedutions/{deduction_id}', [DeductionController::class, 'update'])->name('deduction.update');
+
+        Route::get('/benefits', [BenefitController::class, 'index'])->name('benefit.index');
+        Route::post('/benefits/create', [BenefitController::class, 'store'])->name('benefit.store');
+        Route::put('/benefits/{benefit_id}', [BenefitController::class, 'update'])->name('benefit.update');
+
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

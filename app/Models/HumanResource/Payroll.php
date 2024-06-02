@@ -9,12 +9,12 @@ class Payroll extends Model
 {
     use HasFactory;
 
-    public static array $STATUSES = ['Pending', 'Approved', 'Rejected'];
+    public static array $STATUSES = ['Pending', 'Approved', 'Approval', 'Rejected'];
     protected $fillable = [
-        'attendance_id',
         'employee_id',
         'deduction_id',
         'benefit_id',
+        'status',
         'total_salary',
         'net_pay',
         'created_at',
@@ -25,4 +25,21 @@ class Payroll extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
+
+
+    public function employee()
+    {
+        return static::belongsTo(Employee::class);
+    }
+
+
+    public function deduction()
+    {
+        return static::belongsTo(Deduction::class);
+    }
+
+    public function benefit()
+    {
+        return static::belongsTo(Benefit::class);
+    }
 }
